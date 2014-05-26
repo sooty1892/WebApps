@@ -101,8 +101,8 @@
 			if ($hashpw == false) {
 				echo "PASSWORD HASHING ERROR";
 			} else {
-				$sql = "INSERT INTO users (username, firstname, surname, email, password)
-						VALUES ('$un', '$fn', '$sn', '$email', '$hashpw')";
+				$sql = "INSERT INTO users (username, firstname, surname, email, password, created)
+						VALUES ('$un', '$fn', '$sn', '$email', '$hashpw', NOW())";
 
 				$result = pg_query($con, $sql);
 
@@ -149,10 +149,10 @@ Surname: <input type="text" name="surname" value="<?php echo $sn;?>">
 Email: <input type="text" name="email" value="<?php echo $email;?>">
 <span class="error">* <?php echo $emailError;?></span>
 <br><br>
-Password: <input type="password" maxlength="5" name="password" value="<?php echo $pw;?>">
+Password: <input type="password" name="password" value="<?php echo $pw;?>">
 <span class="error">* <?php echo $pwError;?></span>
 <br><br>
-Re-Enter Password: <input type="password" maxlength="5" name="passwordCheck" value="<?php echo $pwCheck;?>">
+Re-Enter Password: <input type="password" name="passwordCheck" value="<?php echo $pwCheck;?>">
 <span class="error">* <?php echo $pwCheckError;?></span>
 <br><br>
 Remember Me: <input type="checkbox" name="rememberMe" value="<?php echo $rm;?>">
