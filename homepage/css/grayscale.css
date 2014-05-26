@@ -65,8 +65,9 @@ a:focus {
 
 .navbar-brand {
     font-weight: 700;
-    position: relative;
-    left: -220px;
+    margin-left: 0;
+    margin-top: 0;
+    /*margin:25px 0 0 100px; */
 }
 
 .navbar-brand:focus {
@@ -129,6 +130,7 @@ a:focus {
     width: 70%;
     height: auto;
     padding: 100px 0; 
+    padding-right: 30%;
     text-align: right;
     color: #fff;
     /* background: url(../img/intro-bg.jpg) no-repeat bottom center scroll; */
@@ -146,9 +148,11 @@ a:focus {
 }
 
 .brand-heading {
-    position: absolute;
-    left: 1000px;
-    top: 100px;
+    float: right;
+    margin-right: 11.5%;
+    margin-top: 5%;
+    /*left: 1000px;
+    top: 100px;*/
     font-size: 40px;
     color: #00FA9A;
     text-align: left;
@@ -258,6 +262,7 @@ a:focus {
 
 .download-section {
     width: 100%;
+    text-align: middle;
     padding: 50px 0;
     color: #fff;
     background: url(../img/downloads-bg.jpg) no-repeat center center scroll;
