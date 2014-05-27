@@ -18,57 +18,15 @@
 			$rm = $_POST["rememberMe"];
 		}
 
-		if (empty($_POST['username'])) {
-			$unError = "Username is required";
-		} else {
-			$un = test_input($_POST["username"]);
-			if (!preg_match("/^[a-zA-Z0-9 ]*$/", $un)) {
-				$unError = "Only letters and numbers allowed";
-			}
-		}
+		$unError = valUsername($_POST["username"]);
+		$fnError = valName($_POST["firstname"]);
+		$snError = valName($_POST["surname"]);
+		$emailError = valEmail($_POST["email"]);
+		$pwError = valPassword($_POST["password"]);
+		$pwCheckError = valPassword($_POST["passwordCheck"]);
 
-		if (empty($_POST['firstname'])) {
-			$fnError = "Firstname is required";
-		} else {
-			$fn = test_input($_POST["firstname"]);
-			if (!preg_match("/^[a-zA-Z ]*$/", $fn)) {
-				$fnError = "Only letters allowed";
-			}
-		}
-
-		if (empty($_POST['surname'])) {
-			$snError = "Surname is required";
-		} else {
-			$sn = test_input($_POST["surname"]);
-			if (!preg_match("/^[a-zA-Z ]*$/", $sn)) {
-				$snError = "Only letters allowed";
-			}
-		}
-
-		if (empty($_POST['email'])) {
-			$emailError = "Email is required";
-		} else {
-			$email = test_input($_POST["email"]);
-			if (!preg_match("/([\w\-]+\@[\w\-]+\.[\w\-]+)/",$email)) {
-	  			$emailErr = "Invalid email format"; 
-			}
-		}
-
-		if (empty($_POST['password'])) {
-			$pwError = "Password is required";
-		} else {
-			$pw = test_input($_POST["password"]);
-			//validation test?
-		}
-
-		if (empty($_POST['passwordCheck'])) {
-			$pwCheckError = "Password is required";
-		} else {
-			$pwCheck = test_input($_POST["passwordCheck"]);
-			//validation test?
-		}
-
-		if (strcmp($pw, $pwCheck) != 0) {
+		if (empty($pwError) && empty($pwCheckError) && strcmp($pw, $pwCheck) != 0) {
+			$pwCheck = "Passwords don't match!";
 			$pwCheckError = "Passwords don't match!";
 		}
 
@@ -91,11 +49,11 @@
 		if (empty($unError) && empty($fnError) && empty($snError) && empty($emailError) && empty($pwError) && empty($pwCheckError)) {
 
 			// escape variables for security
-			$un = pg_escape_string($_POST['username']);
-			$fn = pg_escape_string($_POST['firstname']);
-			$sn = pg_escape_string($_POST['surname']);
-			$email = pg_escape_string($_POST['email']);
-			$pw = pg_escape_string($_POST['password']);
+			$un = pg_escape_string(valInput($_POST['username']));
+			$fn = pg_escape_string(valInput($_POST['firstname']));
+			$sn = pg_escape_string(valInput($_POST['surname']));
+			$email = pg_escape_string(valInput($_POST['email']));
+			$pw = pg_escape_string(valInput($_POST['password']));
 			$hashpw = password_hash($pw, PASSWORD_DEFAULT);
 
 			if ($hashpw == false) {
@@ -103,9 +61,7 @@
 			} else {
 				$sql = "INSERT INTO users (username, firstname, surname, email, password, created)
 						VALUES ('$un', '$fn', '$sn', '$email', '$hashpw', NOW())";
-
 				$result = pg_query($con, $sql);
-
 				if (!$result) {
 					die("Error in SQL query: " . pg_last_error());
 				}
@@ -119,13 +75,6 @@
 			header("Location: private.php");
 			exit();
 		}
-	}
-
-	function test_input($data) {
-		$date = trim($data);
-		$data = stripslashes($data);
-		$data = htmlspecialchars($data);
-		return $data;
 	}
 ?>
 

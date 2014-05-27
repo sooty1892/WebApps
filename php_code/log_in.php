@@ -9,8 +9,8 @@
 
 	$submitted_username = '';
 	if (!empty($_POST)) {
-		//set to 'on' if ticked and empty if not
-		$rm = $_POST['rememberMe'];
+		//rememberMe set to 'on' if ticked and empty if not
+
 		$un = $_POST['username'];
 		$pw = $_POST['password'];
 
@@ -26,9 +26,9 @@
 		}
 
 		if ($login_ok) {
-			if ($rm == "on") {
+			if ($_POST['rememberMe'] == "on") {
 				setcookie("user", $un, $expire);
-			} else if ($rm == "") {
+			} else if ($_POST['rememberMe'] == "") {
 				$_SESSION['user'] = $un;
 			}
 			header("Location: private.php");
