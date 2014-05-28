@@ -8,6 +8,7 @@
 
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/styles.css" rel="stylesheet">
+      
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
@@ -16,7 +17,7 @@
   <body>
     <div class="container">
       <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
+      <div id ="navbar" class="navbar navbar-default" role="navigation">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -33,50 +34,45 @@
               <li><a href="#">About</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-              <!--<li class="dropdown" id="menuLogin">
-                <a class="dropdown-toggle" href="#" data-toggle="dropdown" id="navLogin">Login</a>
-                <div class="dropdown-menu" style="padding:17px;">
-                  <form class="form" id="formLogin"> 
-                    <input name="username" id="username" type="text" placeholder="Username" style = "margin-bottom: 5px"> 
-                    <input name="password" id="password" type="password" placeholder="Password">
-                    <input type="checkbox" name="checkbox" value="rememberMe">Remember Me<br>
-                  <button type="button" id="btnLogin" class="btn-success" style = "float: right;">Login</button>
-                </form>
-                </div>
-              </li>-->
                 <form class="navbar-form navbar-right" role="search" style = "margin-top: 5px">
                     <div class="form-group">
-                        <input type="text" class="form-control login-height" name="username" placeholder="Username">
+                        <input id="username" type="textfield" class="form-control login-height" placeholder="Username">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control login-height" name="password" placeholder="Password">
+                        <input id = "password" type="password" class="form-control login-height" placeholder="Password">
                     </div>
-                    <button type="submit" class="btn btn-sm btn-success">Login</button>
+                    <button id="btnLogin" type="button" class="btn btn-sm btn-success">Login</button>
                 </form>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </div>
-
-      <!-- Main component for a primary marketing message or call to action -->
-<div id="jumbo" class="jumbotron slide-in">
+       <div>
+            <p id = "login-error" style = "margin-top: -20px; text-align: right; display: none">
+                <font color = "orange">Incorrect username/password. Please try again.</font>
+            </p>
+       </div>
+  <div id="jumbo" class="jumbotron slide-in">
     <div class = "container">
     <form class = "sign-up">    
         <dl class = "form">
-            <dd><input type="text" name="user-login" class="textfield sign-up-width" placeholder="Choose a username"></dd>
+            <dd><input type="text" id="user-login" class="textfield sign-up-width" placeholder="Choose a username"></dd>
+        </dl>
+        <h5 class = "sign-in-error-message">Username has been taken!</h5>
+        <dl class = "form">
+            <dd><input type="text" id="user-email" class="textfield sign-up-width" placeholder="Enter your e-mail address"></dd>
+        </dl>
+        <h5 class = "sign-in-error-message">E-mail address is in use!</h5>
+        <dl class = "form">
+            <dd><input type="password" id="user-password" class="textfield sign-up-width" placeholder="Choose a password"></dd>
         </dl>
         <dl class = "form">
-            <dd><input type="text" name="user-email" class="textfield sign-up-width" placeholder="Enter your e-mail address"></dd>
+            <dd><input type="password" id="user-password-confirm" class="textfield sign-up-width" placeholder="Confirm your password"></dd>
         </dl>
-        <dl class = "form">
-            <dd><input type="password" name="user-password" class="textfield sign-up-width" placeholder="Choose a password"></dd>
-        </dl>
-        <dl class = "form">
-            <dd><input type="password" name="user-password-confirm" class="textfield sign-up-width" placeholder="Confirm your password"></dd>
-        </dl>
-        <button type = "button" id = "btnSignUp" class = "btn-success" form="">Sign Up</button>
+        <h5 id ="password-match" class = "sign-in-error-message"></h5>
+        <button type = "submit" id = "btnSignUp" class = "btn-success" form="">Sign Up</button>
     </form>
-    <h1 class = "signup-heading">Make music, together!</h1>
+    <h1 class = "signup-heading">Make music, together</h1>
     <p class = "signup-heading"> Say something here, and sign up!</p>
     </div>
 </div>
@@ -84,8 +80,7 @@
       <div class="container-about" style = "background: #4e5d6c">
         <div class="content text-center">
           <div class="heading">
-            <h2>What it's all about</h2>
-            <div class="border"></div>
+            <h2 style = "margin-bottom : 5px">Make, create and publish</h2>
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, alias enim placeat earum quos ab.</p>
           </div>
           <div class="row">
@@ -108,9 +103,6 @@
         </div>
       </div>
     </section>    
-    <section id = "connect">
-        
-    </section>
     </div> <!-- /container -->
   </body>
 </html>
