@@ -1,0 +1,44 @@
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.sign-up {
+    float: right;
+    width: 400px;
+    margin-left: 40px;
+}
+
+.sign-up-width {
+    width: 400px
+}
+
+.login-height {
+    height: 30px;
+}
+
+.container-about {
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.slide-in {
+    position:relative;
+    left: -1300px;
+}
+
+.slide-in-right {
+    position: relative;
+    right: -1300px; 
+}
+
+.sign-in-error-message {
+    margin-top: -20px; 
+    text-align:right;
+    color: orange;
+    display: none
+}
