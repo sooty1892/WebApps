@@ -41,13 +41,13 @@ fieldset {
 }
 
 .divider {
-  height: 5px;
-  width:150px;
-  
+  height: 2px;
+  border-style: groove;
   background-color: #292E37;
 }
 
 .navbar-default{
   
-  margin-bottom: 2px;
+  margin-bottom: 0px;
 }
+
