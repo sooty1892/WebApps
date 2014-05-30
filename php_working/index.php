@@ -41,7 +41,7 @@
       header("Location: private.php");
       exit();
     } else {
-      die($un . " " . $pw);
+      //die($un . " " . $pw);
       $submitted_username = htmlentities($un, ENT_QUOTES, 'UTF-8');
     }
   } else if (!empty($_POST['signup_submit'])) {
@@ -123,6 +123,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
     <script src="js/sliding.js"></script>
+    <script src="js/validation.js"></script>
   </head>
 
   <body>
@@ -146,7 +147,7 @@
             </ul>
             <ul class="nav navbar-nav navbar-right">
                 <!-- LOGIN FORM -->
-                <form onsubmit="return valForm();" name="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="navbar-form navbar-right" role="search" style="margin-top: 5px">
+                <form onsubmit="return valLoginForm();" name="login" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" class="navbar-form navbar-right" role="search" style="margin-top: 5px">
                     <div class="form-group">
                         <input id="username" type="text" class="form-control login-height" value="<?php echo $submitted_username; ?>" name="usernameLogin" placeholder="Username">
                     </div>
@@ -169,7 +170,7 @@
 <div id="jumbo" class="jumbotron slide-in">
     <div class="container">
     <!-- SIGN UP -->
-    <form onsubmit="return validateForm();" name="signup" method="post" class="sign-up" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">    
+    <form onsubmit="return valSubmitForm();" name="signup" method="post" class="sign-up" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">    
         <dl class="form">
             <dd><input id="user-login" type="text" name="usernameSignup" class="textfield sign-up-width" placeholder="Choose a username"></dd>
         </dl>

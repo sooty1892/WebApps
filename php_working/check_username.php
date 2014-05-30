@@ -11,7 +11,7 @@
 
 	    $un = $_POST['username'];
 	    
-	    $query = "SELECT * FROM users WHERE username = '{$un}'"
+	    $query = "SELECT * FROM users WHERE username = '{$un}'";
 	    $results = pg_query($con, $query);
 	    
 	    if (pg_num_rows($results) == 1) {

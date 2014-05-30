@@ -12,7 +12,7 @@
 	    $un = $_POST['username'];
 	    $pw = $_POST['password'];
 	    
-	    $query = "SELECT * FROM users WHERE username = '{$un}'"
+	    $query = "SELECT * FROM users WHERE username = '{$un}'";
 	    $results = pg_query($con, $query);
 	    
 	    if (pg_num_rows($results) == 1) {

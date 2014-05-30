@@ -11,7 +11,7 @@
 	    
 	    $em = $_POST['email'];
 
-	    $query = "SELECT * FROM users WHERE email = '{$em}'"
+	    $query = "SELECT * FROM users WHERE email = '{$em}'";
 	    $results = pg_query($con, $query);
 	    
 	    if (pg_num_rows($results) == 1) {
