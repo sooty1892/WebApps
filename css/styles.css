@@ -35,3 +35,14 @@ fieldset {
     position: relative;
     right: -1300px; 
 }
+
+.btn-group-vertical{
+  position: fixed;
+}
+
+.divider {
+  height: 5px;
+  width:150px;
+  
+  background-color: #292E37;
+}
