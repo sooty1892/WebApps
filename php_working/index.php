@@ -190,31 +190,31 @@
         <input type="submit" value="Sign Up" name="signup_submit" id="btnSignUp" class="btn-success">
     </form>
     <h1 class="signup-heading">Make music, together!</h1>
-    <p class="signup-heading"> This is not a website about sex!</p>
+    <p class="signup-heading">Sign up and experience a new world!</p>
     </div>
 </div>
     <section id="about" class="page slide-in-right">
       <div class="container-about" style = "background: #4e5d6c">
         <div class="content text-center">
           <div class="heading">
-            <h2 style="margin-bottom : 5px">Make, create and publish</h2>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Culpa, alias enim placeat earum quos ab.</p>
+            <h2 style="margin-bottom : 5px">Collaborate, create and publish</h2>
+            <p>Make music with friends or complete strangers and share with the world.</p>
           </div>
           <div class="row">
             <div class="col-lg-4 service animated hiding">
               <img src="web_icons/collaboration.png"></img>
               <h3 style "margin-top: 10px">Colloboration</h3>
-              <p>Donec sed odio dui. Etiam porta sem malesuada magna mollis euismod. Nullam id dolor id nibh ultricies vehicula ut id elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.</p>
+              <p>This app allows you to collaborate with people from all over the globe and create music together. It brings people with different expertises within the music industry together, while also allowing you to make new friends allong the way.</p>
             </div>
             <div class="col-lg-4 service animated hiding" data-animation="fadeInUp" data-delay="600">
               <img src="web_icons/learning.png"></img>
               <h3 style="margin-top: 10px">Learning</h3>
-              <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque lau dantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta.</p>
+              <p>Learn from the best! This app allows you to learn from other more experienced people in an interactive way. Simply share music within a project to find out what works and doesn't.</p>
             </div>
             <div class="col-lg-4 service animated hiding" data-animation="fadeInUp" data-delay="900">
               <img src="web_icons/creation.png"></img>
               <h3 style="margin-top: 10px">Creation</h3>
-              <p>Aliquam aliquet, est a ullamcorper condimentum, tellus nulla fringilla elit, a iaculis nulla turpis sed wisi. Fusce volutpat. Etiam sodales ante id nunc. Proin ornare dignissim lacus.</p>
+              <p>Make a project to focus on a specfic piece of music, gaining help from other people to create your own personalised music.</p>
             </div>
           </div>
         </div>
