@@ -10,7 +10,7 @@
 	//cookie to expire after a year
 	$expire = time()+(60*60*24*365);
 
-	$con = pg_connect("host=localhost port=5432 dbname=test user=ashleyhemingway");
+	$con = pg_connect("host=ec2-54-225-103-9.compute-1.amazonaws.com port=5432 dbname=d8lv9hi070ru8r user=hauutfyawsyzpo password=hmxc6ZyFmCAN3tffETT2eBuoz_");
 	// Check connection
 	if (!$con) {
 		die("Error in connection: " . pg_last_error());
