@@ -1,0 +1,105 @@
+.tabber {
+  background-color: #4e5d6c;
+  border: 5px solid #4e5d6c ;
+  border-radius: 5px;
+}
+
+.tabber-fluid {
+  margin-right: auto;
+  margin-left: auto;
+  background-color: #4e5d6c;
+  border: 5px solid #4e5d6c ;
+  border-left: 7px solid #4e5d6c;
+  border-radius: 5px;
+  width: 310px;
+}
+
+.tab-bar {
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
+  display: block;
+  margin-left: 20%
+}
+
+.picture-cell {
+  display: table-cell;
+  height: 100%;
+  width: 50%;
+  margin-bottom: auto;
+  margin-top: auto;
+  margin-left: auto;
+}
+
+.project-picture {
+  display: table-cell;
+  position: absolute;
+  border:5px solid #fff;
+  float: left;
+  height: 80%;
+  width: 40%;
+}
+
+
+.project-list {
+  margin-left: 16.48%;
+  margin-right: auto;
+  position: relative;
+  top: 2px;
+  width: 60%;
+}
+
+.project-list > .list-description {	
+	height: 300px;
+  position: relative;
+  width: 100%;
+}
+
+.description {
+  display: table;
+  padding: 30px;
+  margin-bottom: 30px;
+  color: inherit;
+  background-color: #4e5d6c;
+}
+
+.image-holder {
+  display: table-row;
+}
+
+.edit-menu {
+  background-color: #5cb85c;
+}
+
+.edit {
+  background-color: #5cb85c;
+}
+
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  background-color: #5fa4ed;
+}
+
+.nav-pills > li > a:hover {
+  background-color: #5fa4ed;
+}
+
+.project-desc {
+  position: absolute;
+  display: inline-block;
+  margin-left: 45%;
+}
+
+.edit-desc {
+  float: right;
+  margin-top: 5%;
+  /*height: 70%;
+  width: 50%%;*/
+}
+
+
+
+
+
+
+
