@@ -51,3 +51,30 @@ fieldset {
   margin-bottom: 0px;
 }
 
+#middlePanel{
+  position:relative;
+  border:solid;
+  border-color:#292E37;
+  border-width: 5px;
+  left:170px;
+  top:20px;
+  width:500px;
+}
+
+#albumArt{
+  width:175px;
+}
+
+#projectHead{
+  border:solid;
+  border-color:#292E37;
+
+width:200px;
+height:175px;
+position:relative;
+
+}
+
+#projectInfo{
+
+}
