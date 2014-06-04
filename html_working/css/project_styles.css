@@ -1,0 +1,95 @@
+.projectHead {
+    position: relative;
+    height: 250px;
+    margin-right: auto;
+    width: 600px;
+    background-color: #4e5d6c;
+    overflow: hidden;
+    
+}
+
+.projectSection{
+ position: absolute;
+    height: 170px;
+    margin-top: 50px;
+    margin-right: auto;
+    width: 600px;
+    background-color: #4e5d6c;
+    overflow: hidden
+    
+}
+
+.mediaSection{
+	border-style: ridge;
+	width:250px;
+	position:relative;
+	
+	top:50px;
+	height: 80px;
+}
+
+audio{
+	width:246px;
+}
+
+.projectInfo{
+    word-wrap: break-word;
+    width: 375px;
+    position: absolute;
+    left : 270px;
+    top:0px;
+}
+
+.btn-group-vertical{
+  position: fixed;
+}
+
+#changeAlbumArt{
+     position:relative;
+     left:-38px;
+     top :112px;
+     height:25px;
+     width:25px;
+     text-align:top; 
+border-style: solid;
+border-color: black;
+opacity: 1;
+}
+
+.divider {
+  height: 2px;
+  border-style: groove;
+  background-color: #292E37;
+}
+
+.navbar-default{
+  
+  margin-bottom: 0px;
+}
+
+.middlePanel{
+  position:relative;
+  
+  left:200px;
+  top:50px;
+  width:600px;
+}
+
+#albumArt{
+  width:250px;
+  margin-right: 0px;
+}
+
+
+/*
+#projectHead{
+  border:solid;
+  border-color:#292E37;
+
+width:200px;
+height:175px;
+position:relative;
+
+}*/
+
+
