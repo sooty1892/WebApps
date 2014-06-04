@@ -26,13 +26,6 @@
 
 $(document).ready(function() {
 
-     $(".edit_area").editable('../../php_working/editinplace.php', { 
-         type      : 'textarea',
-         cancel    : 'Cancel',
-         submit    : 'OK',
-         indicator : '<img src="img/indicator.gif">',
-         
-   
-     });
+     $(".edit_area").editable('../../php_working/editinplace.php');
 
  });

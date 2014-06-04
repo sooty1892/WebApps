@@ -1,20 +1,39 @@
 <?php
 	session_start();
 
-	$username = "ashleyhemingway";
-	$host = "localhost";
-	$port = 5432;
-	$dbname = "test";
+	// $username = "ashleyhemingway";
+	// $host = "localhost";
+	// $port = 5432;
+	// $dbname = "ashleyhemingway";
+
+    // $username = "cts12";
+    // $host = "db.doc.ic.ac.uk";
+    // $port = 5432;
+    // $dbname = "cts12";
+    // $password = "WkMRCTUhEN";
+
 	//used to destroy cookie
 	$expireNow = time()-(60*60*24*365);
 	//cookie to expire after a year
 	$expire = time()+(60*60*24*365);
 
-	$con = pg_connect("host=ec2-54-225-103-9.compute-1.amazonaws.com port=5432 dbname=d8lv9hi070ru8r user=hauutfyawsyzpo password=hmxc6ZyFmCAN3tffETT2eBuoz_");
-	// Check connection
-	if (!$con) {
-		die("Error in connection: " . pg_last_error());
-	}
+	// $con = pg_connect("host=localhost port=5432 dbname=ashleyhemingway user=ashleyhemingway");
+	// // Check connection
+	// if (!$con) {
+	// 	die("Error in connection: " . pg_last_error());
+	// }
+
+    // $con = pg_connect("host=db.doc.ic.ac.uk port=5432 dbname=cts12 user=cts12 password=WkMRCTUhEN");
+    // // Check connection
+    // if (!$con) {
+    //  die("Error in connection: " . pg_last_error());
+    // }
+
+    $con = pg_connect("host=ec2-54-225-103-9.compute-1.amazonaws.com port=5432 dbname=d8lv9hi070ru8r user=hauutfyawsyzpo password=hmxc6ZyFmCAN3tffETT2eBuoz_");
+    // Check connection
+    if (!$con) {
+        die("Error in connection: " . pg_last_error());
+    }
 
 	// This block of code is used to undo magic quotes.  Magic quotes are a terrible 
     // feature that was removed from PHP as of PHP 5.4.  However, older installations 
