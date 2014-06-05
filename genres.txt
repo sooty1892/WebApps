@@ -1,0 +1,237 @@
+alternative:
+alternative rock
+college rock
+experimental rock
+goth rock
+grunge
+hardcore punk
+hard rock
+indie rock
+new wave
+progressive rock
+punk
+shoegaze
+steampunk
+
+anime
+
+blues:
+acoustic blues
+chicago blues
+contemporary blues
+country blues
+delta blues
+electric blues
+
+children's music:
+lullabies
+sing-along
+stories
+
+classical:
+avant-garde
+baroque
+chamber music
+chant
+choral
+classical crossover
+early music
+high classical
+impressionist
+medieval
+minimalism
+modern composition
+opera
+orchestral
+renaissance
+romantic
+wedding music
+
+country:
+alternative country
+americana
+bluegrass
+contemporary bluegrass
+contemporary country
+country gospel
+honky tonk
+outlaw country
+traditional bluegrass
+traditional country
+urban cowboy
+
+dance:
+breakbeat
+dubstep
+exercise
+garage
+hardcore
+hard dance
+Hi-NRG/eurodance
+house
+jackin house
+techno
+trance
+
+easy listening:
+bop
+lounge
+swing
+
+electronic:
+ambient
+crunk
+electro
+electronica
+elctronic rock
+idm/experimental
+industrial
+
+enka
+
+french pop
+
+german folk
+
+german pop
+
+fitness & workout
+
+hip-hop/rap:
+alternative rap
+bounce
+dirty south
+east coast rap
+gangsta rap
+hardcore rap
+hip-hop
+latin rap
+old school rap
+rap
+underground rap
+west coast rap
+
+indie pop
+
+industrial
+
+instrumental
+
+Jazz:
+acid jazz
+avant-garde jazz
+big band
+blue note
+contemporary jazz
+cool
+crossover jazz
+dixieland
+ethio-jazz
+fusion
+hard bop
+latin jazz
+mainstram jazz
+ragtime
+smooth jazz
+trad jazz
+
+K-Pop
+
+karaoke
+
+latino
+
+new age
+
+opera
+
+pop:
+adult contemporary
+britpop
+pop/rock
+soft rock
+teen pop
+
+R&B/Soul:
+contemporary R&B
+disco
+doo wop
+funk
+motown
+neo-soul
+quiet storm
+soul
+
+reggae:
+dancehall
+dub
+roots reggae
+ska
+
+rock:
+adult alternative
+american trad rock
+arena rock
+blues rock
+british invasion
+death metal/black metal
+glam rock
+hair metal
+hard rock
+metal
+jam bands
+prog-rock/art rock
+psychedelic
+rock & roll
+rockabilly
+roots rock
+southern rock
+surf
+tex-mex
+
+soundtrack:
+foreign cinema
+musicals
+original score
+soundtrack
+TV soundtrack
+
+spoken word
+
+vocal:
+barbershop
+doo-wop
+standards
+traditional pop
+vocal jazz
+vaocal pop
+
+world:
+africa
+afro-beat
+afro-pop
+asia
+australia
+bossa nova
+cajun
+caribbean
+celtic
+celtic folk
+contemporary celtic
+drinking songs
+drone
+europe
+france
+hawaii
+indian pop
+japan
+japanese pop
+klezmer
+middle east
+north america
+polka
+south africa
+south america
+traditional celtic
+worldbeat
+zydeco
