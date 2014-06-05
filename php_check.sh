@@ -1,5 +1,5 @@
 #!/bin/bash
-for f in *.php
+for f in $(find . -name '*.php')
 do
 	php -l $f
 done
