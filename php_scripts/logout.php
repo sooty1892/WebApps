@@ -7,6 +7,6 @@
 	//unset cookie
 	setcookie("user", "", $expireNow);
 
-	header("Location: index.php"); 
+	header("Location: ../index.php"); 
     exit();
 ?>

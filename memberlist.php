@@ -1,5 +1,5 @@
 <?php
-	include 'common.php';
+	include 'php_scripts/common.php';
 
 	if(!loggedin()) {
 		header("Location: log_in.php");

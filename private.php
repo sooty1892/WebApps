@@ -1,5 +1,5 @@
 <?php
-    include 'common.php';
+    include 'php_scripts/common.php';
 
     $logged_in_user = "";
 
