@@ -29,7 +29,13 @@
     //  die("Error in connection: " . pg_last_error());
     // }
 
-    $con = pg_connect("host=ec2-54-225-103-9.compute-1.amazonaws.com port=5432 dbname=d8lv9hi070ru8r user=hauutfyawsyzpo password=hmxc6ZyFmCAN3tffETT2eBuoz_");
+    // $con = pg_connect("host=ec2-54-225-103-9.compute-1.amazonaws.com port=5432 dbname=d8lv9hi070ru8r user=hauutfyawsyzpo password=hmxc6ZyFmCAN3tffETT2eBuoz_");
+    // // Check connection
+    // if (!$con) {
+    //     die("Error in connection: " . pg_last_error());
+    // }
+
+    $con = pg_connect("host=localhost port=5432 dbname=d8lv9hi070ru8r user=postgres password=postgres");
     // Check connection
     if (!$con) {
         die("Error in connection: " . pg_last_error());
