@@ -35,7 +35,7 @@
     //     die("Error in connection: " . pg_last_error());
     // }
 
-    $con = pg_connect("host=localhost port=5432 dbname=d8lv9hi070ru8r user=postgres password=postgres");
+    $con = pg_connect("host=localhost port=5432 dbname=postgres user=postgres");
     // Check connection
     if (!$con) {
         die("Error in connection: " . pg_last_error());
