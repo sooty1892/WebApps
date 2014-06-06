@@ -5,7 +5,7 @@
 
 \setlength{\droptitle}{-10em}
 
-\title{WebApps Project - Music Collaboration}
+\title{WebApps Project - Music Collaboration (change name?)}
 \author{Ashley Hemingway, Charchris Sloan, \\ David Liskevich, Edwin Kamulegeya \\ Group 9 (g1327109)}
 \date{\today}
 
@@ -17,19 +17,25 @@
 Mention current options no adequate enough
 \subsection{Requirements}
 \subsection{Targets}
-
 \section{Project Management}
 \subsection{Group Structure}
 Mention someone bringing front end and back end together
 \subsection{Implementation Languages}
 \subsubsection{HTML/CSS}
+HTML and CSS were an obvious choice. Their popularity is down to the fact that they are the best basis to design a website on. HTML is offers all of the functionality required, and combined with CSS to easily to change the look of the website, it is there perfect choice. HTML also neatly interacts with JavaScript/jQuery and PHP which is a massive advantage. Furthermore, the newly updated HTML5 offers even more functionally like ’drag and drop’ and embedded audio which are both requirements of the web app. DEVELOP FURTHER
 \subsubsection{Bootstrap}
+Bootstrap was chosen because it basically allows us to development a great looking website from scratch. As a group we were wary of using a website template as it wouldn’t give us the best learning experience, so we decided to use the Bootstrap components when required. This allows us to keep a constant design throughout the whole of the website while making the trivial component coding not necessary, meaning we can focus more on the user experience and functionality.
 \subsubsection{JavaScript/jQuery}
-\subsubsection{PHP}
+JavaScript enables us to add better usability to the website while also keeping things simple. It is widely supported and offers a vast array of frameworks to help us, most noticeably jQuery. It will become very useful when implementing such features like form validation and easing effects to provide the website with an enhanced user experience. Furthermore, JavaScript is a requirement when using Ajax, which we will discuss later.
+\subsubsection{PHP}Although there are many options to code the back-end in like Node, Django, Ruby, Python and Java we decided to choose PHP. The main reason behind this was that PHP is widely used and it is therefore very stable, with many tutorials and supporting libraries. Since none of us have any experience with developing the back-end of a web app, we decided that this would give us the best learning experience. It also offers and easy to use interaction with the Postgresql database and means we can push and pull from the database when required via the use of Ajax. It also had great functionality when it came to data encryption and JSON (JavaScript Object Notation) which benefitted us when transferring data between the server and client.
 \subsubsection{Ajax}
+Ajax became an important part of the app as it allowed us to pull and store data from the database, without the need for a page refresh. As a major part of our app is to do with user experience this became very useful. Since we were implementing our app in JavaScript/jQuery, using Ajax was an obvious choice as the major functionality is already included in those frameworks, while the server side data handling was relatively easy as well. Ajax became useful for features like the user chat and the constant updating of the top featured music. There aren’t many alternatives to Ajax available, and since our app doesn’t require an immediate update (i.e. it can wait 0.5 seconds to get the latest data) it is the best technology at our disposal.
 \subsection{Design Processes}
 \subsection{Back-up Systems}
-Github over gitlab?
+Due to the fact that we are using the provided Virtual Machine to run our server and Postgresql database on, backing up the data is imperative as the VM isn't backed up automatically. In order to back up the web page data/scripts (e.g. PHP scripts, css, html, JavaScript), we have been using GitHub. This was a great platform to use, as it allowed is to back-up our work, roll back to a previous stage of the design process and to easily share our work throughout the whole group on different devices. The choice to use GitHub over GitLab didn't really cross our mind as they both provide the functionality of git, while been both easily accessible. \\
+\newline
+As we were using a large database storing multiple values for all aspects of the app, it was also important that the database didn't become corrupt or lost. In order to stop this from happening, we implemented an auto-backup feature on the VM so the database would be automatically backup every day, allowing us to restore to previous points when required. This became very useful when playing around with data inserts, as on occasions this didn't work as expected.
+
 \section{Actual App}
 \subsection{Program Description}
 \subsection{Implementation}
