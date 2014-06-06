@@ -26,6 +26,6 @@
 
 $(document).ready(function() {
 
-     $(".edit_area").editable('../php_scripts/editinplace.php');
+     $(".edit_area").editable('php_scripts/editinplace.php');
 
  });

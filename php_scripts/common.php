@@ -1,5 +1,5 @@
 <?php
-	session_start()
+	session_start();
 
 	//used to destroy cookie
 	$expireNow = time()-(60*60*24*365);
