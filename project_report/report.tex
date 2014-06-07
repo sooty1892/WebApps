@@ -13,13 +13,20 @@
 \maketitle
 
 \section{Introduction}
-\subsection{Problem To Solve}
+\subsection{Overview}
+Problem To Solve
 Mention current options no adequate enough
 \subsection{Requirements}
 \subsection{Targets}
 \section{Project Management}
 \subsection{Group Structure}
-Mention someone bringing front end and back end together
+Obviously, it would have been ideal for every member of the group to sample every part of the development stage, whether that was the back-end or front-end implementation. In practice, we decided to split the group up into the front-end and back-end sections, mainly because none of us had experience in this type of development, so we would have to learn everything from the start. Splitting the group up meant we could focus on one section and become an expert in this section, allowing for a better end product.\\The back-end was mainly handled by Ashley Hemingway, who will be designing the database structure and writing the database interaction code in PHP and handling the constant data pulling with Ajax and JavaScript.\\
+The front-end was handled by the other group members (Charchris Sloan, David Liskevich \& Edwin Kamulegeya). Their main job was to design the user interface and carry out the implementation, using multiple languages like HTML, CSS and JavaScript/jQuery.\\
+The group was split up like this, as we decided that the web app design and user interaction should be the main feature, allowing the web app to be easy and intuitive to use. This meant that 3 people focussed on this area. The main problem with this decision was the obvious disparity between the front-end and back-end development, meaning that we somehow had to bring these differences back together for the final product. This was done via constant interaction between the group members, meaning that the front-end and back-end was could be constantly be linked together during the development stage once certain sections were completed. For example, once the homepage design had been implemented by Edwin, David and Charchris, this allowed the homepage to be passed to Ashley in order to complete the form validation and the interaction with the database.
+
+Ashley will be partly supported by Charchris Sloan, who will be predominately designing the user interface, but will also help with the back-end when required. The front-end will be developed by David Liskevich, Edwin Kamulegeya and helped by Charchris. Their main job will be to design the webpages and implement them, using multiple languages like HTML, CSS and JavaScript/jQuery.
+
+Mention someone bringing front end and end together
 \subsection{Implementation Languages}
 \subsubsection{HTML/CSS}
 HTML and CSS were an obvious choice. Their popularity is down to the fact that they are the best basis to design a website on. HTML is offers all of the functionality required, and combined with CSS to easily to change the look of the website, it is there perfect choice. HTML also neatly interacts with JavaScript/jQuery and PHP which is a massive advantage. Furthermore, the newly updated HTML5 offers even more functionally like ’drag and drop’ and embedded audio which are both requirements of the web app. DEVELOP FURTHER
@@ -32,9 +39,9 @@ JavaScript enables us to add better usability to the website while also keeping 
 Ajax became an important part of the app as it allowed us to pull and store data from the database, without the need for a page refresh. As a major part of our app is to do with user experience this became very useful. Since we were implementing our app in JavaScript/jQuery, using Ajax was an obvious choice as the major functionality is already included in those frameworks, while the server side data handling was relatively easy as well. Ajax became useful for features like the user chat and the constant updating of the top featured music. There aren’t many alternatives to Ajax available, and since our app doesn’t require an immediate update (i.e. it can wait 0.5 seconds to get the latest data) it is the best technology at our disposal.
 \subsection{Design Processes}
 \subsection{Back-up Systems}
-Due to the fact that we are using the provided Virtual Machine to run our server and Postgresql database on, backing up the data is imperative as the VM isn't backed up automatically. In order to back up the web page data/scripts (e.g. PHP scripts, css, html, JavaScript), we have been using GitHub. This was a great platform to use, as it allowed is to back-up our work, roll back to a previous stage of the design process and to easily share our work throughout the whole group on different devices. The choice to use GitHub over GitLab didn't really cross our mind as they both provide the functionality of git, while been both easily accessible. \\
+Due to the fact that we are using the provided Virtual Machine to run our server and Postgresql database on, backing up the data is imperative as the VM isn't backed up automatically. In order to back-up the web page data/scripts (e.g. PHP scripts, css, html, JavaScript), we have been using GitHub. This was a great platform to use, as it allowed is to back-up our work, roll back to a previous stage of the design process and to easily share our work throughout the whole group on different devices. The choice to use GitHub over GitLab didn't really cross our mind as they both provide the functionality of git, while been both easily accessible. \\
 \newline
-As we were using a large database storing multiple values for all aspects of the app, it was also important that the database didn't become corrupt or lost. In order to stop this from happening, we implemented an auto-backup feature on the VM so the database would be automatically backup every day, allowing us to restore to previous points when required. This became very useful when playing around with data inserts, as on occasions this didn't work as expected.
+As we were using a large database storing multiple values for all aspects of the app, it was also important that the database didn't become corrupt or lost. In order to stop this from happening, we implemented an auto-back-up feature on the VM so the database would be automatically back-up every day, allowing us to restore to previous points when required. This became very useful when playing around with data inserts, as on occasions this didn't work as expected.
 
 \section{Actual App}
 \subsection{Program Description}
