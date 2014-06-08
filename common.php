@@ -1,5 +1,5 @@
 <?php
-	session_start()
+	session_start();
 
 	//used to destroy cookie
 	$expireNow = time()-(60*60*24*365);
@@ -11,6 +11,12 @@
     if (!$con) {
         die("Error in connection: " . pg_last_error());
     }
+
+    // $con = pg_connect("host=localhost port=5432 dbname=ashleyhemingway user=ashleyhemingway");
+    // // Check connection
+    // if (!$con) {
+    //     die("Error in connection: " . pg_last_error());
+    // }
 
 	// This block of code is used to undo magic quotes.  Magic quotes are a terrible 
     // feature that was removed from PHP as of PHP 5.4.  However, older installations 

@@ -114,7 +114,7 @@ function valPassword(password) {
 function checkLogin(user, pass) { 
     var result = $.ajax({
         type: 'POST',
-        url: "../php_scripts/check_login.php",
+        url: "check_login.php",
         data: { username: user, password: pass},
         success: function(response) {
             return response;
@@ -127,7 +127,7 @@ function checkLogin(user, pass) {
 function checkEmailExist(email) {
     var result = $.ajax({
         type: 'POST',
-        url: "../php_scripts/check_email.php",
+        url: "check_email.php",
         data: { email: email},
         success: function(response) {
             return response;
@@ -140,7 +140,7 @@ function checkEmailExist(email) {
 function checkUsernameExist(username) {
    var result = $.ajax({
         type: 'POST',
-        url: "../php_scripts/check_username.php",
+        url: "check_username.php",
         data: { username: username},
         success: function(response) {
             return response;

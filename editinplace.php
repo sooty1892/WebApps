@@ -13,7 +13,7 @@
 	$desc = $_POST['value'];
 	$id = $_POST['id'];
 
-	 $query = "UPDATE projects SET description = '{$desc}' WHERE id = '{$id}'" ;
+	 $query = "UPDATE projects SET description = '{$desc}' WHERE idproject = '{$id}'" ;
 
 	 pg_query($con, $query);
 

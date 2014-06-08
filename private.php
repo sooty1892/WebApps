@@ -1,5 +1,5 @@
 <?php
-    include 'php_scripts/common.php';
+    include 'common.php';
 
     $logged_in_user = "";
 
@@ -97,7 +97,7 @@
             </form>  
          <ul class="nav navbar-nav navbar-right">
                 <li><a href="#">Settings</a></li>
-                <li><a href="php_scripts/logout.php">Logout</a></li>
+                <li><a href="logout.php">Logout</a></li>
             </ul>
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
