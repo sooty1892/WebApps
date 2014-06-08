@@ -26,8 +26,8 @@
 
 $(document).ready(function() {
 
-      $(".edit_area").editable('php_scripts/editinplace.php');
-    // $('.edit_area').editable('php_scripts/editinplace.php', { 
+      $(".edit_area").editable('editinplace.php');
+    // $('.edit_area').editable('editinplace.php', { 
       //   type      : 'textarea',
       //   indicator : '<img src="img/indicator.gif">',
       //   tooltip   : 'Click to edit...',
