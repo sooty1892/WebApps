@@ -8,11 +8,13 @@
 }
 
 .profilesection-details {
-    position: absolute;
-    height: auto;
-    width: auto;
-    left: 220px;
-    top: 0px
+    float: right;
+    margin-top: -200px;
+    margin-right: 100px;
+}
+
+.progress {
+    margin-bottom: -10px
 }
 
 .profilewrap {
@@ -34,8 +36,7 @@
 }
 
 .editpos {
-    position: relative;
-    top: 20px
+    margin-top : 25px
 }
 
 .editpos-changes {
@@ -57,7 +58,7 @@ ul {
 }
 
 li {
-    display:inline
+    display: inline
 }
 
 .close {

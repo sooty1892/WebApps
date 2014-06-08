@@ -3,7 +3,7 @@ function valLoginForm() {
     var pass = document.getElementById("password").value;
 
     if (user == '' || pass == '') {
-        $("#login-error").slideDown("slow"); 
+        $("#login-error").slideDown("slow");
         return false;
     } else if (checkLogin(user, pass) != 1) {
         $("#login-error").slideDown("slow");
@@ -13,6 +13,13 @@ function valLoginForm() {
         return true;
     }
 };
+
+function pulseMessage() {
+    for(var i = 0; i < 2 ; ++i){
+        $("#login-error").fadeOut(200);
+        $("#login-error").fadeIn(200);
+    }
+}
 
 function valSubmitForm() {
     var password = document.getElementById("user-password").value;

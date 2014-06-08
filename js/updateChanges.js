@@ -1,4 +1,3 @@
-//var currentSongPlaying = null;
 var currentActiveButton = null;
 
 $(document).ready(function() {
@@ -10,21 +9,28 @@ $(document).ready(function() {
 })
 
 function editModeUser() {
-    $("#btnEdit").slideToggle(400, function() { 
-        $("#btnsChanges").slideToggle(400);
+    $("#btnEdit").fadeToggle(400, function() { 
+        $("#btnsChanges").fadeToggle(400);
     });
+    document.getElementById("userRealName").disabled = false;
 } 
 
 function cancelUser() {
-    $("#btnsChanges").slideToggle(400, function() { 
-        $("#btnEdit").slideToggle(400);
+    $("#btnsChanges").fadeToggle(400, function() { 
+        $("#btnEdit").fadeToggle(400);
     });
+    $("#files").empty();
+    $("#progress .progress-bar").css("width","0%");
+    document.getElementById("userRealName").disabled = true;
 }
 
 function saveChangesUser() {
-    $("#btnsChanges").slideToggle(400, function() { 
-        $("#btnEdit").slideToggle(400);
+    $("#btnsChanges").fadeToggle(400, function() { 
+        $("#btnEdit").fadeToggle(400);
     });
+    $("#files").empty();
+    $("#progress .progress-bar").css("width","0%");
+    document.getElementById("userRealName").disabled = true;
 }
 
 function editAboutMe() {
@@ -50,6 +56,7 @@ function editSkills() {
         btnSkills[i].disabled = true;
         btnSpans[i].style.display = "block";
     }
+    
     $("#btnEditSkills").fadeOut(300, function() { 
         $("#btnsSkillEdits").fadeIn(300);
     });
@@ -81,7 +88,7 @@ function addSkills() {
 
 var buttonFade = function () {
     $(this).parent().fadeOut(400, function() {
-            $(this).remove();
+            $(this).parent().remove();
     });
 } 
 
@@ -92,28 +99,54 @@ function cancelAboutMe() {
     document.getElementById("aboutArea").disabled = true;
 }
 
-function activateSong(){
+function activateSong() {
     var btn = $(event.target);
-    var img = btn.children("img");
     
     if (currentActiveButton == null) {
-        alert("no current");
         currentActiveButton = btn;
-        img[0].style.display = "inline";
+        btn.children("img")[0].style.display = "inline";
         btn.toggleClass("active");
     } else {
-        var activeImg = currentActiveButton.children("img");
-        activeImg[0].style.display = "none";
+        currentActiveButton.children("img")[0].style.display = "none";
         currentActiveButton.toggleClass("active");
-    
-        if (btn.isEqualNode(currentActiveButton)) {
-            alert("same!");
+        
+        if (currentActiveButton[0] == btn[0]) {
             currentActiveButton = null;
         } else {
-            btn.toggleClass("active");
-            img[0].style.display = "inline";
             currentActiveButton = btn;
+            btn.children("img")[0].style.display = "inline";
+            btn.toggleClass("active");
         }
     }
+}
+
+function removeSongs() {
+    var btnSongs = $("#songs-list button");
+    var btnSpans = $("#songs-list span");
     
+    if(currentActiveButton != null) {
+        currentActiveButton.children("img")[0].style.display = "none";
+        currentActiveButton.toggleClass("active");
+        currentActiveButton = null;
+    }
+    
+    for(var i = 0; i < btnSongs.length ; ++i) {
+        btnSongs[i].disabled = true;
+        btnSpans[i].style.display = "block";
+    }
+    $("#btnRemoveSong").fadeOut(400, function() {
+        $("#btnSaveSong").fadeIn(400);
+    });
+}
+
+function saveSongs() {
+    var btnSongs = $("#songs-list button");
+    var btnSpans = $("#songs-list span");
+    for(var i = 0; i < btnSongs.length ; ++i) {
+        btnSongs[i].disabled = false;
+        btnSpans[i].style.display = "none";
+    }
+    $("#btnSaveSong").fadeOut(400, function() {
+        $("#btnRemoveSong").fadeIn(400);
+    });
 }
