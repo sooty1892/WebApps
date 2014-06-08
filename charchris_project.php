@@ -91,7 +91,7 @@
           <!-- update to actual name soon -->
           <P> Project Name:  </p>
              <p class ="project-desc"> Project Description:- </p> 
-              <div class="edit_area" id="1"> description goes here </div>
+              <div class="edit_area" id="1"> desc here  </div>
 
           <table class="description">
             <tr class="image-holder">
