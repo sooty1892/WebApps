@@ -24,13 +24,19 @@ function cancelUser() {
     document.getElementById("userRealName").disabled = true;
 }
 
-function saveChangesUser() {
+function saveChangesUser(username) {
     $("#btnsChanges").fadeToggle(400, function() { 
         $("#btnEdit").fadeToggle(400);
     });
-    $("#files").empty();
-    $("#progress .progress-bar").css("width","0%");
+    // $("#files").empty();
+    // $("#progress .progress-bar").css("width","0%");
     document.getElementById("userRealName").disabled = true;
+    $.ajax({
+        type: 'POST',
+        url: "scripts/save_name.php",
+        data: { username: username,
+                name: document.getElementById("userRealName").value},
+    });
 }
 
 function editAboutMe() {
@@ -47,7 +53,7 @@ function saveAboutMe(username) {
     document.getElementById("aboutArea").disabled = true;
     $.ajax({
         type: 'POST',
-        url: "save_about.php",
+        url: "scripts/save_about.php",
         data: { username: username,
                 about: document.getElementById("aboutArea").value},
     });
