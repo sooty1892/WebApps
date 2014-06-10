@@ -45,6 +45,10 @@
       });
     </script>
 
+    <!-- For photo upload -->
+    <link href="css/uploadfile.css" rel="stylesheet">
+    <script src="js/jquery.uploadfile.min.js"></script>
+
     <!-- For autocomplete -->
     <link href="http://code.jquery.com/ui/1.10.4/themes/excite-bike/jquery-ui.css" rel="stylesheet">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -69,12 +73,6 @@
             height: 150px;
           }
     </style>
-
-  
-
-  <link href="uploadfile.css" rel="stylesheet">
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="jquery.uploadfile.min.js"></script>
   
   </head>
   <body>
@@ -87,7 +85,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Username</a>
+          <a class="navbar-brand" href="#">musicMan</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
@@ -111,7 +109,9 @@
       <!--/.nav-collapse -->
     </div>
     <!--/.container-fluid -->
+
     <div class="container" style = "margin-top: 50px">
+
       <div class="profilesection">
         <img id="profile_pic" class="img-circle" style = "margin-left: 10px; margin-top: 10px ; margin-bottom: 10px; height: 200px; width: 200px; " src="http://placehold.it/200x200">
         <img src="web_icons/user.png" style="float: right">
@@ -126,49 +126,43 @@
             <button type="submit" class="btn-success" onclick="saveChangesUser()">Save Changes</button>
  
 
-              <div id="mulitplefileuploader">New Photo</div>
+            <div id="mulitplefileuploader">New Photo</div>
 
             <div id="status"></div>
-              <script>
-              $(document).ready(function()
-              {
-              var settings = {
-                  url: "upload.php",
-                  dragDrop:true,
-                  fileName: "myfile",
-                  allowedTypes:"jpg,png,gif,doc,pdf,zip", 
-                  returnType:"json",
-                 onSuccess:function(files,data,xhr)
-                  {
-                     alert((data));
-                     $("#profile_pic").attr("src", 'uploads/Me.jpg');
-                  },
-                  showDelete:true,
-                  deleteCallback: function(data,pd)
-                {
-                  for(var i=0;i<data.length;i++)
-                  {
-                      $.post("delete.php",{op:"delete",name:data[i]},
-                      function(resp, textStatus, jqXHR)
-                      {
-                          //Show Message  
-                          $("#status").append("<div>File Deleted</div>");      
-                      });
-                   }      
-                  pd.statusbar.hide(); //You choice to hide/not.
 
-              }
+            <script>
+              $(document).ready(function() {
+              var settings = {
+                url: "upload.php",
+                dragDrop:true,
+                fileName: "myfile",
+                allowedTypes:"jpg,png,gif,doc,pdf,zip", 
+                returnType:"json",
+                onSuccess:function(files,data,xhr) {
+                  alert((data));
+                  $("#profile_pic").attr("src", 'uploads/Me.jpg'); },
+                showDelete:true,
+                deleteCallback: function(data,pd) {
+                  for(var i=0;i<data.length;i++) {
+                    $.post("delete.php",{op:"delete",name:data[i]},
+                    function(resp, textStatus, jqXHR) {
+                      //Show Message  
+                      $("#status").append("<div>File Deleted</div>");      
+                    });
+                  }      
+                  pd.statusbar.hide(); //You choice to hide/not.
+                }
               }
               var uploadObj = $("#mulitplefileuploader").uploadFile(settings);
-
-
               });
-              </script>
+            </script>
               
           </div>
         </div>
       </div>
+
       <br>
+
       <div class="profilesection">
         <img src="web_icons/about.png" style = "float:right">
         <h1 style = "margin-left: 25px; margin-top: 35px">All about me</h1>
@@ -186,7 +180,9 @@
           <button onclick="saveAboutMe('<?php echo $user['username']; ?>')" type="submit" class="btn-success">Save Changes</button>
         </div>
       </div>
+
       <br>
+
       <div class="profilesection">
         <h1 style = "margin-left: 25px">Skills &#38; Talents</h1>
         <ul id="skill-list" style = "padding-bottom: 10px">
@@ -201,7 +197,9 @@
           <button type="button" class="btn-success" onclick="cancelSkills()">Save Changes</button>
         </div>
       </div>
+
       <br>
+
       <div class="profilesection">
         <img src="web_icons/sounds.png" style = "float:right">
         <h1 style = "margin-left: 25px">My Sounds</h1>
@@ -215,8 +213,7 @@
             </li>
           </ul>
         </div>
-        <div id="audioPlayer">
-        </div>
+        <div id="audioPlayer"></div>
         <audio controls style = "margin-left: 25px; width: 500px; display: none">
           Your browser does not support the audio element.
         </audio>
@@ -226,7 +223,9 @@
           <button id="btnSaveSong" type="button" class="btn-success" onclick="saveSongs()" style = "display:none">Save Changes</button>
         </div>
       </div>
+
       <br>
+
       <div class = "profilesection">
         <img src="web_icons/portfolio.png" style = "float:right">
         <h1 style = "margin-left: 25px">Portfolio</h1>
