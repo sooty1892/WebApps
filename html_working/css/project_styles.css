@@ -114,7 +114,40 @@ opacity: 0.5;
   margin-right: 0px;
   border-radius: 10px;
 }
+.play {
+    width: 0px;
+    height: 0px;
+   left:28px;
+   top:20px;
+    margin-right: 100%;
 
+    overflow: hidden;
+   background-color: transparent;
+    position: absolute;
+    border-top: 20px solid transparent;
+    border-bottom: 20px solid transparent;
+    border-left: 32px solid #4e5d6c;
+    border-right-color: transparent;}
+
+
+.pause {
+    width: 8px;
+    height: 50px;
+   border-radius: 50px;
+   position: relative;   
+   top:18px; 
+   left:25px; 
+    
+   
+   background-color: #4e5d6c;
+    ;}
+    
+.mediaButton{
+  background-color:#2b3e50;border-style:solid;border-color:#4e5d6c;border-radius:100px;position:absolute;top:28px;left:8px;width:85px;height:85px;
+}
+.mediaButton:hover{border-color: white}
+.mediaButton:hover .play{border-left-color: white}
+.mediaButton:hover .pause{background-color: white}
 
 /*
 #projectHead{
