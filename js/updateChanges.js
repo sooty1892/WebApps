@@ -40,11 +40,17 @@ function editAboutMe() {
     document.getElementById("aboutArea").disabled = false;
 }
 
-function saveAboutMe() {
+function saveAboutMe(username) {
     $("#aboutChanges").fadeOut(300, function() { 
         $("#btnEditAbout").fadeIn(300);
     });
     document.getElementById("aboutArea").disabled = true;
+    $.ajax({
+        type: 'POST',
+        url: "save_about.php",
+        data: { username: username,
+                about: document.getElementById("aboutArea").value},
+    });
 }
 
 function editSkills() {

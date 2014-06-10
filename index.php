@@ -1,9 +1,9 @@
 <?php
-  include 'common.php';
-  include 'libraries/passwordLib.php';
+  include 'scripts/common.php';
+  include 'scripts/passwordLib.php';
 
   if (loggedin()) {
-    header("Location: private.php");
+    header("Location: profile_page.php");
     exit();
   }
 
@@ -38,7 +38,7 @@
       //   $_SESSION['user'] = $un;
       // }
       setcookie("user", $un, $expire);
-      header("Location: private.php");
+      header("Location: profile_page.php");
       exit();
     } else {
       //die($un . " " . $pw);
@@ -102,7 +102,7 @@
       //   $_SESSION['user'] = $un;
       // }
       setcookie("user", $un, $expire);
-      header("Location: private.php");
+      header("Location: profile_page.php");
       exit();
     }
   }
