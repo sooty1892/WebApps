@@ -113,17 +113,24 @@
     <div class="container" style = "margin-top: 50px">
 
       <div class="profilesection">
-        <img id="profile_pic" class="img-circle" style = "margin-left: 10px; margin-top: 10px ; margin-bottom: 10px; height: 200px; width: 200px; " src="http://placehold.it/200x200">
+        <?php
+          if (empty($user['path'])) {
+            echo "<img id=\"profile_pic\" class=\"img-circle\" style=\"margin-left: 10px; margin-top: 10px ; margin-bottom: 10px; height: 200px; width: 200px; \" src=\"http://placehold.it/200x200\">";
+          } else {
+            echo "<img id=\"profile_pic\" class=\"img-circle\" style=\"margin-left: 10px; margin-top: 10px ; margin-bottom: 10px; height: 200px; width: 200px; \" src=\"" . substr($user['path'],3) . "\">";
+          }
+        ?>
         <img src="web_icons/user.png" style="float: right">
         <div class="profilesection-details">
-          <h3 class = "profilewrap" style="font-weight: bold"><?php echo $user['username']; ?></h3>
-          <input disabled id ="userRealName" type="text" class ="profileEntry" style="width: 330px" placeholder="Real Name">
+          <h3 class="profilewrap" style="font-weight: bold"><?php echo $user['username']; ?></h3>
+          <h4 class="profilewrap" style="font-weight: bold"><?php echo $user['email']; ?></h3>
+          <input disabled id="userRealName" type="text" class ="profileEntry" style="width: 330px" placeholder="Real Name" value="<?php echo $user['name']; ?>">
           <br>
           <button id="btnEdit" type="button" class="btn-info editpos" onclick="editModeUser()">Edit Info</button>
           <div id="btnsChanges" class="editpos" style="display: none">
             
             <button type ="button" class="btn-default" onclick="cancelUser()">Cancel</button>
-            <button type="submit" class="btn-success" onclick="saveChangesUser()">Save Changes</button>
+            <button type="submit" class="btn-success" onclick="saveChangesUser('<?php echo $user['username']; ?>')">Save Changes</button>
  
 
             <div id="mulitplefileuploader">New Photo</div>
@@ -133,25 +140,30 @@
             <script>
               $(document).ready(function() {
               var settings = {
-                url: "upload.php",
+                url: "scripts/upload_profile_pic.php",
+                formData: {"username": "<?php echo $user['username']; ?>"},
                 dragDrop:true,
                 fileName: "myfile",
-                allowedTypes:"jpg,png,gif,doc,pdf,zip", 
+                allowedTypes:"jpg,png,jpeg", 
                 returnType:"json",
                 onSuccess:function(files,data,xhr) {
-                  alert((data));
-                  $("#profile_pic").attr("src", 'uploads/Me.jpg'); },
-                showDelete:true,
-                deleteCallback: function(data,pd) {
-                  for(var i=0;i<data.length;i++) {
-                    $.post("delete.php",{op:"delete",name:data[i]},
-                    function(resp, textStatus, jqXHR) {
-                      //Show Message  
-                      $("#status").append("<div>File Deleted</div>");      
-                    });
-                  }      
-                  pd.statusbar.hide(); //You choice to hide/not.
-                }
+                  //alert((data));
+                  $("#profile_pic").attr("src", data); },
+                showDelete:false,
+                multiple:false,
+                showAbort:false,
+                showDone:false,
+                showProgress:true
+                // deleteCallback: function(data,pd) {
+                //   for(var i=0;i<data.length;i++) {
+                //     $.post("delete.php",{op:"delete",name:data[i]},
+                //     function(resp, textStatus, jqXHR) {
+                //       //Show Message  
+                //       $("#status").append("<div>File Deleted</div>");      
+                //     });
+                //   }      
+                //   pd.statusbar.hide(); //You choice to hide/not.
+                // }
               }
               var uploadObj = $("#mulitplefileuploader").uploadFile(settings);
               });
@@ -165,7 +177,7 @@
 
       <div class="profilesection">
         <img src="web_icons/about.png" style = "float:right">
-        <h1 style = "margin-left: 25px; margin-top: 35px">All about me</h1>
+        <h1 style = "margin-left: 25px; margin-top: 35px">About Me</h1>
         <?php
             if (empty($user['about'])) {
               echo "<textarea id = \"aboutArea\" class=\"animated infoSection\" disabled>Please, tell us about yourself...</textarea>";
@@ -191,7 +203,7 @@
           <li><button type="button" class="btn-primary">Vocalist<span class="close">x</span></button></li>
           <li><button type="button" class="btn-primary">Piano<span class="close">x</span></button></li>
         </ul>
-        <button id ="btnEditSkills" type="button" class="btn-info" style = "margin-left: 25px; margin-bottom: 10px" onclick=editSkills()>Edit Skills</button>
+        <button id ="btnEditSkills" type="button" class="btn-info" style = "margin-left: 25px; margin-bottom: 10px" onclick="editSkills()">Edit Skills</button>
         <div id="btnsSkillEdits" style ="margin-left: 25px; padding-bottom: 10px; display: none">
           <input id = "skillField" type="text" placeholder="Add your talents..." style="width:300px"><button type="submit" class="btn-success" style="background-color: #3498db" onclick="addSkills()">Add</button>
           <button type="button" class="btn-success" onclick="cancelSkills()">Save Changes</button>
