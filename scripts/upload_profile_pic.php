@@ -1,7 +1,7 @@
 <?php
 include 'common.php';
 
-$output_dir = "../uploads/";
+$output_dir = "../uploads/profile_pics/";
 if(isset($_FILES["myfile"]) && isset($_POST["username"])) {
 	$ret = array();
 

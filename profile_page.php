@@ -140,11 +140,11 @@
             <script>
               $(document).ready(function() {
               var settings = {
-                url: "scripts/upload.php",
+                url: "scripts/upload_profile_pic.php",
                 formData: {"username": "<?php echo $user['username']; ?>"},
                 dragDrop:true,
                 fileName: "myfile",
-                allowedTypes:"jpg,png,gif,doc,pdf,zip", 
+                allowedTypes:"jpg,png,jpeg", 
                 returnType:"json",
                 onSuccess:function(files,data,xhr) {
                   //alert((data));
@@ -152,7 +152,8 @@
                 showDelete:false,
                 multiple:false,
                 showAbort:false,
-                showDone:false
+                showDone:false,
+                showProgress:true
                 // deleteCallback: function(data,pd) {
                 //   for(var i=0;i<data.length;i++) {
                 //     $.post("delete.php",{op:"delete",name:data[i]},
