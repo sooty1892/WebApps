@@ -45,10 +45,6 @@
       });
     </script>
 
-    <!-- For photo upload -->
-    <link href="css/uploadfile.css" rel="stylesheet">
-    <script src="js/jquery.uploadfile.min.js"></script>
-
     <!-- For autocomplete -->
     <link href="http://code.jquery.com/ui/1.10.4/themes/excite-bike/jquery-ui.css" rel="stylesheet">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
@@ -83,7 +79,7 @@
     <script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
     <script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
     <script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
     <script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
     <script src="js/jquery.iframe-transport.js"></script>
     <script src="js/jquery.fileupload.js"></script>
@@ -93,7 +89,6 @@
     <script src="js/jquery.fileupload-video.js"></script>
     <script src="js/jquery.fileupload-validate.js"></script>
     <script src="js/jquery.fileupload-ui.js"></script>
-    <script src="js/main.js"></script>
   
   </head>
   <body>
@@ -153,47 +148,53 @@
             <button type ="button" class="btn-default" onclick="cancelUser()">Cancel</button>
             <button type="submit" class="btn-success" onclick="saveChangesUser('<?php echo $user['username']; ?>')">Save Changes</button>
  
-
-            <div id="mulitplefileuploader">New Photo</div>
-
-            <div id="status"></div>
-
-            <script>
-              $(document).ready(function() {
-              var settings = {
-                url: "scripts/upload_profile_pic.php",
-                formData: {"username": "<?php echo $user['username']; ?>"},
-                dragDrop:true,
-                fileName: "myfile",
-                allowedTypes:"jpg,png,jpeg", 
-                returnType:"json",
-                onSuccess:function(files,data,xhr) {
-                  //alert((data));
-                  $("#profile_pic").attr("src", data); },
-                showDelete:false,
-                multiple:false,
-                showAbort:false,
-                showDone:false,
-                showProgress:true,
-                showStausAfterSuccess:false,
-                // deleteCallback: function(data,pd) {
-                //   for(var i=0;i<data.length;i++) {
-                //     $.post("delete.php",{op:"delete",name:data[i]},
-                //     function(resp, textStatus, jqXHR) {
-                //       //Show Message  
-                //       $("#status").append("<div>File Deleted</div>");      
-                //     });
-                //   }      
-                //   pd.statusbar.hide(); //You choice to hide/not.
-                // }
-              }
-              var uploadObj = $("#mulitplefileuploader").uploadFile(settings);
-              });
-            </script>
+            <span class="btn btn-success fileinput-button">
+                <i class="glyphicon glyphicon-plus"></i>
+                <span>Select files...</span>
+                <!-- The file input field used as target for the file upload widget -->
+                <input id="fileuploading" type="file" name="files[]" multiple>
+            </span>
+            <br>
+            <br>
+            <!-- The global progress bar -->
+            <div id="progress" class="progress">
+                <div class="progress-bar progress-bar-success"></div>
+            </div>
+            <!-- The container for the uploaded files -->
+            <div id="files" class="files"></div>
+            
               
           </div>
         </div>
       </div>
+
+
+      <script>
+        /*jslint unparam: true */
+        /*global window, $ */
+        $(function () {
+          'use strict';
+          // Change this to the location of your server-side upload handler:
+          $('#fileuploading').fileupload({
+            url: 'scripts/upload_profile_pic.php',
+            dataType: 'json',
+            done: function (e, data) {
+              // $.each(data.result.files, function (index, file) {
+              //   $('<p/>').text(file.name).appendTo('#files');
+              // });
+              alert(data);
+            },
+            progressall: function (e, data) {
+              var progress = parseInt(data.loaded / data.total * 100, 10);
+              $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+              );
+            }
+          }).prop('disabled', !$.support.fileInput)
+                .parent().addClass($.support.fileInput ? undefined : 'disabled');
+        });
+      </script>
 
       <br>
 
