@@ -5,7 +5,7 @@ $(document).ready(function() {
           $(this).parent().fadeOut(400, function() {
               $(this).parent().remove();
           });
-    });           
+    });
 })
 
 function editModeUser() {
@@ -91,8 +91,9 @@ function cancelSkills() {
 function addSkills() {
     var newSkill = $("#skillField").val();
     if (newSkill != "") {
-        $("#skill-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled>" 
-                               + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");
+        $("#skill-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
+                                + newSkill  + "\">" 
+                               + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");;
         $("#skillField").val("");
         $(document).on("click", ".close", buttonFade);
     }
