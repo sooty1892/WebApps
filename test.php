@@ -27,7 +27,7 @@
 <body>
 
   <!-- The file upload form used as target for the file upload widget -->
-        <form class="fileupload" action="scripts/upload_profile_pic.php" method="POST" enctype="multipart/form-data">
+        <form id="upload-1" class="fileupload" action="scripts/upload_profile_pic.php" method="POST" enctype="multipart/form-data">
           <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
           <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
@@ -75,7 +75,7 @@
 
 
         <!-- The file upload form used as target for the file upload widget -->
-        <form class="fileupload" action="scripts/upload_profile_song.php" method="POST" enctype="multipart/form-data">
+        <form id="upload-2" class="fileupload" action="scripts/upload_profile_song.php" method="POST" enctype="multipart/form-data">
           <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
           <div class="row fileupload-buttonbar">
             <div class="col-lg-7">
@@ -132,11 +132,19 @@
 
     // Initialize the jQuery File Upload widget:
     $('.fileupload').each(function () {
-        $(this).fileupload({
+        // if ($(this).is("#upload-1"))) {
+          $(this).fileupload({
             dropZone: $(this),
             formData: {username: 'admin'},
             dataType: 'json'
-        });
+          });
+        // } else {
+        //   $(this).fileupload({
+        //     dropZone: $(this),
+        //     formData: {username: 'billy'},
+        //     dataType: 'json'
+        //   });
+        // }
     });
 
     // if (window.location.hostname === 'blueimp.github.io') {

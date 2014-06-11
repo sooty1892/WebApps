@@ -1,6 +1,7 @@
 function addSkillsProject() {
     var newSkill = $("#inputSkill").val();
     if (newSkill != "") {
+        $("#hiddenValues").attr("value", ($("#hiddenValues").attr("value") + ',' + newSkill));
         $("#skill-list-p").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
                                 + newSkill  + "\">" 
                                + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");

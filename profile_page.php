@@ -18,6 +18,24 @@
     $query = "SELECT * FROM users WHERE username = '{$logged_in_user}'";
     $result = pg_query($con, $query);
     $user = pg_fetch_array($result);
+
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+      if (isset($_POST['projectName']) && isset($_POST['projectDescription']) && isset($_POST['projectPrivacy'])) {
+        $name = pg_escape_string(valInput($_POST['projectName']));
+        $desc = pg_escape_string(valInput($_POST['projectDescription']));
+
+        $test = $_POST['hiddenValues'];
+
+        if ($_POST['projectPrivacy'] != 'option1') {
+          $query = "INSERT INTO projects (name, description, private)
+                  VALUES ('$name', '$test', 'true')";
+        } else {
+          $query = "INSERT INTO projects (name, description, private)
+                  VALUES ('$name', '$test', 'false')";
+        }
+        pg_query($con, $query);
+      }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +48,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/profile_styles.css" rel="stylesheet">
     <link href="css/lightbox.css" rel="stylesheet">
+    <link href="css/list_style.css" rel="stylesheet">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -89,43 +108,128 @@
     <script src="js/jquery.fileupload-video.js"></script>
     <script src="js/jquery.fileupload-validate.js"></script>
     <script src="js/jquery.fileupload-ui.js"></script>
-  
+
+    <script src="js/create_project_add.js"></script>
+
   </head>
   <body>
-    <div id ="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#">musicMan</a>
+    <div id ="newProject" class="modal">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          <h4 class="modal-title">Make a new project</h4>
         </div>
-        <div class="navbar-collapse collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Profile</a></li>
-            <li><a href="#">Option 1</a></li>
-          </ul>
-          <form class="navbar-form navbar-left" style= "margin-left: 150px" role="search">
-            <div class="form-group">
-              <input type="text" class="form-control" style = "width: 300px;" placeholder="Search for people, projects and skills...">
-            </div>
-            <button type="submit" class="btn btn-success" style = "margin-left: -2px">
-            <span class="glyphicon glyphicon-search"></span>
-            </button>
+        <div class="modal-body">
+          <form class="form-horizontal" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+            <fieldset>
+              <legend>Enter project details and get creating</legend>
+              <div class="form-group">
+                <label for="inputProjectName" class="col-lg-2 control-label">Project Name</label>
+                <div class="col-lg-10">
+                  <input name="projectName" type="text" class="form-control" id="inputEmail" placeholder="Enter a project name">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="textArea" class="col-lg-2 control-label">Project Description</label>
+                <div class="col-lg-10">
+                  <textarea name="projectDescription" class="form-control" rows="3" id="textArea"></textarea>
+                  <span class="help-block">A description about your musical project</span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-2 control-label">Privacy level</label>
+                <div class="col-lg-10">
+                  <div class="radio">
+                    <label>
+                    <input type="radio" name="projectPrivacy" id="private" value="option1">
+                    Public
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                    <input type="radio" name="projectPrivacy" id="public" value="option2">
+                    Private
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="inputSkills" class="col-lg-2 control-label">Skills & Talents</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" id="inputSkill" placeholder="Add skills that you are looking for...">
+                  <ul id="skill-list-p" style = "padding: 10px; margin-left: -10px">
+                  </ul>
+                </div>
+                <button type="button" class="btn btn-info" onclick = "addSkillsProject()">Add</button>
+              </div>
+              <div class="form-group">
+                <label for="inputGenre" class="col-lg-2 control-label">Genre</label>
+                <div class="col-lg-8">
+                  <input type="text" class="form-control" id="inputGenre" placeholder="Add genres that the project is...">
+                  <ul id="genre-list" style = "padding: 10px; margin-left: -10px">
+                  </ul>
+                </div>
+                <input type="hidden" name="hiddenValues" id="hiddenValues" value="">
+                <button type="button" class="btn btn-info" onclick="addGenre()">Add</button>
+              </div>
+              <button type="submit" class="btn btn-success">Submit</button>
+            </fieldset>
           </form>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Settings</a></li>
-            <li><a href="logout.php">Logout</a></li>
-          </ul>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <!-- <button type="submit" class="btn btn-success">Submit</button> -->
         </div>
       </div>
-      <!--/.nav-collapse -->
     </div>
-    <!--/.container-fluid -->
+  </div>
 
+
+
+
+
+<div id ="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">MusicMan</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Profile</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" style= "margin-left: 150px" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" style = "width: 300px;" placeholder="Search for people, projects and skills...">
+        </div>
+        <button type="submit" class="btn btn-success" style = "margin-left: -2px">
+        <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onclick="showModal()">Create Project</a></li>
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user['username']; ?><b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Profile Page</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
+      </li>
+      </ul>
+    </div>
+  </div>
+  <!--/.nav-collapse -->
+</div>
+
+
+    <!--/.container-fluid -->
     <div class="container" style = "margin-top: 50px">
 
       <div class="profilesection">
