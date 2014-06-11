@@ -1,6 +1,7 @@
 <?php
 
 include 'common.php';
+global $con;
 
 error_reporting(E_ALL | E_STRICT);
 require('UploadHandler.php');
@@ -9,22 +10,13 @@ $custom_dir = "../uploads/profile_songs/";
 
 $options = array(
     'delete_type' => 'POST',
-    'db_host' => 'localhost',
-    'db_user' => 'ashleyhemingway',
-    'db_pass' => '',
-    'db_name' => 'ashleyhemingway',
-    'db_table' => 'usermusicfiles',
     'upload_dir' => $custom_dir
 );
 
 class CustomUploadHandler extends UploadHandler {
 
     protected function initialize() {
-    	$con = pg_connect("host=localhost port=5432 dbname=ashleyhemingway user=ashleyhemingway");
-	    // Check connection
-	    if (!$con) {
-	        die("Error in connection: " . pg_last_error());
-	    }
+        global $con;
         $this->con = $con;
         parent::initialize();
     }
