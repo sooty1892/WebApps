@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Music Collaborator</title>
 
-    <link href="skin/jplayer.blue.monday.css" rel="stylesheet">
+    <link href="css/player.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/project_styles.css" rel="stylesheet">
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script>  
@@ -15,9 +15,8 @@
     <script src="js/jquery.easing.1.3.js"></script>
     <script src="js/sliding.js"></script>
     <script type="text/javascript" src="jplayer/jquery.jplayer.min.js"></script>
-  
-  <script type="text/javascript" src="js/project.js">    
-</script> 
+    <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>  
+  <script type="text/javascript" src="js/project.js"></script> 
 
   </head>
 
@@ -26,7 +25,7 @@
   <body>
     <div class="container">
       <!-- Static navbar -->
-      <div class="navbar navbar-default" role="navigation">
+      <div id ="navbar" class="navbar navbar-default" role="navigation" style="width:1460px;position:fixed;left:0px">
         <div class="container-fluid">
           <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
@@ -35,20 +34,25 @@
               <span class="icon-bar"></span>
               <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Music Collaborator</a>
+            <a class="navbar-brand" href="#">Username</a>
           </div>
           <div class="navbar-collapse collapse">
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Home</a></li>
-              
+              <li class="active"><a href="#">Profile</a></li>
+              <li><a href="#">Option 1</a></li>
             </ul>
-
-            <!-- This is the right hand side list of the navbar -->
-            <ul class="nav navbar-nav navbar-right">
-
+            <form class="navbar-form navbar-left" style= "margin-left: 150px" role="search">
+                <div class="form-group">
+                    <input type="text" class="form-control" style = "width: 300px;" placeholder="Search for people, projects and skills...">
+                </div>
+                <button type="submit" class="btn btn-success" style = "margin-left: -2px">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </form>  
+         <ul class="nav navbar-nav navbar-right">
+                <li><a href="#">Settings</a></li>
+                <li><a href="#">Logout</a></li>
             </ul>
-
-
           </div><!--/.nav-collapse -->
         </div><!--/.container-fluid -->
       </div>
@@ -64,34 +68,11 @@
     <button type="button" class="btn btn-default">Melody</button>
 </div>
 
-<div class="mediaSection" style="left:200px;top:100px;">
-
-<div class="mediaButton">
-
-<div id="mediaContainer"> <!-- <div class="jp-progress">
-          <div class="jp-seek-bar">
-            <div class="jp-play-bar"></div>
-          </div>
-     <div class="jp-time-holder">
-          <div class="jp-current-time"></div>
-          <div class="jp-duration"></div></div>  --> 
-
-
-</div>
-<a href="javascript:;">
-<div id="buttonAction">
-<div class="play"></div>
-<div id="pauseContainer">
-<div class="pause"></div>
-<div class="pause"style="position:relative; top:-32px; left:45px"></div>
-</div>
-</a>
-</div>
 
 
 
 
-<!-- <div class="middlePanel">
+<div class="middlePanel">
   
   <div class="projectSection" >
   <img src="images.jpg" width="250px" id="albumArt">
@@ -100,7 +81,7 @@
   <h3  >Project x</h3>
   <p>Date started: 10/03/14 </p>
   <p>Genre: Hard eco rock</p>
-  <p>Personal: Charki, EDDIETHEBLACK,DAVE</p>
+  <p>Personal: Charki, Ashley the moaner,EDDIETHEBLACK,DAVE</p>
   </div>
 <br>
   
@@ -109,44 +90,123 @@
    <div class="sectionTitle">
      <h3 position="relative" top="-20px">Intro</h3>
    </div>
+
   <div class="mediaSection">
-   <audio controls> dave
-   </audio>
+   <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+  <div id="jp_container_1" class="jp-audio">
+  <div class="jp-playlist">
+    <ul>
+      <li></li> <!-- Empty <li> so your HTML conforms with the W3C spec -->
+    </ul>
+   </div>
+
+   <div class="jp-details">
+        <ul>
+          <li><span class="jp-title"></span></li>
+        </ul>
+      </div> 
+    <div class="jp-type-single">
+      <div class="jp-gui jp-interface">
+        <ul class="jp-controls">
+        <div class="mediaButton">
+          <a href="javascript:;" class="jp-play" >play</a>
+          <a href="javascript:;" class="jp-pause" >
+            <div class="pause"style="top:18px;left:25px"></div>
+            <div class="pause"style="top:-32px;left:45px"></div>
+          </a>
+        </div>
+
+          <div id="starButton" class="unlitStar"></div>
+          <div id="uploadButton" ></div>
+          
+          
+        </ul>
+        
+        <div class="jp-progress">
+          <div class="jp-seek-bar">
+            <div class="jp-play-bar"></div>
+          </div>
+        </div>
+        
+        <div class="jp-time-holder">
+          <div class="jp-current-time"></div>
+          <div class="jp-duration"></div>
+          
+        </div>
+      </div>
+      
+      <div class="jp-no-solution">
+        <span>Update Required</span>
+        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+      </div>
+    </div>
+  </div>
   </div>
 
-  <div class="fileList">
-    <table class="table table-striped table-hover ">
-  <thead>
-    <tr>
-      <th>File name</th>
-      <th>Uploaded date</th>
-      <th>Uploader</th>
-      <th>Length</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Fire.mp3</td>
-      <td>10/06/14</td>
-      <td>Bobby G</td>
-      <td>3:11</td>
-    </tr>
-    <tr>
-      <td>Do It.mp3</td>
-      <td>01/02/14</td>
-      <td>MacDaddyy</td>
-      <td>4:40</td>
-    </tr>
-  
-    
-  </tbody>
-</table> 
+  </div>
+
+
+   <div class="projectSection">
+   <div class="sectionTitle">
+     <h3 position="relative" top="-20px">Melody</h3>
+   </div>
+
+  <div class="mediaSection">
+   <div id="jquery_jplayer_1" class="jp-jplayer"></div>
+  <div id="jp_container_1" class="jp-audio">
+  <div class="jp-playlist">
+    <ul>
+      <li></li> <!-- Empty <li> so your HTML conforms with the W3C spec -->
+    </ul>
+   </div>
+
+   <div class="jp-details">
+        <ul>
+          <li><span class="jp-title"></span></li>
+        </ul>
+      </div> 
+    <div class="jp-type-single">
+      <div class="jp-gui jp-interface">
+        <ul class="jp-controls">
+        <div class="mediaButton">
+          <a href="javascript:;" class="jp-play" >play</a>
+          <a href="javascript:;" class="jp-pause" >
+            <div class="pause"style="top:18px;left:25px"></div>
+            <div class="pause"style="top:-32px;left:45px"></div>
+          </a>
+        </div>
+
+          <div id="starButton" class="unlitStar"></div>
+          <div id="uploadButton" ></div>
+          
+          
+        </ul>
+        
+        <div class="jp-progress">
+          <div class="jp-seek-bar">
+            <div class="jp-play-bar"></div>
+          </div>
+        </div>
+        
+        <div class="jp-time-holder">
+          <div class="jp-current-time"></div>
+          <div class="jp-duration"></div>
+          
+        </div>
+      </div>
+      
+      <div class="jp-no-solution">
+        <span>Update Required</span>
+        To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.
+      </div>
+    </div>
+  </div>
   </div>
 
   </div>
 
- --></div>
+</div>
 
-
+<br><br><br><br><br><br><br><br>
   </body>
 </html>
