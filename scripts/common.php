@@ -6,17 +6,30 @@
 	//cookie to expire after a year
 	$expire = time()+(60*60*24*365);
 
-    // $con = pg_connect("host=localhost port=5432 dbname=postgres user=postgres password=whocares");
-    // // Check connection
-    // if (!$con) {
-    //     die("Error in connection: " . pg_last_error());
-    // }
+    //for
+    $host = "localhost";
+    $port = "5432";
+    $dbname = "ashleyhemingway";
+    $dbuser = "ashleyhemingway";
+    $dbpw = "";
 
-    $con = pg_connect("host=localhost port=5432 dbname=ashleyhemingway user=ashleyhemingway");
-    // Check connection
+    //for imperial server
+    // $host = 'localhost';
+    // $port = '5432';
+    // $dbname = 'postgres';
+    // $dbuser = 'postgres';
+    // $dbpw = 'whocares';
+
+    $con = pg_connect("host=" . $host . " " .
+                      "port=" . $port . " " .
+                      "dbname=" . $dbname . " " .
+                      "user=" . $dbuser . " " .
+                      "password=" . $dbpw
+                      );
     if (!$con) {
         die("Error in connection: " . pg_last_error());
     }
+    global $con;
 
 	// This block of code is used to undo magic quotes.  Magic quotes are a terrible 
     // feature that was removed from PHP as of PHP 5.4.  However, older installations 

@@ -1,34 +1,44 @@
 <?php
+
 include 'common.php';
+global $con;
 
-$output_dir = "../uploads/profile_pics/";
+error_reporting(E_ALL | E_STRICT);
+require('UploadHandler.php');
 
-if(isset($_FILES["myfile"]) && isset($_POST["username"])) {
-	$ret = array();
+$custom_dir = "../uploads/profile_pics/";
 
-	$error = $_FILES["myfile"]["error"];
+$options = array(
+    'delete_type' => 'POST',
+    'upload_dir' => $custom_dir
+);
 
-	if(!is_array($_FILES["myfile"]["name"])) {
-		//single file
- 	 	$fileName = $_FILES["myfile"]["name"];
- 		move_uploaded_file($_FILES["myfile"]["tmp_name"], $output_dir.$fileName);
-    	$ret[]= $fileName;
+class CustomUploadHandler extends UploadHandler {
 
-    	$user = $_POST["username"];
-    	$path = $output_dir . $fileName;
+    protected function initialize() {
+        global $con;
+        $this->con = $con;
+        parent::initialize();
+    }
 
-    	$query = "UPDATE users SET path = '{$path}' where username = '{$user}'";
-    	pg_query($con, $query);
-	} else {
-		//Multiple files, file[]
-	 	$fileCount = count($_FILES["myfile"]["name"]);
-	 	for($i = 0; $i < $fileCount; $i++) {
-	  		$fileName = $_FILES["myfile"]["name"][$i];
-			move_uploaded_file($_FILES["myfile"]["tmp_name"][$i], $output_dir.$fileName);
-	  		$ret[]= $fileName;
-	  	}
-	}
-	echo json_encode(substr($output_dir . $fileName, 3));
+    protected function handle_form_data($file, $index) {
+        $file->username = @$_REQUEST['username'];
+    }
+
+    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
+            $index = null, $content_range = null) {
+        $file = parent::handle_file_upload(
+            $uploaded_file, $name, $size, $type, $error, $index, $content_range
+        );
+        if (empty($file->error)) {
+        	$path = "../uploads/profile_pics/" . $file->name;
+        	$query = "UPDATE users SET path = '$path' where username = '$file->username'";
+	    	pg_query($this->con, $query);
+
+        }
+        return $file;
+    }
+
 }
 
-?>
+$upload_handler = new CustomUploadHandler($options);
