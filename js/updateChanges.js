@@ -74,7 +74,7 @@ function editSkills() {
     });
 }
 
-function cancelSkills() {
+function cancelSkills(username) {
     var btnSkills = $("#skill-list button");
     var btnSpans = $("#skill-list span");
     
@@ -86,13 +86,20 @@ function cancelSkills() {
     $("#btnsSkillEdits").fadeOut(300, function() { 
         $("#btnEditSkills").fadeIn(300);
     });
+
+    $.ajax({
+        type: 'POST',
+        url: "scripts/save_skills.php",
+        data: { username: username,
+                skills: document.getElementById("profileSkills").value},
+    });
 }
 
 function addSkills() {
     var newSkill = $("#skillField").val();
+    $("#profileSkills").attr("value", ($("#profileSkills").attr("value") + ',' + newSkill));
     if (newSkill != "") {
-        $("#skill-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
-                                + newSkill  + "\">" 
+        $("#skill-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled>" 
                                + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");;
         $("#skillField").val("");
         $(document).on("click", ".close", buttonFade);
@@ -101,9 +108,13 @@ function addSkills() {
 
 var buttonFade = function () {
     $(this).parent().fadeOut(400, function() {
-            $(this).parent().remove();
+        $(this).parent().remove();
     });
-} 
+    var skills = $("#profileSkills").attr("value");
+    var skill = $(this).value;
+    var newSkills = skills.replace(skill,'');
+    $("#profileSkills").attr("value", newSkills);
+}
 
 function cancelAboutMe() {
     $("#aboutChanges").fadeOut(400, function() { 

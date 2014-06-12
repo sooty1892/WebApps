@@ -24,16 +24,45 @@
         $name = pg_escape_string(valInput($_POST['projectName']));
         $desc = pg_escape_string(valInput($_POST['projectDescription']));
 
-        $test = $_POST['hiddenValues'];
+        $skills = explode(",", $_POST['hiddenSkills']);
+        $genres = explode(",", $_POST['hiddenGenres']);
+
 
         if ($_POST['projectPrivacy'] != 'option1') {
-          $query = "INSERT INTO projects (name, description, private)
-                  VALUES ('$name', '$test', 'true')";
+          $query = "INSERT INTO projects (idproject, name, description, private)
+                  VALUES ('$name', '$desc', 'true') RETURNING idproject";
         } else {
           $query = "INSERT INTO projects (name, description, private)
-                  VALUES ('$name', '$test', 'false')";
+                  VALUES ('$name', '$desc', 'false') RETURNING idproject";
         }
-        pg_query($con, $query);
+        $result = pg_query($con, $query);
+        $row = pg_fetch_row($result);
+        $idproject = $row['0'];
+
+        foreach($skills as $skill) {
+          if ($skill != ',' && $skill != '') {
+            $query = "SELECT idskill FROM skills WHERE skill = '$skill'";
+            $re = pg_query($con, $query);
+            $row = pg_fetch_row($re);
+            $idskill = $row['0'];
+
+            $query = "INSERT INTO projectskills (idproject, idskill)
+                      VALUES ('$idproject', '$idskill')";
+            pg_query($con, $query);
+          }
+        }
+        foreach($genres as $genre) {
+          if ($genre != ',' && $genre != '') {
+            $query = "SELECT idgenre FROM genres WHERE genre = '$genre'";
+            $re = pg_query($con, $query);
+            $row = pg_fetch_row($re);
+            $idgenre = $row['0'];
+
+            $query = "INSERT INTO projectgenres (idproject, idgenre)
+                      VALUES ('$idproject', '$idgenre')";
+            pg_query($con, $query);
+          }
+        }
       }
     }
 ?>
@@ -70,7 +99,15 @@
     <script>
         $(document).ready(function($){
             $('#skillField').autocomplete({
-                source:'suggest_skill.php'
+                source:'scripts/suggest_skill.php',
+                change: function (event, ui) {
+                  if (!ui.item) {
+                    $(event.target).val("");
+                  }
+                },
+                focus: function (event, ui) {
+                  return false;
+                }
             });
         });
     </script>
@@ -80,12 +117,6 @@
             overflow-y: auto;
             /* prevent horizontal scrollbar */
             overflow-x: hidden;
-          }
-          /* IE 6 doesn't support max-height
-           * we use height instead, but this forces the menu to always be this tall
-           */
-          * html .ui-autocomplete {
-            height: 150px;
           }
     </style>
 
@@ -170,7 +201,8 @@
                   <ul id="genre-list" style = "padding: 10px; margin-left: -10px">
                   </ul>
                 </div>
-                <input type="hidden" name="hiddenValues" id="hiddenValues" value="">
+                <input type="hidden" name="hiddenSkills" id="hiddenSkills" value="">
+                <input type="hidden" name="hiddenGenres" id="hiddenGenres" value="">
                 <button type="button" class="btn btn-info" onclick="addGenre()">Add</button>
               </div>
               <button type="submit" class="btn btn-success">Submit</button>
@@ -180,7 +212,6 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <!-- <button type="submit" class="btn btn-success">Submit</button> -->
         </div>
       </div>
     </div>
@@ -216,12 +247,12 @@
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#" onclick="showModal()">Create Project</a></li>
         <li class="dropdown">
-        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user['username']; ?><b class="caret"></b></a>
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
         <ul class="dropdown-menu">
           <li><a href="#">Profile Page</a></li>
-          <li><a href="logout.php">Logout</a></li>
+          <li><a href="#">Logout</a></li>
         </ul>
-      </li>
+        </li>
       </ul>
     </div>
   </div>
@@ -252,20 +283,20 @@
             <button type ="button" class="btn-default" onclick="cancelUser()">Cancel</button>
             <button type="submit" class="btn-success" onclick="saveChangesUser('<?php echo $user['username']; ?>')">Save Changes</button>
  
-            <span class="btn btn-success fileinput-button">
+            <!-- <span class="btn btn-success fileinput-button">
                 <i class="glyphicon glyphicon-plus"></i>
-                <span>Select files...</span>
+                <span>Select files...</span> -->
                 <!-- The file input field used as target for the file upload widget -->
-                <input id="fileuploading" type="file" name="files[]" multiple>
+                <!-- <input id="fileuploading" type="file" name="files[]" multiple>
             </span>
             <br>
-            <br>
+            <br> -->
             <!-- The global progress bar -->
-            <div id="progress" class="progress">
+            <!-- <div id="progress" class="progress">
                 <div class="progress-bar progress-bar-success"></div>
-            </div>
+            </div> -->
             <!-- The container for the uploaded files -->
-            <div id="files" class="files"></div>
+            <!-- <div id="files" class="files"></div> -->
             
               
           </div>
@@ -325,15 +356,28 @@
       <div class="profilesection">
         <h1 style = "margin-left: 25px">Skills &#38; Talents</h1>
         <ul id="skill-list" style = "padding-bottom: 10px">
-          <li><button type="button" class="btn-primary">Lyrics<span class="close">x</span></button></li>
-          <li><button type="button" class="btn-primary">Guitar<span class="close">x</span></button></li>
-          <li><button type="button" class="btn-primary">Vocalist<span class="close">x</span></button></li>
-          <li><button type="button" class="btn-primary">Piano<span class="close">x</span></button></li>
+          <?php
+            $username = $user['username'];
+            $query = "SELECT * FROM userskills WHERE username = '$username'";
+            $result = pg_query($con, $query);
+            $output = "";
+            while($row = pg_fetch_array($result)) {
+              $id = $row['idskill'];
+              $query = "SELECT skill FROM skills WHERE idskill = '$id'";
+              $re = pg_query($con, $query);
+              $hi = pg_fetch_row($re);
+              $skill = $hi['0'];
+              $output = $output . "," . $skill;
+              echo "\n<li><button type=\"button\" class=\"btn-primary\" value=\"" . $skill . "\">" . $skill . "<span class=\"close\" style =\"display: none\">x</span></button></li>";
+            }
+          ?>
         </ul>
         <button id ="btnEditSkills" type="button" class="btn-info" style = "margin-left: 25px; margin-bottom: 10px" onclick="editSkills()">Edit Skills</button>
         <div id="btnsSkillEdits" style ="margin-left: 25px; padding-bottom: 10px; display: none">
           <input id = "skillField" type="text" placeholder="Add your talents..." style="width:300px"><button type="submit" class="btn-success" style="background-color: #3498db" onclick="addSkills()">Add</button>
-          <button type="button" class="btn-success" onclick="cancelSkills()">Save Changes</button>
+          <input type="hidden" id="profileSkills" value="">
+          <?php echo "<input type=\"hidden\" id=\"profileSkills\" value=\"" . $output . "\">"; ?>
+          <button type="button" class="btn-success" onclick="cancelSkills('<?php echo $user['username']; ?>')">Save Changes</button>
         </div>
       </div>
 
@@ -363,12 +407,12 @@
         </div>
 
         <!-- The file upload form used as target for the file upload widget -->
-        <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
+        <!-- <form id="fileupload" action="" method="POST" enctype="multipart/form-data"> -->
           <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-          <div class="row fileupload-buttonbar">
-            <div class="col-lg-7">
+          <!-- <div class="row fileupload-buttonbar">
+            <div class="col-lg-7"> -->
               <!-- The fileinput-button span is used to style the file input field as button -->
-              <span class="btn btn-success fileinput-button">
+              <!-- <span class="btn btn-success fileinput-button">
                 <i class="glyphicon glyphicon-plus"></i>
                 <span>Add files...</span>
                 <input type="file" name="files[]" multiple>
@@ -385,23 +429,23 @@
                 <i class="glyphicon glyphicon-trash"></i>
                 <span>Delete</span>
               </button>
-              <input type="checkbox" class="toggle">
+              <input type="checkbox" class="toggle"> -->
               <!-- The global file processing state -->
-              <span class="fileupload-process"></span>
-            </div>
+              <!-- <span class="fileupload-process"></span>
+            </div> -->
             <!-- The global progress state -->
-            <div class="col-lg-5 fileupload-progress fade">
+            <!-- <div class="col-lg-5 fileupload-progress fade"> -->
               <!-- The global progress bar -->
-              <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
+              <!-- <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
                 <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-              </div>
+              </div> -->
               <!-- The extended global progress state -->
-              <div class="progress-extended">&nbsp;</div>
+              <!-- <div class="progress-extended">&nbsp;</div>
             </div>
-          </div>
+          </div> -->
           <!-- The table listing the files available for upload/download -->
-          <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
-        </form>
+          <!-- <table role="presentation" class="table table-striped"><tbody class="files"></tbody></table>
+        </form> -->
 
         <script>
           $(function () {
@@ -426,7 +470,7 @@
         </script>
 
         <!-- The blueimp Gallery widget -->
-        <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
+       <!--  <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls" data-filter=":even">
           <div class="slides"></div>
           <h3 class="title"></h3>
           <a class="prev">‹</a>
@@ -434,7 +478,7 @@
           <a class="close">×</a>
           <a class="play-pause"></a>
           <ol class="indicator"></ol>
-        </div>
+        </div> -->
         <!-- The template to display files available for upload -->
         <script id="template-upload" type="text/x-tmpl">
         {% for (var i=0, file; file=o.files[i]; i++) { %}

@@ -1,7 +1,7 @@
 function addSkillsProject() {
     var newSkill = $("#inputSkill").val();
     if (newSkill != "") {
-        $("#hiddenValues").attr("value", ($("#hiddenValues").attr("value") + ',' + newSkill));
+        $("#hiddenSkills").attr("value", ($("#hiddenSkills").attr("value") + ',' + newSkill));
         $("#skill-list-p").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
                                 + newSkill  + "\">" 
                                + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");
@@ -13,6 +13,7 @@ function addSkillsProject() {
 function addGenre() {
     var newGenre = $("#inputGenre").val();
     if (newGenre != "") {
+        $("#hiddenGenres").attr("value", ($("#hiddenGenres").attr("value") + ',' + newSkill));
         $("#genre-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
                                 + newGenre  + "\">" 
                                + newGenre + "<span class=\"close\" style =\"display: block\">x</span></button></li>");
