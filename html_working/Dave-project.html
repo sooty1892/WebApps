@@ -25,48 +25,54 @@
   <body>
     <div class="container">
       <!-- Static navbar -->
-      <div id ="navbar" class="navbar navbar-default" role="navigation" style="width:1460px;position:fixed;left:0px">
-        <div class="container-fluid">
-          <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="#">Username</a>
-          </div>
-          <div class="navbar-collapse collapse">
-            <ul class="nav navbar-nav">
-              <li class="active"><a href="#">Profile</a></li>
-              <li><a href="#">Option 1</a></li>
-            </ul>
-            <form class="navbar-form navbar-left" style= "margin-left: 150px" role="search">
-                <div class="form-group">
-                    <input type="text" class="form-control" style = "width: 300px;" placeholder="Search for people, projects and skills...">
-                </div>
-                <button type="submit" class="btn btn-success" style = "margin-left: -2px">
-                    <span class="glyphicon glyphicon-search"></span>
-                </button>
-            </form>  
-         <ul class="nav navbar-nav navbar-right">
-                <li><a href="#">Settings</a></li>
-                <li><a href="#">Logout</a></li>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div><!--/.container-fluid -->
-      </div>
+     <div id ="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="#">MusicMan</a>
+    </div>
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#">Profile</a></li>
+      </ul>
+      <form class="navbar-form navbar-left" style= "margin-left: 150px" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" style = "width: 300px;" placeholder="Search for people, projects and skills...">
+        </div>
+        <button type="submit" class="btn btn-success" style = "margin-left: -2px">
+        <span class="glyphicon glyphicon-search"></span>
+        </button>
+      </form>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onclick="showModal()">Create Project</a></li>
+        <li class="dropdown">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+          <li><a href="#">Profile Page</a></li>
+          <li><a href="#">Logout</a></li>
+        </ul>
+      </li>
+      </ul>
+    </div>
+  </div>
 
 
 </div>
-<div  class="btn-group-vertical">
-     <li class="divider" ></li>
-    <button type="button" class="btn btn-default">Edit structure</button>
-    <button type="button" class="btn btn-default">Edit permissions</button>
-    <li class="divider"></li>
-    <button type="button" class="btn btn-default">Intro</button>
-    <button type="button" class="btn btn-default">Melody</button>
-</div>
+
+<ul id = "sideNav"class="nav nav-pills nav-stacked" style="max-width: 300px;">
+  <li ><a href="#">Home</a></li>
+  <li class="divider" style="background-color:#222222"></li>
+  <li ><a class="active"href="#">Bio</a></li>
+  <ul class="nav nav-pills nav-stacked">
+  <li ><a href="#">Intro</a></li>
+  <li ><a href='#'>Melody</a></li>
+  </ul>
+</ul>
 
 
 
@@ -75,7 +81,7 @@
 <div class="middlePanel">
   
   <div class="projectSection" >
-  <img src="images.jpg" width="250px" id="albumArt">
+  <img src="dj.jpg" width="250px" id="albumArt">
   <button type="button" class="btn btn-default" id="changeAlbumArt">:::</button>
   <div class="projectInfo">
   <h3  >Project x</h3>
@@ -90,7 +96,8 @@
    <div class="sectionTitle">
      <h3 position="relative" top="-20px">Intro</h3>
    </div>
-
+ <h3 style="position:absolute;left:600px"> File description</h3>
+ <p style="position:absolute;left:600px;top:90px">I tried to convey a sense of hopelessness with the decreasing tempo throughout. The trumpet is used to get across the loss of all happiness</p>
   <div class="mediaSection">
    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
   <div id="jp_container_1" class="jp-audio">
@@ -111,8 +118,8 @@
         <div class="mediaButton">
           <a href="javascript:;" class="jp-play" >play</a>
           <a href="javascript:;" class="jp-pause" >
-            <div class="pause"style="top:18px;left:25px"></div>
-            <div class="pause"style="top:-32px;left:45px"></div>
+            <div class="pause"style="top:14px;left:25px"></div>
+            <div class="pause"style="top:-36px;left:45px"></div>
           </a>
         </div>
 
@@ -150,7 +157,8 @@
    <div class="sectionTitle" style="border-color:#9b59b6;background-color:#9b59b6">
      <h3 >Melody</h3>
    </div>
-
+<h3 style="position:absolute;left:600px"> File description</h3>
+ <p style="position:absolute;left:600px;top:90px">The horns that come in halfway through are amazing and deserve to be in the project</p>
   <div class="mediaSection">
    <div id="jquery_jplayer_1" class="jp-jplayer"></div>
   <div id="jp_container_1" class="jp-audio">
@@ -171,8 +179,8 @@
         <div class="mediaButton">
           <a href="javascript:;" class="jp-play" >play</a>
           <a href="javascript:;" class="jp-pause" >
-            <div class="pause"style="top:18px;left:25px"></div>
-            <div class="pause"style="top:-32px;left:45px"></div>
+            <div class="pause"style="top:14px;left:25px"></div>
+            <div class="pause"style="top:-36px;left:45px"></div>
           </a>
         </div>
 

@@ -73,11 +73,36 @@ audio{
     top:0px;
 }
 
-.btn-group-vertical{
-  position: fixed;
-  top:100px;
-  /*border:2px solid #3498db;*/
+
+#sideNav li{
+  background-color:  #4e5d6c;
+  bottom: 0px;
+  border-style: solid;
+  border-color:  rgba(0, 0, 0, 0.2);
+  border-width: 1px;
+  border-bottom-style: none;
+  position :relative;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+  margin-top: 0px
+
+
 }
+
+ 
+ .active{background-color: #3498db;
+
+color: #3498db;}
+#lastNav{
+  border-bottom-style: solid;
+  border-color: rgba(0, 0, 0, 0.2);
+  border-bottom-width: 1px;
+}
+#sideNav{position: fixed;
+      top:101px;}
+
+#sideNav a:hover{background-color: #3498db;}
+
 
 #changeAlbumArt{
      position:relative;
@@ -94,8 +119,11 @@ opacity: 0.5;
 
 .divider {
   height: 2px;
-  border-style: groove;
-  background-color: #292E37;
+  border-style: solid;
+  border-top-width: 1px;
+  color:  red;
+  background-color:  red;
+  border-top-color:  red;;
 }
 
 .navbar-default{
@@ -114,7 +142,6 @@ opacity: 0.5;
 #albumArt{
   width:250px;
   margin-right: 0px;
-  border-radius: 10px;
 }
 
 
