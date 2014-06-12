@@ -26,10 +26,30 @@
 
         $skills = explode(",", $_POST['hiddenSkills']);
         $genres = explode(",", $_POST['hiddenGenres']);
+        foreach (array_keys($skills, '') as $key) {
+          unset($skills[$key]);
+        }
+        foreach (array_keys($skills, ',') as $key) {
+          unset($skills[$key]);
+        }
+        foreach (array_keys($genres, '') as $key) {
+          unset($genres[$key]);
+        }
+        foreach (array_keys($genres, ',') as $key) {
+          unset($genres[$key]);
+        }
 
+        $fp = fopen('scripts/log.txt', "w+");
+
+        foreach ($skills as $skill) {
+          fwrite($fp, $skill . "\n");
+        }
+        foreach ($genres as $genre) {
+          fwrite($fp, $genre . "\n");
+        }
 
         if ($_POST['projectPrivacy'] != 'option1') {
-          $query = "INSERT INTO projects (idproject, name, description, private)
+          $query = "INSERT INTO projects (name, description, private)
                   VALUES ('$name', '$desc', 'true') RETURNING idproject";
         } else {
           $query = "INSERT INTO projects (name, description, private)
@@ -40,28 +60,20 @@
         $idproject = $row['0'];
 
         foreach($skills as $skill) {
-          if ($skill != ',' && $skill != '') {
             $query = "SELECT idskill FROM skills WHERE skill = '$skill'";
-            $re = pg_query($con, $query);
-            $row = pg_fetch_row($re);
-            $idskill = $row['0'];
+            $idskill = pg_fetch_row(pg_query($con, $query))['0'];
 
             $query = "INSERT INTO projectskills (idproject, idskill)
                       VALUES ('$idproject', '$idskill')";
             pg_query($con, $query);
-          }
         }
         foreach($genres as $genre) {
-          if ($genre != ',' && $genre != '') {
             $query = "SELECT idgenre FROM genres WHERE genre = '$genre'";
-            $re = pg_query($con, $query);
-            $row = pg_fetch_row($re);
-            $idgenre = $row['0'];
+            $idgenre = pg_fetch_row(pg_query($con, $query))['0'];
 
             $query = "INSERT INTO projectgenres (idproject, idgenre)
                       VALUES ('$idproject', '$idgenre')";
             pg_query($con, $query);
-          }
         }
       }
     }
@@ -97,19 +109,49 @@
     <link href="http://code.jquery.com/ui/1.10.4/themes/excite-bike/jquery-ui.css" rel="stylesheet">
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script>
-        $(document).ready(function($){
-            $('#skillField').autocomplete({
-                source:'scripts/suggest_skill.php',
-                change: function (event, ui) {
-                  if (!ui.item) {
-                    $(event.target).val("");
-                  }
-                },
-                focus: function (event, ui) {
-                  return false;
-                }
-            });
+      $(document).ready(function($){
+        $('#skillField').autocomplete({
+          source:'scripts/suggest_skill.php',
+          change: function (event, ui) {
+            if (!ui.item) {
+              $(event.target).val("");
+            }
+          },
+          focus: function (event, ui) {
+            return false;
+          }
         });
+      });
+    </script>
+    <script>
+      $(document).ready(function($){
+        $('#inputSkill').autocomplete({
+          source:'scripts/suggest_skill.php',
+          change: function (event, ui) {
+            if (!ui.item) {
+              $(event.target).val("");
+            }
+          },
+          focus: function (event, ui) {
+            return false;
+          }
+        });
+      });
+    </script>
+    <script>
+      $(document).ready(function($){
+        $('#inputGenre').autocomplete({
+          source:'scripts/suggest_genre.php',
+          change: function (event, ui) {
+            if (!ui.item) {
+              $(event.target).val("");
+            }
+          },
+          focus: function (event, ui) {
+            return false;
+          }
+        });
+      });
     </script>
     <style>
           .ui-autocomplete {
@@ -117,6 +159,7 @@
             overflow-y: auto;
             /* prevent horizontal scrollbar */
             overflow-x: hidden;
+            z-index:2147483647;
           }
     </style>
 
@@ -152,7 +195,7 @@
           <h4 class="modal-title">Make a new project</h4>
         </div>
         <div class="modal-body">
-          <form class="form-horizontal" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+          <form onsubmit="return generateTabs();" class="form-horizontal" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
             <fieldset>
               <legend>Enter project details and get creating</legend>
               <div class="form-group">
@@ -360,23 +403,19 @@
             $username = $user['username'];
             $query = "SELECT * FROM userskills WHERE username = '$username'";
             $result = pg_query($con, $query);
-            $output = "";
             while($row = pg_fetch_array($result)) {
               $id = $row['idskill'];
               $query = "SELECT skill FROM skills WHERE idskill = '$id'";
               $re = pg_query($con, $query);
               $hi = pg_fetch_row($re);
               $skill = $hi['0'];
-              $output = $output . "," . $skill;
               echo "\n<li><button type=\"button\" class=\"btn-primary\" value=\"" . $skill . "\">" . $skill . "<span class=\"close\" style =\"display: none\">x</span></button></li>";
             }
           ?>
         </ul>
         <button id ="btnEditSkills" type="button" class="btn-info" style = "margin-left: 25px; margin-bottom: 10px" onclick="editSkills()">Edit Skills</button>
         <div id="btnsSkillEdits" style ="margin-left: 25px; padding-bottom: 10px; display: none">
-          <input id = "skillField" type="text" placeholder="Add your talents..." style="width:300px"><button type="submit" class="btn-success" style="background-color: #3498db" onclick="addSkills()">Add</button>
-          <input type="hidden" id="profileSkills" value="">
-          <?php echo "<input type=\"hidden\" id=\"profileSkills\" value=\"" . $output . "\">"; ?>
+          <input id="skillField" type="text" placeholder="Add your talents..." style="width:300px"><button type="submit" class="btn-success" style="background-color: #3498db" onclick="addSkills()">Add</button>
           <button type="button" class="btn-success" onclick="cancelSkills('<?php echo $user['username']; ?>')">Save Changes</button>
         </div>
       </div>

@@ -12,8 +12,6 @@
 	    
 	    $user = $_POST['username'];
 
-	 	$fp = fopen($log, 'w+');
-
 	    //array of skills from form
 	    $formSkills = explode(",", $_POST['skills']);
 	    foreach (array_keys($formSkills, '') as $key) {
@@ -23,13 +21,13 @@
 	    	unset($formSkills[$key]);
 	    }
 
-	    fwrite($fp, $_POST['skills']);
-
 	   	//array of skills from database
 	    $dbSkills = array();
-	    $query = "SELECT idskill FROM userskills WHERE username = '$user'";
-	    while ($row = pg_fetch_array(pg_query($con, $query))) {
-	    	array_push($dbSkills, $row['idskill']);
+	    $query = "SELECT skills.skill FROM userskills
+	    		INNER JOIN skills ON userskills.username = '$user' AND skills.idskill = userskills.idskill";
+	    $res = pg_query($con, $query);
+	    while ($row = pg_fetch_assoc($res)) {
+	    	array_push($dbSkills, $row['skill']);
 	    }
 
 	    $inDbNotInForm = array_diff($dbSkills, $formSkills);
@@ -44,14 +42,10 @@
 
 	    foreach($inFormNotInDb as $skill) {
 	    	$query = "SELECT idskill FROM skills WHERE skill = '$skill'";
-            $re = pg_query($con, $query);
-            $row = pg_fetch_row($re);
-            $idskill = $row['0'];
+            $idskill = pg_fetch_row(pg_query($con, $query))['0'];
             $query = "INSERT INTO userskills (username, idskill)
                       VALUES ('$user', '$idskill')";
             pg_query($con, $query);
 	    }
-
-	    fclose($fp);
 	}
 ?>
