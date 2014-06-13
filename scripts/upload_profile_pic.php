@@ -1,44 +1,44 @@
 <?php
 
 include 'common.php';
-global $con;
 
-error_reporting(E_ALL | E_STRICT);
-require('UploadHandler.php');
+if(isset($_FILES["FileInput"]) && $_FILES["FileInput"]["error"]== UPLOAD_ERR_OK) {
 
-$custom_dir = "../uploads/profile_pics/";
-
-$options = array(
-    'delete_type' => 'POST',
-    'upload_dir' => $custom_dir
-);
-
-class CustomUploadHandler extends UploadHandler {
-
-    protected function initialize() {
-        global $con;
-        $this->con = $con;
-        parent::initialize();
-    }
-
-    protected function handle_form_data($file, $index) {
-        $file->username = @$_REQUEST['username'];
-    }
-
-    protected function handle_file_upload($uploaded_file, $name, $size, $type, $error,
-            $index = null, $content_range = null) {
-        $file = parent::handle_file_upload(
-            $uploaded_file, $name, $size, $type, $error, $index, $content_range
-        );
-        if (empty($file->error)) {
-        	$path = "../uploads/profile_pics/" . $file->name;
-        	$query = "UPDATE users SET path = '$path' where username = '$file->username'";
-	    	pg_query($this->con, $query);
-
-        }
-        return $file;
-    }
-
+	$UploadDirectory	= '../uploads/profile_pics/';
+	
+	//check php.ini for max file sizez
+	//check if this is an ajax request
+	if (!isset($_SERVER['HTTP_X_REQUESTED_WITH'])){
+		die("AJAX Problem");
+	}
+	
+	switch(strtolower($_FILES['FileInput']['type'])) {
+		//allowed file types
+        case 'image/png': 
+		case 'image/gif': 
+		case 'image/jpeg': 
+		case 'image/pjpeg':
+			break;
+		default:
+			die('Unsupported File!');
+	}
+	
+	$File_Name = strtolower($_FILES['FileInput']['name']);
+	$File_Ext = substr($File_Name, strrpos($File_Name, '.'));
+	$NewFileName = rand(0, 9999999999) . $File_Ext;
+	$path = $UploadDirectory . $NewFileName;
+	$username = $_POST['username'];
+	
+	if(!move_uploaded_file($_FILES['FileInput']['tmp_name'], $path)) {
+		die('error uploading File!');
+	} else {
+		$newPath = substr($path,3);
+		$query = "UPDATE users SET path = '$newPath' where username = '$username'";
+		pg_query($con, $query);
+		echo json_encode(substr($path, 3));
+	}
+	
+} else {
+	die('Something wrong with profile pic upload!');
 }
-
-$upload_handler = new CustomUploadHandler($options);
+?>

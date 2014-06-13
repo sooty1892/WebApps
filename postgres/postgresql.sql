@@ -8,7 +8,8 @@ CREATE TABLE users (username varchar(20) PRIMARY KEY NOT NULL,
 CREATE TABLE projects (idProject bigserial PRIMARY KEY NOT NULL,
 					   name varchar(50) NOT NULL,
 					   description text,
-					   private boolean NOT NULL);
+					   private boolean NOT NULL,
+					   license varchar(100) NOT NULL);
 
 CREATE TABLE projectUsers (username varchar(20) NOT NULL,
 						   idProject int NOT NULL,
