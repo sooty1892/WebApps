@@ -1,0 +1,56 @@
+.profilesection {
+    position: relative;
+    height: auto;
+    margin-right: auto;
+    width: 700px;
+    background-color: #4e5d6c;
+    overflow: hidden
+}
+
+.profilesection-details {
+    float: right;
+    margin-top: -200px;
+    margin-right: 100px;
+}
+
+.progress {
+    margin-bottom: -10px
+}
+
+.profilewrap {
+    word-wrap: break-word;
+    width: 375px
+}
+
+.profileEntry {
+    background-color: transparent; 
+    border-color: transparent; 
+    color: white
+}
+
+.infoSection {
+    width : 500px; 
+    resize: none;
+    margin-left: 25px; 
+    margin-bottom: 2px
+}
+
+.editpos {
+    margin-top : 25px
+}
+
+.editpos-changes {
+    position: absolute;
+    top : 148px;
+    left : 5px
+}
+
+.btnMargin {
+    margin-left : 25px; 
+    margin-bottom: 10px
+}
+
+.songBtn {
+    text-align: left; 
+    padding-left: 10px
+}

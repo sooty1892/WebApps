@@ -6,15 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Music Collaborator</title>
 
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/styles.css" rel="stylesheet">
-    <link href="../css/override.css" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="css/override.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="../js/bootstrap.min.js"></script>
-    <script src="../js/jquery.easing.1.3.js"></script>
-    <script src="../js/sliding.js"></script>
-    <script src="../js/editinplace.js"></script> 
-    <script src="../js/jquery.jeditable.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+    <script src="js/sliding.js"></script>
+    <script src="js/editinplace.js"></script> 
+    <script src="js/jquery.jeditable.js"></script>
 
   </head>
   <body>
@@ -91,7 +91,7 @@
           <!-- update to actual name soon -->
           <P> Project Name:  </p>
              <p class ="project-desc"> Project Description:- </p> 
-              <div class="edit_area"  id="1"> </div>
+              <div class="edit_area" id="1"> desc here  </div>
 
           <table class="description">
             <tr class="image-holder">
@@ -106,34 +106,6 @@
 
 
         </ul>
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   </body>
 </html>
