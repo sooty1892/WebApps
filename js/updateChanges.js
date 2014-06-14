@@ -95,7 +95,7 @@ function addSkills() {
                                 + newSkill  + "\">" 
                                + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");;
         $("#skillField").val("");
-        $(document).on("click", ".close", buttonFade);
+        $(document).on("click", "span.close", buttonFade);
     }
 }
 
@@ -163,3 +163,7 @@ function saveSongs() {
         $("#btnRemoveSong").fadeIn(400);
     });
 }
+
+$('.feed-element').hover(function(){
+    alert("");
+});

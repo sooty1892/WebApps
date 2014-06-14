@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Create Project</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/profile_styles.css" rel="stylesheet">
+        <link href="../css/lightbox.css" rel="stylesheet">
+        <link href="../css/list_style.css" rel="stylesheet">
+        <link rel="stylesheet" href="../file_upload/css/jquery.fileupload.css">
+        <link rel="stylesheet" href="../file_upload/css/jquery.fileupload-ui.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/create_project_add.js"></script>
+    </head>
+    <body>
+     <div id ="newProject" class="modal">
+       <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Make a new project</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+  <fieldset>
+    <legend>Enter project details and get creating</legend>
+    <div class="form-group">
+      <label for="inputProjectName" class="col-lg-2 control-label">Project Name</label>
+      <div class="col-lg-10">
+        <input type="text" class="form-control" id="inputEmail" placeholder="Enter a project name">
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="textArea" class="col-lg-2 control-label">Project Description</label>
+      <div class="col-lg-10">
+        <textarea class="form-control" rows="3" id="textArea"></textarea>
+        <span class="help-block">A description about your musical project</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-lg-2 control-label">Privacy level</label>
+      <div class="col-lg-10">
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="private" value="option1" checked="">
+            Private
+          </label>
+        </div>
+        <div class="radio">
+          <label>
+            <input type="radio" name="optionsRadios" id="public" value="option2">
+            Public
+          </label>
+        </div>
+      </div>
+    </div> 
+    <div class="form-group">
+      <label for="inputSkills" class="col-lg-2 control-label">Skills & Talents</label>
+      <div class="col-lg-8">
+        <input type="text" class="form-control" id="inputSkill" placeholder="Add skills that you are looking for...">
+        <ul id="skill-list-p" style = "padding: 10px; margin-left: -10px">
+        </ul>
+      </div>
+      <button type="button" class="btn btn-info" onclick = "addSkills()">Add</button>
+    </div>
+      
+    <div class="form-group">
+      <label for="inputGenre" class="col-lg-2 control-label">Genre</label>
+      <div class="col-lg-8">
+        <input type="text" class="form-control" id="inputGenre" placeholder="Add genres that you are looking for...">
+        <ul id="genre-list" style = "padding: 10px; margin-left: -10px">
+        </ul>
+      </div>
+      <button type="button" class="btn btn-info" onclick="addGenre()">Add</button>
+    </div>
+  </fieldset>
+</form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+     </div>
+     </div>
+     <div id ="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">Username</a>
+        </div>
+        <div class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Profile</a></li>
+            <li><a href="#">Option 1</a></li>
+          </ul>
+          <form class="navbar-form navbar-left" style= "margin-left: 150px" role="search">
+            <div class="form-group">
+              <input type="text" class="form-control" style = "width: 300px;" placeholder="Search for people, projects and skills...">
+            </div>
+            <button type="submit" class="btn btn-success" style = "margin-left: -2px">
+            <span class="glyphicon glyphicon-search"></span>
+            </button>
+          </form>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a onclick="showModal()">Create Project</a></li>
+            <li><a href="#">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+      <!--/.nav-collapse -->
+    </div>
+        <div class = "container">
+        </div>
+    </body>
+</html>
