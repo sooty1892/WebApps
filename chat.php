@@ -24,6 +24,7 @@
   		var last = 0;
 
   		$(document).ready(function() {
+        getMessages();
   			setInterval(function() {
   				getMessages();
   			}, 1000);
