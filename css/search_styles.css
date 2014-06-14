@@ -71,7 +71,7 @@ li {
 }
 
 .sidebar {
-    width: 250px;
+    width: 260px;
     background-color: #4e5d6c;
     float : right;
 }
@@ -81,7 +81,7 @@ li {
 }
 
 .feed-element:hover {
-    background-color: #3d4954;
+    background-color: #505b65;
     cursor: pointer
 }
 
