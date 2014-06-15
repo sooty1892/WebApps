@@ -24,7 +24,7 @@ if (isset($_FILES["myfile"]) && isset($_POST['username'])) {
     } else {
         $fileCount = count($_FILES["myfile"]['name']);
     	for($i = 0; $i < $fileCount; $i++) {            
-            $File_Name      = strtolower($_FILES['myfile']['name'][$i]);
+            $File_Name = strtolower($_FILES['myfile']['name'][$i]);
 
     		$newPath = uploadFile($_FILES["myfile"]["tmp_name"][$i], $File_Name);
 
