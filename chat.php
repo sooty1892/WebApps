@@ -19,6 +19,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <link href="css/chat.css" rel="stylesheet">
   	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
   	<script>
   		var last = 0;
@@ -58,7 +59,7 @@
 				success: function(response) {
 					console.log(response);
 					for (var i in response) {
-						$('#chat-area').append($("</p>" + response[i].message + "</p>"));
+						$('#chat-area').append($("</p>" +"<span>" + response[i].username + "</span>" + ":\n" + response[i].message + "</p>"));
 						if (response[i].idmessage > last) {
 							last = response[i].idmessage;
 						}
@@ -80,7 +81,7 @@
         </div>
         
         <form id="send-message-area">
-            <p>Your message: </p>
+            <!-- <p>Your message: </p> -->
             <textarea id="sendie" maxlength='100'></textarea>
         </form>
     

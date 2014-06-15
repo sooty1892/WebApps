@@ -12,7 +12,7 @@
 	    $idproject = $_GET["idproject"];
 	    $last = $_GET["last"];
 
-	    $query = "SELECT idmessage, message FROM chat WHERE idproject = '$idproject' AND idmessage > '$last' ORDER BY datesent ASC";
+	    $query = "SELECT idmessage, message, username FROM chat WHERE idproject = '$idproject' AND idmessage > '$last' ORDER BY datesent ASC";
 	    $results = pg_query($con, $query);
 
 	    $messages = array();
