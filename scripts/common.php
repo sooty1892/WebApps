@@ -13,6 +13,13 @@
     // $dbuser = "ashleyhemingway";
     // $dbpw = "";
 
+
+     $username = "cts12";
+     $host = "db.doc.ic.ac.uk";
+     $port = 5432;
+     $dbname = "cts12";
+     $password = "WkMRCTUhEN";
+
     // for imperial server
     $host = '146.169.45.190';
     $port = '5432';

@@ -26,9 +26,9 @@ $(document).ready(function(){
     enableRemoveControls: false
   },
   swfPath: "js",
-  supplied: "mp3",
+  supplied: "mp3, mp4",
   smoothPlayBar: true,
-  keyEnabled: true,
+  keyEnabled: false,
   audioFullScreen: true // Allows the audio poster to go full screen via keyboard
 });
     });

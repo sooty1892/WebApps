@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Music Collaborator</title>
-<link rel="stylesheet" href="js/jquery.simplecolorpicker.css">
+<link rel="stylesheet" href="css/jquery.simplecolorpicker.css">
     <link href="../css/player.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
       <link href="../css/lightbox.css" rel="stylesheet">
@@ -26,7 +26,18 @@
   <script type="text/javascript">
       
       $(document).ready(function(){
-            
+            $.ajax({
+
+    dataType: 'json',
+    type: "POST",
+    url: "../scripts/pull_project_data.php",
+    dataType: {idProject: '1'},
+    success:  function(response) {
+           console.log(response);
+
+    }
+
+  });
             var middle = $("#middlePanel");
          middle.pageScroller({sectionClass:'projectSection',navigation: '#menu',scrollOffset:-200,animationSpeed:200});        
           $(document).keydown(function(e){
@@ -77,7 +88,7 @@
         </button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onclick="showModal()">Create Project</a></li>
+        <li><a href="#" onclick="showMosectionTitledal()">Create Project</a></li>
         <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
         <ul class="dropdown-menu">
