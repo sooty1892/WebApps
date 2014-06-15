@@ -27,7 +27,7 @@ var buttonFadeNew = function () {
 }
 
 function showModal() {
-    $('#editProject').modal('show');
+    $('#newProject').modal('show');
 }
 
 function generateTabs() {
