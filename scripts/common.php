@@ -7,11 +7,11 @@
 	$expire = time()+(60*60*24*365);
 
     //for
-    // $host = "localhost";
-    // $port = "5432";
-    // $dbname = "ashleyhemingway";
-    // $dbuser = "ashleyhemingway";
-    // $dbpw = "";
+    $host = "localhost";
+    $port = "5432";
+    $dbname = "ashleyhemingway";
+    $dbuser = "ashleyhemingway";
+    $dbpw = "";
 
 
      $username = "cts12";
@@ -21,11 +21,11 @@
      $password = "WkMRCTUhEN";
 
     // for imperial server
-    $host = '146.169.45.190';
-    $port = '5432';
-    $dbname = 'postgres';
-    $dbuser = 'postgres';
-    $dbpw = 'whocares';
+    // $host = '146.169.45.190';
+    // $port = '5432';
+    // $dbname = 'postgres';
+    // $dbuser = 'postgres';
+    // $dbpw = 'whocares';
 
     $con = pg_connect("host=" . $host . " " .
                       "port=" . $port . " " .

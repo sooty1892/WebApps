@@ -32,9 +32,13 @@
 
 			$('#sendie').keyup(function(e) {
 				if (e.keyCode == 13) {
-					sendMessage($('#sendie').val());
-					//$('#chat-area').append($("<p>" + $('#sendie').val() + "</p>"));
-					$('#sendie').val('');
+          if ($('#sendie').val() == "\n") {
+            $('#sendie').val('');
+          } else {
+            sendMessage($('#sendie').val());
+            //$('#chat-area').append($("<p>" + $('#sendie').val() + "</p>"));
+            $('#sendie').val('');
+          }
 				}
 			});
 		});

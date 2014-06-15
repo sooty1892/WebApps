@@ -51,6 +51,15 @@
             
           })
 
+          $.ajax({
+            type: 'POST',
+            dataType: 'json',
+            data: {idproject: '1'},
+            sucess: function(response) {
+              console.log(response);
+            }
+          });
+
 })
   </script>
 
