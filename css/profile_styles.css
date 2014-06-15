@@ -1,7 +1,6 @@
 .profilesection {
     position: relative;
     height: auto;
-    margin-right: auto;
     width: 700px;
     background-color: #4e5d6c;
     overflow: hidden
@@ -53,4 +52,23 @@
 .songBtn {
     text-align: left; 
     padding-left: 10px
+}
+
+.sidebar {
+    width: 300px;
+    background-color: #4e5d6c;
+    float : right;
+}
+
+.feed-element {
+    padding : 20px
+}
+
+.feed-element:hover {
+    background-color: #3d4954;
+    cursor: pointer
+}
+
+.feed-element:click {
+    border-color: white
 }
