@@ -29,6 +29,12 @@ p {
     background-color: #4e5d6c
 }
 
+.follow-pos {
+    float:right; 
+    margin-top: 35px; 
+    margin-right: 35px
+}
+
 .search-section-top {
     width: 600px; 
     background-color: #4e5d6c;

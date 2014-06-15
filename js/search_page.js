@@ -16,3 +16,15 @@ function hideFiltering() {
     $("#projects").attr("checked", false);
     $("#users").attr("checked", false);
 }
+
+function followUser() {
+    if($("#btnFollow").val() == "not_following"){
+        $("#btnFollow").html('<i class="glyphicon glyphicon-ok"></i> Following');
+        $("#btnFollow").val("following");
+        $("#btnFollow").css("opacity", "0.6");
+    } else {
+        $("#btnFollow").html('<i class="glyphicon glyphicon-user"></i> Follow');
+        $("#btnFollow").val("not_following");
+        $("#btnFollow").css("opacity", "1");
+    }
+}
