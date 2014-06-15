@@ -277,28 +277,28 @@
     </script>
 
     <script>
-      $(function () {
-        'use strict';
+      // $(function () {
+      //   'use strict';
 
-        // Initialize the jQuery File Upload widget:
-        $('#fileupload').fileupload({
-          url: 'scripts/upload_profile_song.php'
-        });
+      //   // Initialize the jQuery File Upload widget:
+      //   $('#fileupload').fileupload({
+      //     url: 'scripts/upload_profile_song.php'
+      //   });
 
-        // Load existing files:
-        $('#fileupload').addClass('fileupload-processing');
-        $.ajax({
-          // Uncomment the following to send cross-domain cookies:
-          //xhrFields: {withCredentials: true},
-          url: $('#fileupload').fileupload('option', 'url'),
-          dataType: 'json',
-          context: $('#fileupload')[0]
-        }).always(function () {
-          $(this).removeClass('fileupload-processing');
-        }).done(function (result) {
-          $(this).fileupload('option', 'done').call(this, $.Event('done'), {result: result});
-        });
-      });
+      //   // Load existing files:
+      //   $('#fileupload').addClass('fileupload-processing');
+      //   $.ajax({
+      //     // Uncomment the following to send cross-domain cookies:
+      //     //xhrFields: {withCredentials: true},
+      //     url: $('#fileupload').fileupload('option', 'url'),
+      //     dataType: 'json',
+      //     context: $('#fileupload')[0]
+      //   }).always(function () {
+      //     $(this).removeClass('fileupload-processing');
+      //   }).done(function (result) {
+      //     $(this).fileupload('option', 'done').call(this, $.Event('done'), {result: result});
+      //   });
+      // });
     </script>
 
     <script>
@@ -323,6 +323,30 @@
         }
 
         $("#mulitplefileuploader").uploadFile(settings);
+      });
+    </script>
+    <script>
+      $(document).ready(function() {
+
+        var settings = {
+          url: "scripts/upload_profile_song.php",
+          method: "POST",
+          allowedTypes:"mp3,mp4",
+          fileName: "myfile",
+          multiple: true,
+          formData: {username: '<?php echo $user['username']; ?>'},
+          onSuccess:function(files,data,xhr) {
+            $("#statusSong").html("<font color='green'>Upload is success</font>");
+          },
+          afterUploadAll:function() {
+            //alert("all images uploaded!!");
+          },
+          onError: function(files,status,errMsg){   
+            $("#statusSong").html("<font color='red'>Upload is Failed</font>");
+          }
+        }
+
+        $("#mulitplefileuploaderSong").uploadFile(settings);
       });
     </script>
   </head>
@@ -432,11 +456,11 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Profile</a></li>
           </ul>
-          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search">
+          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search" action="search.php" method="GET">
             <div class="form-group">
-              <input type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills...">
+              <input name="search" type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills...">
             </div>
-            <button type="submit" class="btn btn-success" style = "margin-left: -2px">
+            <button type="submit" class="btn btn-success" style="margin-left: -2px">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
@@ -482,8 +506,8 @@
             <div id="upload-wrapper">
               <div align="center">
                 <form action="scripts/upload_profile_pic.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
-                  <input name="FileInput" id="FileInput" type="file" />
-                  <input type="submit"  id="submit-btn" value="Upload" />
+                  <input name="FileInput" id="FileInput" type="file"/>
+                  <input type="submit"  id="submit-btn" value="Upload"/>
                   <img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/>
                 </form>
                 <div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
@@ -580,50 +604,10 @@
           <button id="btnSaveSong" type="button" class="btn-success" onclick="saveSongs()" style = "display:none">Save Changes</button>
         </div>
 
-        <!-- The file upload form used as target for the file upload widget -->
-        <form id="fileupload" action="" method="POST" enctype="multipart/form-data">
-          <!-- The fileupload-buttonbar contains buttons to add/delete files and start/cancel the upload -->
-          <div class="row fileupload-buttonbar">
-            <div class="col-lg-7">
-              <!-- The fileinput-button span is used to style the file input field as button -->
-              <span class="btn btn-success fileinput-button">
-                <i class="glyphicon glyphicon-plus"></i>
-                <span>Add files...</span>
-                <input type="file" name="files[]" multiple>
-              </span>
-              <button type="submit" class="btn btn-primary start">
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start upload</span>
-              </button>
-              <button type="reset" class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel upload</span>
-              </button>
-              <button type="button" class="btn btn-danger delete">
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-              </button>
-              <input type="checkbox" class="toggle">
-              <!-- The global file processing state -->
-              <span class="fileupload-process"></span>
-            </div>
-            <!-- The global progress state -->
-            <div class="col-lg-5 fileupload-progress fade">
-              <!-- The global progress bar -->
-              <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                <div class="progress-bar progress-bar-success" style="width:0%;"></div>
-              </div>
-              <!-- The extended global progress state -->
-              <div class="progress-extended">&nbsp;</div>
-            </div>
-          </div>
-          <!-- The table listing the files available for upload/download -->
-          <table role="presentation" class="table table-striped">
-            <tbody class="files">
+        <h2>Upload Songs</h2>
+        <div id="mulitplefileuploaderSong">Upload</div>
 
-          </tbody>
-        </table>
-        </form>
+        <div id="statusSong"></div>
 
       </div>
       <!-- End of Sounds Section -->
