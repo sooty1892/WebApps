@@ -1,4 +1,7 @@
+.simplecolorpicker.icon{height:30px;width:30px;}
+
 .simplecolorpicker.picker {
+
   position: absolute;
   top: 100%;
   left: 0;

@@ -6,6 +6,8 @@
 	//cookie to expire after a year
 	$expire = time()+(60*60*24*365);
 
+    //for
+    
     // //for
     // $host = "localhost";
     // $port = "5432";

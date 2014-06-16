@@ -2,13 +2,11 @@
     position: relative;
     height: 250px;
     margin-right: auto;
-    margin-top: 70px;
-    margin-bottom:100px;
+    margin-top: 100px;
+    margin-bottom:70px;
     width: 900px;
     background-color: #4e5d6c;
     overflow: hidden;
-   /* border-top-right-radius: 10px;
-    border-top-left-radius :10px;*/
     
 }
 
@@ -75,17 +73,7 @@ li.active{background-color: #3498DB}
 	width:300px;
 	height:210px;
 }
-/*
-.projectSection{
- position: absolute;
-    height: 170px;
-    margin-top: 50px;
-    margin-right: auto;
-    width: 600px;
-    background-color: #4e5d6c;
-    overflow: hidden
-    
-}*/
+
 
 .mediaSection{
 	
@@ -98,7 +86,7 @@ li.active{background-color: #3498DB}
 .description{
   width:328px;
   position: relative;
-  top:-210px;
+  top:-220px;
   left:572px;
   height: 210px;
   border-left-style: solid;

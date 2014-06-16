@@ -25,9 +25,9 @@
         success: function(response) {
           console.log(response); 
           for (var i in response) {
-            $('#print').append($("<p>" + response[i].description + " " + response[i].name + "</p>"));
+            $("body").append($("<p>" + response[i].description + " " + response[i].name + "</p>"));
             for (var a in response[i][0]) {
-              $('#print').append($("<p>" + response[i][0][a].extension + " " + response[i][0][a].name + " " + response[i][0][a].path + " " + response[i][0][a].username + "</p>"));
+              $('body').append($("<p>" + response[i][0][a].extension + " " + response[i][0][a].name + " " + response[i][0][a].path + " " + response[i][0][a].username + "</p>"));
             }
           }    
         },
