@@ -17,7 +17,7 @@ $(document).ready(function(){
 
 function pullData(){
    $.ajax({
-        url: '../scripts/pull_project_data.php',
+        url: 'scripts/pull_project_data.php',
         type: 'GET',
         dataType: 'json',
         data: {idproject: '1'},
@@ -36,13 +36,7 @@ function pullData(){
     }
 
 
-function writePage(){
-  var data = pullData();
-  writeMenu(data);
-  // writeSections(data);
-  // activatePlayers(data);
-  // activatePageScroller();
-}
+
 
 function activatePageScroller(){
   var middle = $("#middlePanel");
@@ -52,7 +46,7 @@ function activatePageScroller(){
 
 function writeMenu(data){
 for (var i in data) {
- var item = "<li><a href='#'>"+ data[i].name +"</a></li>"  
+ var item = "<li><a href='#'>"+ data[i].name +"</a></li>";  
 $("#menu").append(item);
 
 

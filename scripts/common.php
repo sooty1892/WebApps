@@ -7,18 +7,14 @@
 	$expire = time()+(60*60*24*365);
 
     //for
-    $host = "localhost";
-    $port = "5432";
-    $dbname = "ashleyhemingway";
-    $dbuser = "ashleyhemingway";
-    $dbpw = "";
+    
 
 
-     $username = "cts12";
+     $dbuser = "cts12";
      $host = "db.doc.ic.ac.uk";
      $port = 5432;
      $dbname = "cts12";
-     $password = "WkMRCTUhEN";
+     $dbpw = "WkMRCTUhEN";
 
     // for imperial server
     // $host = '146.169.45.190';
