@@ -304,8 +304,12 @@
               data: formdata,
               processData: false,
               contentType: false,
+              dataType: 'json',
               success: function (res) {
-                //document.getElementById("response").innerHTML = res; 
+                console.log(res);
+                for (var i in res) {
+                  alert(res[i]);
+                }
               }
             });
           }

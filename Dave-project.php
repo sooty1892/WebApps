@@ -1,33 +1,72 @@
+<?php
+    include 'scripts/common.php';
+
+    $logged_in_user = "";
+
+    //check if user is logged in or not
+    if (!loggedin()) {
+        header("Location: index.php");
+        exit();
+    } else {
+        if (isset($_COOKIE["user"])) {
+            $logged_in_user = $_COOKIE["user"];
+        } else {
+            $logged_in_user = $_SESSION["user"];
+        }
+    }
+
+    $query = "SELECT * FROM projects WHERE idproject = '1'";
+    $results = pg_query($con, $query);
+    $pro = pg_fetch_array($result);
+
+    $projectid = $pro['idproject'];
+    $projectname = $pro['name'];
+    $projectdesc = $pro['description'];
+    $projectprivacy = $pro['private'];
+    $projectlicense = $pro['license'];
+    $projectdata = $pro['datecreated'];
+    $projectsectionorder = $pro['secionorder'];
+
+    $query = "SELECT username FROM projectusers WHERE idproject = '{$projectid}'";
+    $results = pg_query($con, $query);
+    $users = pg_fetch_array($result);
+
+    $query = "SELECT genres.genre FROM projectgenres
+              INNER JOIN genres ON projectgenres.idproject = '$idproject' AND genres.idgenre = projectgenres.idgenre";
+    $results = pg_query($con, $query);
+    $genres = pg_fetch_array($result);
+
+    $query = "SELECT skills.skill FROM projectskills
+              INNER JOIN skills ON projectskills.idproject = '$idproject' AND skills.idskill = projectskills.idskill";
+    $results = pg_query($con, $query);
+    $skills = pg_fetch_array($result);          
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <meta charset="utf-8">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Music Collaborator</title>
-<link rel="stylesheet" href="css/jquery.simplecolorpicker.css">
+    <link rel="stylesheet" href="css/jquery.simplecolorpicker.css">
     <link href="css/player.css" rel="stylesheet">
-<link href="css/jquery.simplecolorpicker.css" rel="stylesheet">
+    <link href="css/jquery.simplecolorpicker.css" rel="stylesheet">
     <link href="css/bootstrap.min.css" rel="stylesheet">
-      <link href="css/lightbox.css" rel="stylesheet">
+    <link href="css/lightbox.css" rel="stylesheet">
     <link href="css/project_styles.css" rel="stylesheet">
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-      <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>  
-  <script type="text/javascript" src="js/jquery.pagescroller.lite.js"></script>
+    <script type="text/javascript" src="js/jquery.pagescroller.lite.js"></script>
     <script src="js/create_project_add.js"></script>
     <script src="js/edit_project_add.js"></script>
 
-<script src="js/jquery.simplecolorpicker.js"></script>
-<script src="js/project.js"></script>
-
-
-
-
-  
+    <script src="js/jquery.simplecolorpicker.js"></script>
+    <script src="js/project.js"></script>
 
   </head>
 

@@ -5,6 +5,8 @@ if (isset($_FILES["imageFiles"])) {
     $output_dir = '../uploads/profile_album_art/';
 
     $username = $_POST['username'];
+
+    $results = array();
     
     foreach ($_FILES["imageFiles"]["error"] as $key => $error) {
         if ($error == UPLOAD_ERR_OK) {
@@ -17,10 +19,14 @@ if (isset($_FILES["imageFiles"])) {
 
             $newPath = substr($path, 3);
 
+            array_push($results, $newPath);
+
             $query = "INSERT INTO userimagefiles (username, path) VALUES ('$username', '$newPath')";
             pg_query($con, $query);
         }
     }
+
+    echo json_encode($results);
 }
 
 ?>
