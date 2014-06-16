@@ -5,10 +5,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Music Collaborator</title>
-<link rel="stylesheet" href="css/jquery.simplecolorpicker.css">
+<link rel="stylesheet" href="../css/jquery.simplecolorpicker.css">
     <link href="../css/player.css" rel="stylesheet">
     <link href="../css/bootstrap.min.css" rel="stylesheet">
-      <link href="../css/lightbox.css" rel="stylesheet">
     <link href="../css/project_styles.css" rel="stylesheet">
    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -21,23 +20,54 @@
     <script src="../js/create_project_add.js"></script>
 <script src="../js/jquery.simplecolorpicker.js"></script>
 
+<script>
+      
+    $(document).ready(function(){
+ 
+    $.ajax({
+        url: '../scripts/pull_project_data.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {idproject: '6'},
+        success: function(response) {
+          console.log(response); 
+          for (var i in response) {
+            $('body').append($("<p>" + response[i].description + " " + response[i].name + "</p>"));
+            for (var a in response[i][0]) {
+              $('body').append($("<p>" + response[i][0][a].extension + " " + response[i][0][a].name + " " + response[i][0][a].path + " " + response[i][0][a].username + "</p>"));
+            }
+          }    
+        },
+        error: function(xhr,err){
+                alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status);
+                alert("responseText: "+xhr.responseText);
+              }
+      });
+
+
+    });
+  </script>
+
 
 
   <script type="text/javascript">
       
       $(document).ready(function(){
-            $.ajax({
+  //           $.ajax({
 
-    dataType: 'json',
-    type: "POST",
-    url: "../scripts/pull_project_data.php",
-    dataType: {idProject: '1'},
-    success:  function(response) {
-           console.log(response);
+  //   dataType: 'text',
+  //   type: "POST",
+  //   url: "../scripts/pull_project_data.php",
+  //   dataType: {idproject: '1'},
+  //   success:  function(response) {
+  //          console.log(response);
+  //   },
+  //   error: function(data) {
+  //     console.log(data);
+  //     alert(data);
+  //   }
 
-    }
-
-  });
+  // });
             var middle = $("#middlePanel");
          middle.pageScroller({sectionClass:'projectSection',navigation: '#menu',scrollOffset:-200,animationSpeed:200});        
           $(document).keydown(function(e){
@@ -51,14 +81,6 @@
             
           })
 
-          $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {idproject: '1'},
-            sucess: function(response) {
-              console.log(response);
-            }
-          });
 
 })
   </script>
