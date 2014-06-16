@@ -7,13 +7,12 @@
     width: 900px;
     background-color: #4e5d6c;
     overflow: hidden;
-   /* border-top-right-radius: 10px;
-    border-top-left-radius :10px;*/
+  
     
 }
 
 .sectionEdit{background-color: #485563;
-height: 500px;width: 500px;
+height: 500px;width: 450px;
 position: relative; left:50px;}
 .sectionList{
   list-style-type: none;
@@ -29,13 +28,13 @@ position: relative; left:50px;}
     /*border-radius: 10px;*/
     /*border-bottom-right-radius: 0px;
     border-bottom-left-radius: 0px;*/
-    text-align: center;
+    text-align: center; 
 }
 
 
 .listItem{
   background-color: #222222;
-  width :auto;
+  width :350px;
   height:40px;
     position: relative;
     /*border-style: solid;*/
@@ -51,9 +50,6 @@ position: relative; left:50px;}
 }
 
 
-.frame { width: 100%; height: 160px; padding: 0; }
-.frame .slidee { margin: 0; padding: 0; height: 100%; list-style: none; }
-.frame .slidee li { float: left; margin: 0 5px 0 0; padding: 0; width: 120px; height: 100%; }
 
 .sectionTitle h3{
 	position: relative;
@@ -75,17 +71,7 @@ li.active{background-color: #3498DB}
 	width:300px;
 	height:210px;
 }
-/*
-.projectSection{
- position: absolute;
-    height: 170px;
-    margin-top: 50px;
-    margin-right: auto;
-    width: 600px;
-    background-color: #4e5d6c;
-    overflow: hidden
-    
-}*/
+
 
 .mediaSection{
 	
@@ -98,7 +84,7 @@ li.active{background-color: #3498DB}
 .description{
   width:328px;
   position: relative;
-  top:-210px;
+  top:-310px;
   left:572px;
   height: 210px;
   border-left-style: solid;

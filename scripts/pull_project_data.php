@@ -45,5 +45,5 @@
 
 	    echo json_encode($a_json);
 	    flush();
-	}
+	} else {echo "ERRORERRORERROR";}
 ?>

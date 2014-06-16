@@ -20,6 +20,8 @@
   <script type="text/javascript" src="../js/jquery.pagescroller.lite.js"></script>
     <script src="../js/create_project_add.js"></script>
 <script src="../js/jquery.simplecolorpicker.js"></script>
+<script src="PROTOTYPE.js"></script>
+
 
 
 
@@ -27,17 +29,26 @@
       
       $(document).ready(function(){
             $.ajax({
+        url: '../scripts/pull_project_data.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {idproject: '1'},
+        success: function(response) {
+          console.log(response); 
+          for (var i in response) {
+            $("body").append($("<p>" + response[i].description + " " + response[i].name + "</p>"));
+            for (var a in response[i][0]) {
+              $('body').append($("<p>" + response[i][0][a].extension + " " + response[i][0][a].name + " " + response[i][0][a].path + " " + response[i][0][a].username + "</p>"));
+            }
+          }    
+        },
+        error: function(xhr,err){
+                alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status);
+                alert("responseText: "+xhr.responseText);
+              }
+      });
 
-    dataType: 'json',
-    type: "POST",
-    url: "../scripts/pull_project_data.php",
-    dataType: {idProject: '1'},
-    success:  function(response) {
-           console.log(response);
-
-    }
-
-  });
+ 
             var middle = $("#middlePanel");
          middle.pageScroller({sectionClass:'projectSection',navigation: '#menu',scrollOffset:-200,animationSpeed:200});        
           $(document).keydown(function(e){
@@ -49,18 +60,11 @@
             }
             
             
-          })
-
-          $.ajax({
-            type: 'POST',
-            dataType: 'json',
-            data: {idproject: '1'},
-            sucess: function(response) {
-              console.log(response);
-            }
           });
 
-})
+          
+
+});
   </script>
 
   </head>
@@ -209,7 +213,7 @@
       <p>Personal: Charki, Ashley the moaner,EDDIETHEBLACK,DAVE</p>
     </div><br>  
   </div><br>
-  
+  <div>
   <div class="projectSection">
     <div class="sectionTitle">
      <h3>Intro</h3>
@@ -329,7 +333,7 @@
   </div>
 
   </div>
-
+ </div>
 </div>
 
 <br>
