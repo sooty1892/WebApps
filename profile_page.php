@@ -51,11 +51,11 @@
         $license = $_POST['selectLicense'];
 
         if ($_POST['projectPrivacy'] != 'option1') {
-          $query = "INSERT INTO projects (name, description, private, license)
-                  VALUES ('$name', '$desc', 'true', '$license') RETURNING idproject";
+          $query = "INSERT INTO projects (name, description, private, license, datecreated)
+                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()') RETURNING idproject";
         } else {
-          $query = "INSERT INTO projects (name, description, private, license)
-                  VALUES ('$name', '$desc', 'false', '$license') RETURNING idproject";
+          $query = "INSERT INTO projects (name, description, private, license, datecreated)
+                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()') RETURNING idproject";
         }
         $result = pg_query($con, $query);
         $row = pg_fetch_row($result);
@@ -102,10 +102,6 @@
 
     <!-- For profile pic upload form -->
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
-    <style type="text/css">
-      img {border-width: 0}
-      * {font-family:'Lucida Grande', sans-serif;}
-    </style>
     <link href="css/upload_style.css" rel="stylesheet">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -275,9 +271,12 @@
               data: formdata,
               processData: false,
               contentType: false,
+              dataType: 'json',
               success: function (res) {
-                alert(res);
-                //document.getElementById("response").innerHTML = res; 
+                console.log(res);
+                for (var i in res) {
+                  alert(res[i]);
+                }
               }
             });
           }
