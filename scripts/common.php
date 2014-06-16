@@ -8,6 +8,12 @@
 
     //for
     
+    // //for
+    // $host = "localhost";
+    // $port = "5432";
+    // $dbname = "ashleyhemingway";
+    // $dbuser = "ashleyhemingway";
+    // $dbpw = "";
 
 
      $dbuser = "cts12";

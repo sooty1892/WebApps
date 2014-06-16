@@ -98,11 +98,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/profile_styles.css" rel="stylesheet">
     <link href="css/list_style.css" rel="stylesheet">
-    <!-- For blueimp file upload -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-    <link rel="stylesheet" href="css/jquery.fileupload.css">
-    <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
+
     <!-- For profile pic upload form -->
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
     <style type="text/css">
@@ -110,8 +106,9 @@
       * {font-family:'Lucida Grande', sans-serif;}
     </style>
     <link href="css/uploadfilemulti.css" rel="stylesheet">
-    
 
+    <link href="css/upload_style.css" rel="stylesheet">
+    
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
     <script src="js/jquery.easing.1.3.js"></script>
@@ -120,21 +117,7 @@
     <script src="js/create_project_add.js"></script>
     <!-- For autocomplete -->
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <!-- For blueimp file upload -->
-    <script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
-    <script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
-    <script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
-    <script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-    <script src="js/blueimp/jquery.iframe-transport.js"></script>
-    <script src="js/blueimp/jquery.fileupload.js"></script>
-    <script src="js/blueimp/jquery.fileupload-process.js"></script>
-    <script src="js/blueimp/jquery.fileupload-image.js"></script>
-    <script src="js/blueimp/jquery.fileupload-audio.js"></script>
-    <script src="js/blueimp/jquery.fileupload-video.js"></script>
-    <script src="js/blueimp/jquery.fileupload-validate.js"></script>
-    <script src="js/blueimp/jquery.fileupload-ui.js"></script>
-    <script src="js/blueimp/jquery.ui.widget.js"></script>
-    <script src="js/blueimp/jquery.fileupload-jquery-ui.js"></script>
+
     <!-- For profile pic upload form -->
     <script type="text/javascript" src="js/jquery.form.min.js"></script>
 
@@ -275,80 +258,69 @@
         }
       });
     </script>
-
-    <script>
-      // $(function () {
-      //   'use strict';
-
-      //   // Initialize the jQuery File Upload widget:
-      //   $('#fileupload').fileupload({
-      //     url: 'scripts/upload_profile_song.php'
-      //   });
-
-      //   // Load existing files:
-      //   $('#fileupload').addClass('fileupload-processing');
-      //   $.ajax({
-      //     // Uncomment the following to send cross-domain cookies:
-      //     //xhrFields: {withCredentials: true},
-      //     url: $('#fileupload').fileupload('option', 'url'),
-      //     dataType: 'json',
-      //     context: $('#fileupload')[0]
-      //   }).always(function () {
-      //     $(this).removeClass('fileupload-processing');
-      //   }).done(function (result) {
-      //     $(this).fileupload('option', 'done').call(this, $.Event('done'), {result: result});
-      //   });
-      // });
-    </script>
-
     <script>
       $(document).ready(function() {
+        var input = document.getElementById("songFiles");
 
-        var settings = {
-          url: "scripts/upload_profile_portfolio.php",
-          method: "POST",
-          allowedTypes:"jpg,png,jpeg",
-          fileName: "myfile",
-          multiple: true,
-          formData: {username: '<?php echo $user['username']; ?>'},
-          onSuccess:function(files,data,xhr) {
-            $("#status").html("<font color='green'>Upload is success</font>");
-          },
-          afterUploadAll:function() {
-            //alert("all images uploaded!!");
-          },
-          onError: function(files,status,errMsg){   
-            $("#status").html("<font color='red'>Upload is Failed</font>");
+        formdata = new FormData();
+        document.getElementById("songButt").style.display = "none";
+
+
+        input.addEventListener("change", function (evt) {
+
+          for (var i = 0; i < this.files.length; i++ ) {
+            formdata.append("songFiles[]", this.files[i]);
           }
-        }
 
-        $("#mulitplefileuploader").uploadFile(settings);
+          formdata.append("username", "admin");
+
+          if (formdata) {
+            $.ajax({
+              url: "scripts/upload_profile_song.php",
+              type: "POST",
+              data: formdata,
+              processData: false,
+              contentType: false,
+              success: function (res) {
+                //document.getElementById("response").innerHTML = res; 
+              }
+            });
+          }
+        });
       });
     </script>
     <script>
       $(document).ready(function() {
+        var input = document.getElementById("imageFiles");
 
-        var settings = {
-          url: "scripts/upload_profile_song.php",
-          method: "POST",
-          allowedTypes:"mp3,mp4",
-          fileName: "myfile",
-          multiple: true,
-          formData: {username: '<?php echo $user['username']; ?>'},
-          onSuccess:function(files,data,xhr) {
-            $("#statusSong").html("<font color='green'>Upload is success</font>");
-          },
-          afterUploadAll:function() {
-            //alert("all images uploaded!!");
-          },
-          onError: function(files,status,errMsg){   
-            $("#statusSong").html("<font color='red'>Upload is Failed</font>");
+        formdata = new FormData();
+        document.getElementById("imageButt").style.display = "none";
+
+
+        input.addEventListener("change", function (evt) {
+
+          for (var i = 0; i < this.files.length; i++ ) {
+            formdata.append("imageFiles[]", this.files[i]);
           }
-        }
 
-        $("#mulitplefileuploaderSong").uploadFile(settings);
+          formdata.append("username", "admin");
+
+          if (formdata) {
+            $.ajax({
+              url: "scripts/upload_profile_portfolio.php",
+              type: "POST",
+              data: formdata,
+              processData: false,
+              contentType: false,
+              success: function (res) {
+                //document.getElementById("response").innerHTML = res; 
+              }
+            });
+          }
+        });
       });
     </script>
+
   </head>
 
   <body>
@@ -506,9 +478,9 @@
             <div id="upload-wrapper">
               <div align="center">
                 <form action="scripts/upload_profile_pic.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
-                  <input name="FileInput" id="FileInput" type="file"/>
-                  <input type="submit"  id="submit-btn" value="Upload"/>
-                  <img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait"/>
+                  <input name="FileInput" id="FileInput" type="file" multiple="multiple">
+                  <input type="submit"  id="submit-btn" value="Upload">
+                  <img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait">
                 </form>
                 <div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
                 <div id="output"></div>
@@ -540,16 +512,7 @@
         </div>
       </div>
       <!-- End of About Section -->
-<table role="presentation" class="table">
-            <tbody class="files">
-            <tr class="template-upload fade">
-              <td>
-                fgfhggh
-                <span class="preview"></span>
-              </td>
-            </tr>
-          </tbody>
-        </table>
+
       <br>
 
       <!-- Start of Skills Section -->
@@ -583,7 +546,7 @@
       <!-- Start of Sounds Section -->
       <div class="profilesection">
         <img src="web_icons/sounds.png" style = "float:right">
-        <h1 style = "margin-left: 25px">My Sounds</h1>
+        <h1 style = "margin-left: 25px">My Sounds (No val on input yet)</h1>
         <div id = "sound-container" class = "infoSection" style="padding-bottom: 5px">
           <ul id="songs-list">
             <li><button type="button" class="btn-default btn-lg btn-block" onclick="activateSong()">
@@ -604,10 +567,12 @@
           <button id="btnSaveSong" type="button" class="btn-success" onclick="saveSongs()" style = "display:none">Save Changes</button>
         </div>
 
-        <h2>Upload Songs</h2>
-        <div id="mulitplefileuploaderSong">Upload</div>
-
-        <div id="statusSong"></div>
+        <div id="main">
+          <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_song.php">
+              <input type="file" name="songFiles" id="songFiles" multiple />
+              <button type="submit" id="songButt">Upload Files!</button>
+            </form>
+        </div>
 
       </div>
       <!-- End of Sounds Section -->
@@ -645,10 +610,12 @@
           ?>
         </div>
 
-        <h2>Upload Image</h2>
-        <div id="mulitplefileuploader">Upload</div>
-
-        <div id="status"></div>
+        <div id="main">
+          <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_portfolio.php">
+              <input type="file" name="imageFiles" id="imageFiles" multiple />
+              <button type="submit" id="imageButt">Upload Files!</button>
+            </form>
+        </div>
 
       </div>
       <!-- End of Portfolio Section -->
@@ -656,83 +623,6 @@
       <br>
     </div>
     <!-- End of Container -->
-
-    <!-- The template to display files available for upload -->
-    <script id="template-upload" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr>
-          <td>
-            <span class="preview"></span>
-          </td>
-          <td>
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-          </td>
-          <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-          </td>
-          <td>
-            {% if (!i && !o.options.autoUpload) { %}
-              <button class="btn btn-primary start" disabled>
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start</span>
-              </button>
-            {% } %}
-            {% if (!i) { %}
-              <button class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-              </button>
-            {% } %}
-          </td>
-        </tr>
-      {% } %}
-    </script>
-
-    <!-- The template to display files available for download -->
-    <script id="template-download" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-download fade">
-          <td>
-            <span class="preview">
-              {% if (file.thumbnailUrl) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-              {% } %}
-            </span>
-          </td>
-          <td>
-            <p class="name">
-              {% if (file.url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-              {% } else { %}
-                <span>{%=file.name%}</span>
-              {% } %}
-            </p>
-              {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-              {% }%}
-          </td>
-          <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-          </td>
-          <td>
-            {% if (file.deleteUrl) { %}
-              <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-              </button>
-              <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-              <button class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-              </button>
-            {% } %}
-          </td>
-        </tr>
-      {% } %}
-    </script>
 
   </body>
 </html>
