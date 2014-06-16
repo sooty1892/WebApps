@@ -26,10 +26,30 @@ var buttonFadeNew = function () {
     });
 }
 
-function showModal() {
+function showEditModal() { 
     $('#editProject').modal('show');
 }
 
+function pullData(){
+   $.ajax({
+        url: 'scripts/pull_project_data.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {idproject: '1'},
+        success: function(response) {
+          fillDetails(response);
+           
+        },
+        error: function(xhr,err){
+                alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status + "NNNNNNNOOOOOOOO");
+                alert("responseText: "+xhr.responseText);
+              }
+      });
+
+    }
+function fillDetails(response){
+     
+}
 function generateTabs() {
     var btnSkills = $("#skill-list-p button");
     var btnGenres = $("#genre-list button");
