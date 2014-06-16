@@ -86,7 +86,6 @@
   <li class="divider" style="background-color:#222222"></li>
   
   <ul id="menu"class="nav nav-pills nav-stacked">
-  <li ><a href="#">Bio</a></li>
   
   </ul>
 </ul>

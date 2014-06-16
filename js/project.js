@@ -2,8 +2,18 @@
 //ADJUST FOR PROFILE HEAD.
 $(document).ready(function(){
     pullData();
-$(document).click(function(){
-activatePageScroller()});
+$(document).on("keydown",function(e){
+            if (e.which == 40){
+	      pageScroller.next();
+
+            }
+            if (e.which == 38){
+              pageScroller.prev();
+            }
+            
+            
+          }) ;  
+
 
 });
 
@@ -17,7 +27,8 @@ function pullData(){
           writeMenu(response);
           writeSections(response);
           activatePlayers(response);
-           
+          activatePageScroller(); 
+          pageScroller.prev();
         },
         error: function(xhr,err){
                 alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status + "NNNNNNNOOOOOOOO");
@@ -31,22 +42,13 @@ function pullData(){
 
 
 function activatePageScroller(){
-  var middle = $("#middlePanel");
-         middle.pageScroller({sectionClass:'projectSection',navigation: '#menu',scrollOffset:-180,animationSpeed:200}); 
-         $(document).on("keydown",function(e){
-            if (e.which == 40){
-              pageScroller.next();
-            }
-            if (e.which == 38){
-              pageScroller.prev();
-            }
-            
-            
-          }) ;      
+ $("#middlePanel").pageScroller({sectionClass:'projectSection',navigation: '#menu',scrollOffset:-180,animationSpeed:200}); 
+             
           
 }
 
 function writeMenu(data){
+$("#menu").append('<li ><a href="#">Bio</a></li>');
 for (var i in data) {
  var item = "<li><a href='#'>"+ data[i].name +"</a></li>";  
 $("#menu").append(item);
@@ -96,9 +98,9 @@ function activatePlayers(data){
   cssSelectorAncestor: c
 }, [], {
   playlistOptions: {
-    enableRemoveControls: false
+    enableRemoveControls: true
   },
-  swfPath: "../js",
+  swfPath: "swf",
   supplied: "mp3,mp4",
   smoothPlayBar: true,
   keyEnabled: false,
