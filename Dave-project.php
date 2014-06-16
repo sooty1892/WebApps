@@ -16,7 +16,6 @@
     <script src="js/bootstrap.min.js"></script>
     <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
     <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>  
-  <!-- <script type="text/javascript" src="js/project.js"></script> -->
   <script type="text/javascript" src="js/jquery.pagescroller.lite.js"></script>
     <script src="js/create_project_add.js"></script>
 <script src="js/jquery.simplecolorpicker.js"></script>
@@ -61,7 +60,7 @@
         </button>
       </form>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#" onclick="showMosectionTitledal()">Create Project</a></li>
+        <li><a href="#" onclick="showModal()">Create Project</a></li>
         <li class="dropdown">
         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
         <ul class="dropdown-menu">
@@ -159,6 +158,76 @@
   </div>
 </div>
 
+<div id ="newProject" class="modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Make a new project</h4>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>Enter project details and get creating</legend>
+            <div class="form-group">
+              <label for="inputProjectName" class="col-lg-2 control-label">Project Name</label>
+              <div class="col-lg-10">
+                <input type="text" class="form-control" id="inputEmail" placeholder="Enter a project name">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="textArea" class="col-lg-2 control-label">Project Description</label>
+              <div class="col-lg-10">
+                <textarea class="form-control" rows="3" id="textArea"></textarea>
+                <span class="help-block">A description about your musical project</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-2 control-label">Privacy level</label>
+              <div class="col-lg-10">
+                <div class="radio">
+                  <label>
+                  <input type="radio" name="optionsRadios" id="private" value="option1" checked="">
+                  Public
+                  </label>
+                </div>
+                <div class="radio">
+                  <label>
+                  <input type="radio" name="optionsRadios" id="public" value="option2">
+                  Private
+                  </label>
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="inputSkills" class="col-lg-2 control-label">Skills & Talents</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="inputSkill" placeholder="Add skills that you are looking for...">
+                <ul id="skill-list-p" style = "padding: 10px; margin-left: -10px">
+                </ul>
+              </div>
+              <button type="button" class="btn btn-info" onclick = "addSkills()">Add</button>
+            </div>
+            <div class="form-group">
+              <label for="inputGenre" class="col-lg-2 control-label">Genre</label>
+              <div class="col-lg-8">
+                <input type="text" class="form-control" id="inputGenre" placeholder="Add genres that the project is...">
+                <ul id="genre-list" style = "padding: 10px; margin-left: -10px">
+                </ul>
+              </div>
+              <button type="button" class="btn btn-info" onclick="addGenre()">Add</button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-success">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 
 <div class="middlePanel"id="middlePanel">
@@ -172,9 +241,7 @@
       <p>Personal: Charki, Ashley the moaner,EDDIETHEBLACK,DAVE</p>
     </div><br>  
   </div><br>
-  <div id="sections">
   
- </div>
 </div>
 
 <br>

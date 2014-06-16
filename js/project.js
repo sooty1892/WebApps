@@ -2,16 +2,8 @@
 //ADJUST FOR PROFILE HEAD.
 $(document).ready(function(){
     pullData();
-    $(document).keydown(function(e){
-            if (e.which == 40){
-              pageScroller.next();
-            }
-            if (e.which == 38){
-              pageScroller.prev();
-            }
-            
-            
-          });
+$(document).click(function(){
+activatePageScroller()});
 
 });
 
@@ -25,7 +17,7 @@ function pullData(){
           writeMenu(response);
           writeSections(response);
           activatePlayers(response);
-          activatePageScroller(response); 
+           
         },
         error: function(xhr,err){
                 alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status + "NNNNNNNOOOOOOOO");
@@ -40,7 +32,17 @@ function pullData(){
 
 function activatePageScroller(){
   var middle = $("#middlePanel");
-         middle.pageScroller({sectionClass:'projectSection',navigation: '#menu',scrollOffset:-200,animationSpeed:200});        
+         middle.pageScroller({sectionClass:'projectSection',navigation: '#menu',scrollOffset:-180,animationSpeed:200}); 
+         $(document).on("keydown",function(e){
+            if (e.which == 40){
+              pageScroller.next();
+            }
+            if (e.which == 38){
+              pageScroller.prev();
+            }
+            
+            
+          }) ;      
           
 }
 
@@ -54,11 +56,12 @@ $("#menu").append(item);
 }
 // !!DO THE ALBUM ART
 function writeSections(data){
-  $("#sections").html("");
+  
 
 for (var i  in data){
 
     var sectionName = data[i].name;
+var description = data[i].description;
   var section = '<div class="projectSection">';
   section += ' <div class="sectionTitle"><h3>' + sectionName + '</h3></div';
      section+= ' <div class="mediaSection"><div id="jquery_jplayer_' + sectionName+'" class="jp-jplayer"></div>'
@@ -72,8 +75,10 @@ for (var i  in data){
     section+='<div class="jp-progress"><div class="jp-seek-bar"><div class="jp-play-bar"></div></div></div>';
     section+='<div class="jp-time-holder"><div class="jp-current-time"></div><div class="jp-duration"></div></div></div>';
     section+='<div class="jp-no-solution"><span>Update Required</span>To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.';
-    section+='</div></div></div></div><div class="description"><h4> Project Description</h4><p id="description_Intro"></p></div></div><br>'
-  $("#sections").append(section);
+    section+='</div></div></div><div class="description"><h4> Project Description</h4><p >';
+section+=description+'</p></div></div><br>';	
+  $("#middlePanel").append(section);
+  
 
   }
 }
