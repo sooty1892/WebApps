@@ -51,11 +51,11 @@
         $license = $_POST['selectLicense'];
 
         if ($_POST['projectPrivacy'] != 'option1') {
-          $query = "INSERT INTO projects (name, description, private, license)
-                  VALUES ('$name', '$desc', 'true', '$license') RETURNING idproject";
+          $query = "INSERT INTO projects (name, description, private, license, datecreated)
+                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()') RETURNING idproject";
         } else {
-          $query = "INSERT INTO projects (name, description, private, license)
-                  VALUES ('$name', '$desc', 'false', '$license') RETURNING idproject";
+          $query = "INSERT INTO projects (name, description, private, license, datecreated)
+                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()') RETURNING idproject";
         }
         $result = pg_query($con, $query);
         $row = pg_fetch_row($result);
@@ -98,15 +98,10 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/profile_styles.css" rel="stylesheet">
     <link href="css/list_style.css" rel="stylesheet">
+    <link href="css/jquery.fileupload.css" rel="stylesheet">
 
     <!-- For profile pic upload form -->
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
-    <style type="text/css">
-      img {border-width: 0}
-      * {font-family:'Lucida Grande', sans-serif;}
-    </style>
-    <link href="css/uploadfilemulti.css" rel="stylesheet">
-
     <link href="css/upload_style.css" rel="stylesheet">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -120,8 +115,6 @@
 
     <!-- For profile pic upload form -->
     <script type="text/javascript" src="js/jquery.form.min.js"></script>
-
-    <script src="js/jquery.fileuploadmulti.min.js"></script>
 
     <script>
       $(function(){
@@ -261,13 +254,10 @@
     <script>
       $(document).ready(function() {
         var input = document.getElementById("songFiles");
-
         formdata = new FormData();
         document.getElementById("songButt").style.display = "none";
 
-
         input.addEventListener("change", function (evt) {
-
           for (var i = 0; i < this.files.length; i++ ) {
             formdata.append("songFiles[]", this.files[i]);
           }
@@ -281,8 +271,12 @@
               data: formdata,
               processData: false,
               contentType: false,
+              dataType: 'json',
               success: function (res) {
-                //document.getElementById("response").innerHTML = res; 
+                console.log(res);
+                for (var i in res) {
+                  alert(res[i]);
+                }
               }
             });
           }
@@ -295,8 +289,6 @@
 
         formdata = new FormData();
         document.getElementById("imageButt").style.display = "none";
-
-
         input.addEventListener("change", function (evt) {
 
           for (var i = 0; i < this.files.length; i++ ) {
@@ -320,7 +312,6 @@
         });
       });
     </script>
-
   </head>
 
   <body>
@@ -385,9 +376,10 @@
                   <input type="hidden" name="hiddenSkills" id="hiddenSkills" value="">
                   <input type="hidden" name="hiddenGenres" id="hiddenGenres" value="">
                   <button type="button" class="btn btn-info" onclick="addGenre()">Add</button>
-
-                  <label for="select" class="col-lg-2 control-label">License - <a href="http://creativecommons.org/licenses/">More</a></label>
-                  <div class="col-lg-10">
+                 </div> 
+                  <div class="form-group">
+                    <label for="select" class="col-lg-2 control-label">License - <a href="http://creativecommons.org/licenses/">More</a></label>
+                    <div class="col-lg-8">
                     <select class="form-control" id="select" name='selectLicense'>
                       <option selected="selected">Public Domain</option>
                       <option>All Rights Reserved</option>
@@ -400,7 +392,12 @@
                     </select>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-success">Submit</button>
+                <div class="form-group">
+                  <label for="inputProjectName" class="col-lg-2 control-label"></label>
+                  <div class="col-lg-10">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                  </div>
+                </div>
               </fieldset>
             </form>
           </div>
@@ -428,11 +425,11 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Profile</a></li>
           </ul>
-          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search" action="search.php" method="GET">
+          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search">
             <div class="form-group">
-              <input name="search" type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills...">
+              <input type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills...">
             </div>
-            <button type="submit" class="btn btn-success" style="margin-left: -2px">
+            <button type="submit" class="btn btn-success" style = "margin-left: -2px">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
@@ -469,22 +466,26 @@
           <h4 class="profilewrap" style="font-weight: bold"><?php echo $user['email']; ?></h3>
           <input disabled id="userRealName" type="text" class ="profileEntry" style="width: 330px" placeholder="Real Name" value="<?php echo $user['name']; ?>">
           <br>
+          <button id="btnFollow" value="not_following" type="button" class="btn-success editpos" onclick="followUser()">
+            <i class="glyphicon glyphicon-user"></i>
+            Follow
+          </button>
           <button id="btnEdit" type="button" class="btn-info editpos" onclick="editModeUser()">Edit Info</button>
           <div id="btnsChanges" class="editpos" style="display: none">
             
             <button type ="button" class="btn-default" onclick="cancelUser()">Cancel</button>
             <button type="submit" class="btn-success" onclick="saveChangesUser('<?php echo $user['username']; ?>')">Save Changes</button>
- 
-            <div id="upload-wrapper">
-              <div align="center">
+            <div style = "margin-top : 3px">
                 <form action="scripts/upload_profile_pic.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
-                  <input name="FileInput" id="FileInput" type="file" multiple="multiple">
-                  <input type="submit"  id="submit-btn" value="Upload">
-                  <img src="images/ajax-loader.gif" id="loading-img" style="display:none;" alt="Please Wait">
+                  <button class="btn-info fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add photo...</span>
+                    <input name="FileInput" id="FileInput" type="file" onchange="updateOutputSelection()">
+                  </button>
+                  <button type="submit" style="margin-top:5px" class="btn-primary" id="submit-btn" value="Upload">Change Photo</button>
                 </form>
-                <div id="progressbox" ><div id="progressbar"></div ><div id="statustxt">0%</div></div>
+                <div id="progressbox"><div id="progressbar"></div><!--<div id="statustxt">0%</div>--></div>
                 <div id="output"></div>
-              </div>
             </div>   
           </div>
         </div>
@@ -511,10 +512,7 @@
           <button onclick="saveAboutMe('<?php echo $user['username']; ?>')" type="submit" class="btn-success">Save Changes</button>
         </div>
       </div>
-      <!-- End of About Section -->
-
       <br>
-
       <!-- Start of Skills Section -->
       <div class="profilesection">
         <h1 style = "margin-left: 25px">Skills &#38; Talents</h1>
@@ -546,7 +544,7 @@
       <!-- Start of Sounds Section -->
       <div class="profilesection">
         <img src="web_icons/sounds.png" style = "float:right">
-        <h1 style = "margin-left: 25px">My Sounds (No val on input yet)</h1>
+        <h1 style = "margin-left: 25px">My Sounds</h1>
         <div id = "sound-container" class = "infoSection" style="padding-bottom: 5px">
           <ul id="songs-list">
             <li><button type="button" class="btn-default btn-lg btn-block" onclick="activateSong()">
@@ -561,19 +559,23 @@
         <audio controls style = "margin-left: 25px; width: 500px; display: none">
           Your browser does not support the audio element.
         </audio>
-        <div id="songUploadBtns" style="padding-bottom: 10px">
+        <!--<div id="songUploadBtns" style="padding-bottom: 10px">
           <button type="button" class="btn-info" style ="margin-left:25px">Upload Song</button>
           <button id="btnRemoveSong" type="button" class="btn-danger" onclick="removeSongs()">Remove Songs</button>
           <button id="btnSaveSong" type="button" class="btn-success" onclick="saveSongs()" style = "display:none">Save Changes</button>
-        </div>
-
-        <div id="main">
+        </div>-->
+        <div style= "margin-left: 25px; margin-bottom: 10px">
           <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_song.php">
-              <input type="file" name="songFiles" id="songFiles" multiple />
-              <button type="submit" id="songButt">Upload Files!</button>
+              <button class="btn-info fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add songs...</span>
+                    <input type="file" name="songFiles" id="songFiles" multiple>                  
+              </button>
+              <button type="submit" id="songButt">Upload</button>
             </form>
+            <div id = "song-preview-list" style= "margin-top: 5px">
+            </div>
         </div>
-
       </div>
       <!-- End of Sounds Section -->
 
@@ -609,20 +611,91 @@
             }
           ?>
         </div>
-
-        <div id="main">
-          <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_portfolio.php">
-              <input type="file" name="imageFiles" id="imageFiles" multiple />
-              <button type="submit" id="imageButt">Upload Files!</button>
-            </form>
-        </div>
-
+        <!--<div id="mulitplefileuploader" style="margin-left: 25px">Upload</div>
+        <div id="status"></div>-->
       </div>
       <!-- End of Portfolio Section -->
 
       <br>
     </div>
     <!-- End of Container -->
+
+    <!-- The template to display files available for upload -->
+    <script id="template-upload" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr>
+          <td style="width:300px">
+            <span class="preview"></span>
+          </td>
+          <td class="block">
+            <p class="name">{%=file.name%}</p>
+            <strong class="error text-danger"></strong>
+          </td>
+          <td>
+            <p class="size">Processing...</p>
+            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
+          </td>
+          <td>
+            {% if (!i && !o.options.autoUpload) { %}
+              <button class="btn-primary start" disabled>
+                <i class="glyphicon glyphicon-upload"></i>
+                <span>Start</span>
+              </button>
+            {% } %}
+            {% if (!i) { %}
+              <button class="btn-warning cancel">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Cancel</span>
+              </button>
+            {% } %}
+          </td>
+        </tr>
+      {% } %}
+    </script>
+
+    <!-- The template to display files available for download -->
+    <script id="template-download" type="text/x-tmpl">
+      {% for (var i=0, file; file=o.files[i]; i++) { %}
+        <tr class="template-download fade">
+          <td>
+            <span class="preview">
+              {% if (file.thumbnailUrl) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
+              {% } %}
+            </span>
+          </td>
+          <td>
+            <p class="name">
+              {% if (file.url) { %}
+                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
+              {% } else { %}
+                <span>{%=file.name%}</span>
+              {% } %}
+            </p>
+              {% if (file.error) { %}
+                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
+              {% }%}
+          </td>
+          <td>
+            <span class="size">{%=o.formatFileSize(file.size)%}</span>
+          </td>
+          <td>
+            {% if (file.deleteUrl) { %}
+              <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
+                <i class="glyphicon glyphicon-trash"></i>
+                <span>Delete</span>
+              </button>
+              <input type="checkbox" name="delete" value="1" class="toggle">
+            {% } else { %}
+              <button class="btn btn-warning cancel">
+                <i class="glyphicon glyphicon-ban-circle"></i>
+                <span>Cancel</span>
+              </button>
+            {% } %}
+          </td>
+        </tr>
+      {% } %}
+    </script>
 
   </body>
 </html>

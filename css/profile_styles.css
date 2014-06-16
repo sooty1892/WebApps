@@ -72,3 +72,11 @@
 .feed-element:click {
     border-color: white
 }
+
+.song-entry {
+    padding: 12.5px;
+    background-color: #485563;
+    width: 300px;
+    display: inline-block;
+    margin-bottom: 2px
+}

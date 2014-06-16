@@ -13,7 +13,28 @@ function editModeUser() {
         $("#btnsChanges").fadeToggle(400);
     });
     document.getElementById("userRealName").disabled = false;
-} 
+}
+
+function followUser() {
+    if($("#btnFollow").val() == "not_following"){
+        $("#btnFollow").html('<i class="glyphicon glyphicon-ok"></i> Following');
+        $("#btnFollow").val("following");
+        $("#btnFollow").css("opacity", "0.6");
+    } else {
+        $("#btnFollow").html('<i class="glyphicon glyphicon-user"></i> Follow');
+        $("#btnFollow").val("not_following");
+        $("#btnFollow").css("opacity", "1");
+    }
+}
+
+/*function fileNamesList() {
+    var inp = $("#songFiles")[0];
+    for (var i = 0; i < inp.files.length; ++i) {
+        var name = inp.files.item(i).name;
+        $("#song-preview-list").append('<div class="song-entry">' + name + 
+            ' <i style="float:right; display:none" class="glyphicon glyphicon-ok"></i></div><br>');
+    }
+}*/
 
 function cancelUser() {
     $("#btnsChanges").fadeToggle(400, function() { 
@@ -22,6 +43,12 @@ function cancelUser() {
     $("#files").empty();
     $("#progress .progress-bar").css("width","0%");
     document.getElementById("userRealName").disabled = true;
+}
+
+function updateOutputSelection() {
+    var filePath = $("#FileInput").val();
+    $("#output").html(filePath.substring(filePath.lastIndexOf("\\") + 1, 
+        filePath.length));
 }
 
 function saveChangesUser(username) {
