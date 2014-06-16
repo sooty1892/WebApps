@@ -35,13 +35,8 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/profile_styles.css" rel="stylesheet">
     <link href="css/list_style.css" rel="stylesheet">
-    <!-- For blueimp file upload -->
     <!-- For profile pic upload form -->
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
-    <style type="text/css">
-      img {border-width: 0}
-      * {font-family:'Lucida Grande', sans-serif;}
-    </style>
     
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -52,22 +47,8 @@
     <script src="js/create_project_add.js"></script>
     <!-- For autocomplete -->
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
-    <!-- For blueimp file upload -->
- <script type="text/javascript" src="js/jquery.form.min.js"></script>
-<script> 
-	
-$(document).ready(function(){
+    <script type="text/javascript" src="js/jquery.form.min.js"></script>
 
-	$("#notify").click(function(){ 
-
-	
-
-	});
-
-});
-	
-
-</script>
 </head>
 
 <body> 
@@ -115,21 +96,20 @@ $(document).ready(function(){
         Invite to Project
         <span class="caret"></span>
       </button>
-      <ul class="dropdown-menu">
+      <!-- /<ul class="dropdown-menu"> -->
 	<?php
 
-	  $query = "SELECT projects.name FROM projects INNER JOIN projectusers ON projectusers.owner AND projects.idproject = projectusers.idproject";
+	  $query = "SELECT projects.name FROM projects INNER JOIN projectusers ON projectusers.owner = 't' AND projects.idproject = projectusers.idproject";
 
-	 $results = pg_query($con, $query);
-         $array  = pg_fetch_array($results);
 	
-	// while($row = $array){
-	  // echo "<li class=\"projectinvite\">".$row['name']."</li>";   
-	// }
-	echo implode("|",$array);
+	if ($data = pg_query($con, $query)) {
+    while ($row = pg_fetch_assoc($data)) {
+      echo "<h1>" . $row['name'] . "</h1>";
+    }
+  }
 
 	?>
-       </ul>
+       <!-- </ul> -->
     </div>
 </body>
 
