@@ -77,7 +77,7 @@ var description = data[i].description;
     section+='<div class="jp-progress"><div class="jp-seek-bar"><div class="jp-play-bar"></div></div></div>';
     section+='<div class="jp-time-holder"><div class="jp-current-time"></div><div class="jp-duration"></div></div></div>';
     section+='<div class="jp-no-solution"><span>Update Required</span>To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.';
-    section+='</div></div></div><div class="description"><h4> Project Description</h4><p >';
+    section+='</div></div></div><div class="description"><h4> Section Description</h4><p >';
 section+=description+'</p></div></div><br>';	
   $("#middlePanel").append(section);
   
