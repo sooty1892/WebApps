@@ -36,17 +36,12 @@
     <link href="css/profile_styles.css" rel="stylesheet">
     <link href="css/list_style.css" rel="stylesheet">
     <!-- For blueimp file upload -->
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="http://blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
-    <link rel="stylesheet" href="css/jquery.fileupload.css">
-    <link rel="stylesheet" href="css/jquery.fileupload-ui.css">
     <!-- For profile pic upload form -->
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
     <style type="text/css">
       img {border-width: 0}
       * {font-family:'Lucida Grande', sans-serif;}
     </style>
-    <link href="css/uploadfilemulti.css" rel="stylesheet">
     
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
@@ -58,15 +53,6 @@
     <!-- For autocomplete -->
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <!-- For blueimp file upload -->
-    <script src="http://blueimp.github.io/JavaScript-Templates/js/tmpl.min.js"></script>
-    <script src="http://blueimp.github.io/JavaScript-Load-Image/js/load-image.min.js"></script>
-    <script src="http://blueimp.github.io/JavaScript-Canvas-to-Blob/js/canvas-to-blob.min.js"></script>
-    <script src="http://blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>
-    <script src="js/blueimp/jquery.iframe-transport.js"></script>
-    <script src="js/blueimp/jquery.fileupload.js"></script>
-    <script src="js/blueimp/jquery.fileupload-process.js"></script>
-    <script src="js/blueimp/jquery.fileupload-image.js"></script>
-    <script src="js/blueimp/jquery.fileupload-audio.js"></script>
  <script type="text/javascript" src="js/jquery.form.min.js"></script>
 <script> 
 	
@@ -137,9 +123,10 @@ $(document).ready(function(){
 	 $results = pg_query($con, $query);
          $array  = pg_fetch_array($results);
 	
-	 while($row = $array){
-	   echo "<li class= \"projectinvite\"> '{$row['name']}' </li>";   
-	 }
+	// while($row = $array){
+	  // echo "<li class=\"projectinvite\">".$row['name']."</li>";   
+	// }
+	echo implode("|",$array);
 
 	?>
        </ul>
