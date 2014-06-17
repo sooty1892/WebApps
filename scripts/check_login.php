@@ -1,5 +1,6 @@
 <?php
 	include 'common.php';
+	include 'passwordLib.php';
 
 	//check we have username post var
 	if(isset($_POST["username"]) && isset($_POST["password"]))
