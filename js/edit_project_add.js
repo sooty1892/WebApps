@@ -1,21 +1,49 @@
+$(document).ready(function (){
+$("#edit_sectionsButton").click(function () {
+    var name = $("#edit_inputSection").val();
+console.log(name);
+    var sectionName ='id_' + name;
+    var color= '<div style="position:relative; top:-15px; left:230px"><select name="colorpicker_' + name + '">';
+              color += '<option value="#222222">Black</option><option value="#9b59b6">Purple</option><option value="#f1c40f">Yellow</option>';
+              color += '<option value="#d35400">Orange</option><option value="#c0392b">Red</option><option value="#ecf0f1">White</option>';
+              color += '<option value="#27ae60">Green</option></select></div>';
+    var block = '<li id="' + sectionName+'" class="listItem">' + name + color+ '</li>';
+    $('.sectionList').append(block);
+    var select = 'select[name="colorpicker_'+name+'"]';
+var name = '#' + sectionName;
+ $(select).on('change', function() {
+  $(this).parent().parent().css('background-color', $(this).val());
+  if ($(this).val() == "#ecf0f1"){
+      $(this).parent().parent().css('color', "black");
+} else {
+ $(this).parent().parent().css('color', "white");
+}
+});             
+ $(select).simplecolorpicker({
+  picker: true
+})
+})
+})
+
+
 function addSkillsProject() {
-    var newSkill = $("#inputSkill").val();
+    var newSkill = $("#edit_inputSkill").val();
     if (newSkill != "") {
-        $("#skill-list-p").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
+        $("#edit_skill-list-p").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
                                 + newSkill  + "\">" 
                                + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");
-        $("#inputSkill").val("");
+        $("#edit_inputSkill").val("");
         $(document).on("click", ".close", buttonFade);
     }
 }
 
 function addGenre() {
-    var newGenre = $("#inputGenre").val();
+    var newGenre =  $("edit_#inputGenre").val();
     if (newGenre != "") {
-        $("#genre-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
+        $("#edit_genre-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
                                 + newGenre  + "\">" 
                                + newGenre + "<span class=\"close\" style =\"display: block\">x</span></button></li>");
-        $("#inputGenre").val("");
+        $("#edit_inputGenre").val("");
         $(document).on("click", ".close", buttonFade);
     }
 }
@@ -30,29 +58,13 @@ function showEditModal() {
     $('#editProject').modal('show');
 }
 
-function pullData(){
-   $.ajax({
-        url: 'scripts/pull_project_data.php',
-        type: 'GET',
-        dataType: 'json',
-        data: {idproject: '1'},
-        success: function(response) {
-          fillDetails(response);
-           
-        },
-        error: function(xhr,err){
-                alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status + "NNNNNNNOOOOOOOO");
-                alert("responseText: "+xhr.responseText);
-              }
-      });
 
-    }
 function fillDetails(response){
      
 }
 function generateTabs() {
-    var btnSkills = $("#skill-list-p button");
-    var btnGenres = $("#genre-list button");
+    var btnSkills = $("#edit_skill-list-p button");
+    var btnGenres = $("#edit_genre-list button");
 
     var skills = "";
     var genres = "";
@@ -64,8 +76,8 @@ function generateTabs() {
         genres = genres + "," + btnGenres[i].value;
     }
 
-    $('#hiddenSkills').attr("value", skills);
-    $('#hiddenGenres').attr("value", genres);
+    $('#edit_hiddenSkills').attr("value", skills);
+    $('#edit_hiddenGenres').attr("value", genres);
 
     return true;
 }

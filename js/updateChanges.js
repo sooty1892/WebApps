@@ -1,4 +1,5 @@
 var currentActiveButton = null;
+var currentActiveAudio = null;
 
 $(document).ready(function() {
     $("span.close").click(function () {
@@ -27,14 +28,14 @@ function followUser() {
     }
 }
 
-/*function fileNamesList() {
+function fileNamesList() {
     var inp = $("#songFiles")[0];
     for (var i = 0; i < inp.files.length; ++i) {
         var name = inp.files.item(i).name;
         $("#song-preview-list").append('<div class="song-entry">' + name + 
-            ' <i style="float:right; display:none" class="glyphicon glyphicon-ok"></i></div><br>');
+            ' <i style="float:right; color:#2ecc71" class="glyphicon glyphicon-ok"></i></div><br>');
     }
-}*/
+}
 
 function cancelUser() {
     $("#btnsChanges").fadeToggle(400, function() { 
@@ -148,56 +149,32 @@ function cancelAboutMe() {
     document.getElementById("aboutArea").disabled = true;
 }
 
-function activateSong() {
+var activate = function activateSong() {
     var btn = $(event.target);
-    
+    var id = btn.attr('id');
+
     if (currentActiveButton == null) {
         currentActiveButton = btn;
+        currentActiveAudio = document.getElementById("audio" + id);
+        currentActiveAudio.play();       
         btn.children("img")[0].style.display = "inline";
         btn.toggleClass("active");
     } else {
         currentActiveButton.children("img")[0].style.display = "none";
         currentActiveButton.toggleClass("active");
+        currentActiveAudio.load();
         
         if (currentActiveButton[0] == btn[0]) {
+            currentActiveAudio = null;
             currentActiveButton = null;
         } else {
             currentActiveButton = btn;
+            currentActiveAudio = document.getElementById("audio" + id);
+            currentActiveAudio.play();  
             btn.children("img")[0].style.display = "inline";
             btn.toggleClass("active");
         }
     }
-}
-
-function removeSongs() {
-    var btnSongs = $("#songs-list button");
-    var btnSpans = $("#songs-list span");
-    
-    if(currentActiveButton != null) {
-        currentActiveButton.children("img")[0].style.display = "none";
-        currentActiveButton.toggleClass("active");
-        currentActiveButton = null;
-    }
-    
-    for(var i = 0; i < btnSongs.length ; ++i) {
-        btnSongs[i].disabled = true;
-        btnSpans[i].style.display = "block";
-    }
-    $("#btnRemoveSong").fadeOut(400, function() {
-        $("#btnSaveSong").fadeIn(400);
-    });
-}
-
-function saveSongs() {
-    var btnSongs = $("#songs-list button");
-    var btnSpans = $("#songs-list span");
-    for(var i = 0; i < btnSongs.length ; ++i) {
-        btnSongs[i].disabled = false;
-        btnSpans[i].style.display = "none";
-    }
-    $("#btnSaveSong").fadeOut(400, function() {
-        $("#btnRemoveSong").fadeIn(400);
-    });
 }
 
 $('.feed-element').hover(function(){

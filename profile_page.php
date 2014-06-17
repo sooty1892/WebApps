@@ -273,9 +273,22 @@
               contentType: false,
               dataType: 'json',
               success: function (res) {
-                console.log(res);
-                for (var i in res) {
-                  alert(res[i]);
+                for(var i = 0; i < input.files.length; ++i) {
+                  var name = input.files.item(i).name;
+                  var id = $("#songs-list li").length + 1;
+                  $("#songs-list").append('<li><button id="' + id + '" type="button"' + 
+                    ' class="btn-default btn-lg btn-block"">' +
+                    '<img src="web_icons/now_playing.png" style="display: none">' 
+                    + name + '</button></li>');
+                  $('#' + id).on('click', activate);
+                  var audio_id = 'audio' + id;
+                  $("#audioPlayer").append('<audio loop controls style="display:none" id="' 
+                    + audio_id +'"><source src="' + res[i] + '"></audio>');
+                  setTimeout(function() {
+                    $("#song-preview-list").fadeOut(400, function() {
+                      $("#song-preview-list").empty();
+                    });
+                  } ,3000);
                 }
               }
             });
@@ -306,10 +319,7 @@
               contentType: false,
               dataType: 'json',
               success: function (res) {
-                console.log(res);
-                for (var i in res) {
-                  alert(res[i]);
-                }
+                  
               }
             });
           }
@@ -551,18 +561,9 @@
         <h1 style = "margin-left: 25px">My Sounds</h1>
         <div id = "sound-container" class = "infoSection" style="padding-bottom: 5px">
           <ul id="songs-list">
-            <li><button type="button" class="btn-default btn-lg btn-block" onclick="activateSong()">
-              <img src="web_icons/now_playing.png" style="display: none">The Art of Peer Pressure<span class="close close-music">x</span></button>
-            </li>
-            <li><button type="button" class="btn-default btn-lg btn-block" onclick="activateSong()">
-              <img src="web_icons/now_playing.png" style="display: none">Time of the Seasons<span class="close close-music">x</span></button>
-            </li>
           </ul>
         </div>
         <div id="audioPlayer"></div>
-        <audio controls style = "margin-left: 25px; width: 500px; display: none">
-          Your browser does not support the audio element.
-        </audio>
         <!--<div id="songUploadBtns" style="padding-bottom: 10px">
           <button type="button" class="btn-info" style ="margin-left:25px">Upload Song</button>
           <button id="btnRemoveSong" type="button" class="btn-danger" onclick="removeSongs()">Remove Songs</button>
@@ -573,7 +574,7 @@
               <button class="btn-info fileinput-button">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>Add songs...</span>
-                    <input type="file" name="songFiles" id="songFiles" multiple>                  
+                    <input type="file" name="songFiles" id="songFiles" multiple onchange="fileNamesList()">                  
               </button>
               <button type="submit" id="songButt">Upload</button>
             </form>
@@ -615,8 +616,17 @@
             }
           ?>
         </div>
-        <!--<div id="mulitplefileuploader" style="margin-left: 25px">Upload</div>
-        <div id="status"></div>-->
+        <div style= "margin-left: 25px; margin-bottom: 10px">
+            <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_portfolio.php">
+              <button class="btn-info fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add photos...</span>
+                    <input type="file" name="imageFiles" id="imageFiles" multiple onchange="fileNamesList()">                  
+              </button>
+              <button type="submit" id="imageButt">Upload</button>
+            </form>
+        </div>
+        </div>
       </div>
       <!-- End of Portfolio Section -->
 

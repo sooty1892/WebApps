@@ -17,7 +17,7 @@
 
     $query = "SELECT * FROM projects WHERE idproject = '1'";
     $results = pg_query($con, $query);
-    $pro = pg_fetch_array($result);
+    $pro = pg_fetch_array($results);
 
     $projectid = $pro['idproject'];
     $projectname = $pro['name'];
@@ -25,21 +25,21 @@
     $projectprivacy = $pro['private'];
     $projectlicense = $pro['license'];
     $projectdata = $pro['datecreated'];
-    $projectsectionorder = $pro['secionorder'];
+    $projectsectionorder = $pro['sectionorder'];
 
     $query = "SELECT username FROM projectusers WHERE idproject = '{$projectid}'";
     $results = pg_query($con, $query);
-    $users = pg_fetch_array($result);
+    $users = pg_fetch_array($results);
 
     $query = "SELECT genres.genre FROM projectgenres
-              INNER JOIN genres ON projectgenres.idproject = '$idproject' AND genres.idgenre = projectgenres.idgenre";
+              INNER JOIN genres ON projectgenres.idproject = '$projectid' AND genres.idgenre = projectgenres.idgenre";
     $results = pg_query($con, $query);
-    $genres = pg_fetch_array($result);
+    $genres = pg_fetch_array($results);
 
     $query = "SELECT skills.skill FROM projectskills
-              INNER JOIN skills ON projectskills.idproject = '$idproject' AND skills.idskill = projectskills.idskill";
+              INNER JOIN skills ON projectskills.idproject = '$projectid' AND skills.idskill = projectskills.idskill";
     $results = pg_query($con, $query);
-    $skills = pg_fetch_array($result);          
+    $skills = pg_fetch_array($results);          
 ?>
 
 <!DOCTYPE html>
@@ -67,6 +67,19 @@
 
     <script src="js/jquery.simplecolorpicker.js"></script>
     <script src="js/project.js"></script>
+    <script type="text/javascript"> 
+
+     $(document).ready(function(){
+
+  var x = '<?php echo $projectprivacy ?>';
+if (x == 'f') {
+
+      $('#edit_public').attr("checked","");
+} else {
+   $('#edit_private').attr("checked","");
+}
+});
+</script>
 
   </head>
 
@@ -122,8 +135,7 @@
   <li><div id="controlButton"class="btn-group">
     <button href='#'onclick="showEditModal()"style="width:98px"type="button" class="btn btn-info"><img src="glyphicons_free/glyphicons/png/glyphicons_157_show_thumbnails_with_lines.png"></button>
   </div></li>
-  <li class="divider" style="background-color:#222222"></li>
-  
+  <li class="divider" style="background-color:#222222"></li>  
   <ul id="menu"class="nav nav-pills nav-stacked">
   
   </ul>
@@ -143,67 +155,67 @@
     <div class="form-group">
       <label for="inputProjectName" class="col-lg-2 control-label">Project Name</label>
       <div class="col-lg-10">
-        <input type="text" class="form-control" id="inputEmail" placeholder="Enter a project name">
+        <input type="text" value=<?php echo $projectname;?> class="form-control" id="edit_inputEmail" placeholder="Enter a project name">
       </div>
     </div>
     <div class="form-group">
       <label for="textArea" class="col-lg-2 control-label">Project Description</label>
       <div class="col-lg-10">
-        <textarea class="form-control" rows="3" id="textArea"></textarea>
+        <textarea name="edit_projectDescription"class="form-control" rows="3" id="textArea"><?php echo $projectdesc;?></textarea>
         <span class="help-block">A description about your musical project</span>
       </div>
     </div>
     <div class="form-group">
-      <label class="col-lg-2 control-label">Privacy level</label>
-      <div class="col-lg-10">
-        <div class="radio">
-          <label>
-            <input type="radio" name="optionsRadios" id="private" value="option1" checked="">
-            Private
-          </label>
-        </div>
-        <div class="radio">
-          <label>
-            <input type="radio" name="optionsRadios" id="public" value="option2">
-            Public
-          </label>
-        </div>
-      </div>
-    </div> 
+                  <label class="col-lg-2 control-label">Privacy level</label>
+                  <div class="col-lg-10">
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="edit_projectPrivacy" id="edit_public" value="option1">
+                        Public
+                      </label>
+                    </div>
+                    <div class="radio">
+                      <label>
+                        <input type="radio" name="edit_projectPrivacy" id="edit_private" value="option2">
+                        Private
+                      </label>
+                    </div>
+                  </div>
     <div class="form-group">
-      <label for="inputSkills" class="col-lg-2 control-label">Skills & Talents</label>
+      <label for="edit_inputSkills" class="col-lg-2 control-label">Skills & Talents</label>
       <div class="col-lg-8">
-        <input type="text" class="form-control" id="inputSkill" placeholder="Add skills that you are looking for...">
-        <ul id="skill-list-p" style = "padding: 10px; margin-left: -10px">
+        <input type="text" class="form-control" id="edit_inputSkill" placeholder="Add skills that you are looking for...">
+        <ul id="edit_skill-list-p" style = "padding: 10px; margin-left: -10px">
         </ul>
       </div>
       <button type="button" class="btn btn-info" onclick = "addSkills()">Add</button>
     </div>
       
     <div class="form-group">
-      <label for="inputGenre" class="col-lg-2 control-label">Genre</label>
+      <label for="edit_inputGenre" class="col-lg-2 control-label">Genre</label>
       <div class="col-lg-8">
-        <input type="text" class="form-control" id="inputGenre" placeholder="Add genres that you are looking for...">
-        <ul id="genre-list" style = "padding: 10px; margin-left: -10px">
+        <input type="text" class="form-control" id="edit_inputGenre" placeholder="Add genres that you are looking for...">
+        <ul id="edit_genre-list" style = "padding: 10px; margin-left: -10px">
         </ul>
       </div>
-      <button type="button" class="btn btn-info" onclick="addGenre()">Add</button>
+      <input type="hidden" name="edit_hiddenSkills" id="edit_hiddenSkills" value="">
+                  <input type="hidden" name="edit_hiddenGenres" id="edit_hiddenGenres" value="">
+      <button type="button" class="btn btn-info" onclick="edit_addGenre()">Add</button>
     </div>
 
     <div class="sectionEdit">
               <ul class="sectionList">
-                <li id="id_Intro"class="listItem">Intro
-</li>
+               
                 
               </ul>
 
               <div style="position:relative;top:0px"class="form-group">
-      <label for="editSections" class="col-lg-2 control-label">Genre</label>
+      <label for="editSections" class="col-lg-2 control-label">Insert a new section</label>
       <div class="col-lg-8">
-        <input type="text" class="form-control" id="inputSection" placeholder="Section name">
+        <input type="text" class="form-control" id="edit_inputSection" placeholder="Section name">
         
       </div>
-      <button id="davebutton"type="button" class="btn btn-info" >Add</button>
+      <button id="edit_sectionsButton"type="button" class="btn btn-info" >Add</button>
     </div>
     </div>
 
@@ -295,9 +307,16 @@
     <img src="images/dj.jpg" width="250px" id="albumArt">
     <button type="button" class="btn btn-default" id="changeAlbumArt">:::</button>
     <div class="projectInfo">
-      <h3  >Project x</h3>
-      <p>Date started: 10/03/14 </p>
-      <p>Genre: Hard eco rock</p>
+      <h3 ><?php echo $projectname;?></h3>
+      <p> <?php echo $projectdesc;?></p>
+      <p> <strong>Genres: </strong> 
+           <?php  
+             foreach($genres as $genre){
+               echo "<span class=\"label label-primary\">". $genre ."</span>";
+}
+?>
+        </p>
+      <P> Date added: <h3 ><?php echo $projectdata;?></h3>
       <p>Personal: Charki, Ashley the moaner,EDDIETHEBLACK,DAVE</p>
     </div><br>  
   </div><br>
