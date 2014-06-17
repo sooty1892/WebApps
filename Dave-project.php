@@ -210,9 +210,9 @@ if (x == 'f') {
               </ul>
 
               <div style="position:relative;top:0px"class="form-group">
-      <label for="editSections" class="col-lg-2 control-label">Genre</label>
+      <label for="editSections" class="col-lg-2 control-label">Insert a new section</label>
       <div class="col-lg-8">
-        <input type="text" class="form-control" id="inputSection" placeholder="Section name">
+        <input type="text" class="form-control" id="edit_inputSection" placeholder="Section name">
         
       </div>
       <button id="edit_sectionsButton"type="button" class="btn btn-info" >Add</button>
