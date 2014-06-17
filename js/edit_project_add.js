@@ -1,4 +1,11 @@
 $(document).ready(function (){
+
+$("#editProject").on("hidden.bs.modal",function(){
+   $('#edit_inputSection').val("");
+   $(".sectionList").html("");
+});
+
+
 $("#edit_sectionsButton").click(function () {
     var name = $("#edit_inputSection").val();
 console.log(name);
@@ -22,6 +29,7 @@ var name = '#' + sectionName;
  $(select).simplecolorpicker({
   picker: true
 })
+$('#edit_inputSection').val("");
 })
 })
 
@@ -55,6 +63,21 @@ var buttonFadeNew = function () {
 }
 
 function showEditModal() { 
+   $.ajax({
+        url: 'scripts/pull_project_data.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {idproject: '1'},
+        success: function(response) {
+          writeSectionList(response);
+        },
+        error: function(xhr,err){
+                alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status);
+                alert("responseText: "+xhr.responseText);
+              }
+      });
+ 
+
     $('#editProject').modal('show');
 }
 

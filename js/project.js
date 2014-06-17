@@ -51,7 +51,6 @@ var name = '#' + sectionName;
 
 
 }
-
 function pullData(){
    $.ajax({
         url: 'scripts/pull_project_data.php',
@@ -104,7 +103,7 @@ var description = data[i].description;
   var section = '<div class="projectSection">';
   section += ' <div class="sectionTitle"><h3>' + sectionName + '</h3></div';
      section+= ' <div class="mediaSection"><div id="jquery_jplayer_' + sectionName+'" class="jp-jplayer"></div>';
-    section+='<div id="jp_container_' + sectionName +'" class="jp-audio">';
+    section+='<div id="jp_contaasdasdasdiner_' + sectionName +'" class="jp-audio">';
     section+='<div class="jp-playlist"><ul> <li></li> <!-- Empty <li> so your HTML conforms with the W3C spec --></ul></div>';
     section+='<div class="jp-details"><ul><li><span class="jp-title"></span></li></ul></div>';
     section+='<div class="jp-type-single"><span id="song_' + sectionName + '" class="songName">Song name: </span>';
