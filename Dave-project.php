@@ -161,33 +161,7 @@
             z-index:2147483647;
           }
     </style>
-    <script>
-      function getRating(name, section) {
-        $.ajax({
-          type: 'POST',
-          dataType: 'text',
-          data: {name: name,
-                 section: section,
-                 idproject: '1'},
-          url: 'scripts/rating.php'
-          sucess: function(res) {
-
-          }
-        });
-      }
-
-      function deleteSong(name, section) {
-        $.ajax({
-          type: 'POST',
-          dataType: 'text',
-          data: {},
-          data: {name: name,
-                 section: section,
-                 idproject: '1'},
-          url: 'scripts/delete_song.php'
-        });
-      }
-    </script>
+    
   </head>
 
   <body>
