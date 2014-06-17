@@ -103,11 +103,14 @@ for (var i  in data){
 var description = data[i].description;
   var section = '<div class="projectSection">';
   section += ' <div class="sectionTitle"><h3>' + sectionName + '</h3></div';
-     section+= ' <div class="mediaSection"><div id="jquery_jplayer_' + sectionName+'" class="jp-jplayer"></div>'
+     section+= ' <div class="mediaSection"><div id="jquery_jplayer_' + sectionName+'" class="jp-jplayer"></div>';
     section+='<div id="jp_container_' + sectionName +'" class="jp-audio">';
     section+='<div class="jp-playlist"><ul> <li></li> <!-- Empty <li> so your HTML conforms with the W3C spec --></ul></div>';
     section+='<div class="jp-details"><ul><li><span class="jp-title"></span></li></ul></div>';
-    section+='<div class="jp-type-single"><div class="jp-gui jp-interface"><ul class="jp-controls"><div class="mediaButton">'
+    section+='<div class="jp-type-single"><span id="song_' + sectionName + '" class="songName">Song name: </span>';
+    section+='<span id="artist_' + sectionName + '" class="artistName">Artist name: </span>';
+    section+='<div class="starImage"><img style="position:relative; left:120px;top:55px;z-index:999;width:20px;height:20px;"src="http://www.freestockphotos.biz/pictures/15/15160/Illustration+of+a+gold+star.png"><span style="position:relative; left:130px;top:55px;z-index:999;width:20px;height:20px;"class="star"id="star_'+sectionName+'"></span></div>';
+    section+='<div class="jp-gui jp-interface"><ul class="jp-controls"><div class="mediaButton">'
     section+='<a href="javascript:;" class="jp-play" >play</a><a href="javascript:;" class="jp-pause"><div class="pause"style="top:14px;left:25px"></div>';
     section+='<div class="pause"style="top:-36px;left:45px"></div></a></div>';
     section+='<div id="starButton"  class="unlitStar"></div><div id="uploadButton"></div></ul>';
@@ -122,7 +125,7 @@ section+=description+'</p></div></div><br>';
   }
 }
 
-function decoratePlayers() {
+function activateStars(data) {
      
 }
 
@@ -137,7 +140,9 @@ function activatePlayers(data){
    var myPlaylist = new jPlayerPlaylist({
   jPlayer: p,
   cssSelectorAncestor: c
-}, [], {
+}, [
+  
+], {
   playlistOptions: {
   },
   swfPath: "swf",
@@ -145,6 +150,41 @@ function activatePlayers(data){
   smoothPlayBar: true,
   keyEnabled: false,
 });
+ 
+  var container = "#jp_container_" + data[i].name;
+  var song = "#song_" + data[i].name;
+  var artist="#artist_" + data[i].name;
+  var playerName = '#jquery_jplayer_' + data[i].name;
+$(playerName).on($.jPlayer.event.setmedia, function(event){ 
+  var current = $(this).next().find(".jp-playlist-current");
+ var value = current.html(); 
+$(this).next().find(".songName").html(value);
+ value = $(this).next().find(".songName").find(".jp-playlist-current").html();
+$(this).next().find(".songName").html("Song name:" + value);
+$(this).next().find(".songName").find(".jp-free-media").hide();
+var a = $(this).next().find(".jp-playlist-current .jp-artist").html();
+$(this).next().find(".artistName").html(a);
+$(this).next().find(".songName").find(".jp-artist").hide();
+$(this).next().find(".songName").find(".jp-artist").hide();
+
+});
+
+$(playerName).on($.jPlayer.event.play, function(event){ 
+  var current = $(this).next().find(".jp-playlist-current");
+ var value = current.html(); 
+$(this).next().find(".songName").html(value);
+ value = $(this).next().find(".songName").find(".jp-playlist-current").html();
+$(this).next().find(".songName").html("Song name:" + value);
+$(this).next().find(".songName").find(".jp-free-media").hide();
+var a = $(this).next().find(".jp-playlist-current .jp-artist").html();
+$(this).next().find(".artistName").html(a);
+$(this).next().find(".songName").find(".jp-artist").hide();
+$(this).next().find(".songName").find(".jp-artist").hide();
+//GET RATING SOMEHOW VIA WHAT WE KNOW
+//$(this).next().find(".star").html(rating);
+
+});
+  
 
   for (var file in data[i][0]) {
    var extension = data[i][0][file].extension;
@@ -158,12 +198,13 @@ function activatePlayers(data){
    myPlaylist.add({title:name,artist:fileArtist,mp4:path,free:true});
 
    }
-  };
+  }
 
 }
 
 }
 
 // if !isOwner $("#controlButton").hide();
+
 
 

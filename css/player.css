@@ -99,7 +99,7 @@ div.jp-interface ul.jp-controls a {
   border-style:solid;
   border-color:#4e5d6c;
   border-radius:100px;
-  position:absolute;top:14px;
+  position:absolute;top:-5px;
   left:8px;
   width:85px;
   height:85px;
@@ -128,7 +128,7 @@ div.jp-interface ul.jp-controls a {
   border-color:#4e5d6c;
   border-radius:100px;
   position:absolute;
-  top:100px;
+  top:80px;
   left:8px;
   width:40px;
   height:40px;
@@ -148,7 +148,7 @@ div.jp-interface ul.jp-controls a {
   border-color:#4e5d6c;
   border-radius:100px;
   position:absolute;
-  top:100px;
+  top:80px;
   left:50px;
   width:40px;
   height:40px;
@@ -184,6 +184,7 @@ background-size: 20px 20px;
 
 
 
+
 /* @end */
 
 /* @group progress bar */
@@ -194,7 +195,7 @@ background-size: 20px 20px;
 }
 div.jp-audio div.jp-progress {
 	position: absolute;
-	top:150px;
+	top:130px;
 	height:35px;
 }
 div.jp-audio div.jp-type-single div.jp-progress {
@@ -237,7 +238,7 @@ div.jp-audio div.jp-type-playlist div.jp-progress {
 
 div.jp-audio div.jp-time-holder {
 	position:absolute;
-	top:185px;
+	top:165px;
 }
 div.jp-audio div.jp-type-single div.jp-time-holder {
 	left:-2px;
@@ -353,11 +354,10 @@ div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove:hover {
 	color:#0d88c1; }*/
 
 
-
-/* THIS IS THE ONE!
-.jp-playlist .jp-playlist-item-free{background-color:black;color:transparent;height:20px;width:20px;}
-.jp-playlist .jp-playlist-item-free:hover{background-color:black;color:transparent;height:20px;width:20px;}*/
-
+.jp-free-media{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
+.jp-playlist-item-free{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
+.jp-playlist .jp-playlist-item-free{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
+.jp-playlist .jp-playlist-item-free:hover{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
 
 /*MAYBE THIS?
 .jp-free-media{
