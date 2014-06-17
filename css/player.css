@@ -348,9 +348,21 @@ li div a .jp-playlist-item{height:25px;width: 250px}
 	font-weight:bold;
 	color:#666;
 }
+
 div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove:hover {
 	color:#0d88c1; }*/
 
+
+
+/* THIS IS THE ONE!
+.jp-playlist .jp-playlist-item-free{background-color:black;color:transparent;height:20px;width:20px;}
+.jp-playlist .jp-playlist-item-free:hover{background-color:black;color:transparent;height:20px;width:20px;}*/
+
+
+/*MAYBE THIS?
+.jp-free-media{
+height:50px;width:50px;color:transparent; left:120px;position:relative;background-image:url('https://www.google.co.uk/search?q=image&es_sm=122&tbm=isch&imgil=vkdiHkxHSTnYJM%253A%253Bhttps%253A%252F%252Fencrypted-tbn2.gstatic.com%252Fimages%253Fq%253Dtbn%253AANd9GcToZGEWvIBFgCiona6d74FtVthl4lkdJg3d61SGy-UCf4qFuDLD%253B900%253B600%253BaxYI8d0bBT-6wM%253Bhttp%25253A%25252F%25252Fwww.joomlaworks.net%25252Fsupport%25252Fdocs%25252Fsimple-image-gallery-pro&source=iu&usg=__bvpXGHorQLbFtoZgQ5qLeIiSQ1g%3D&sa=X&ei=GDefU4P4GqHF7AbxtIEg&ved=0CD8Q9QEwBQ&biw=1600&bih=788#facrc=_&imgdii=_&imgrc=vkdiHkxHSTnYJM%253A%3BaxYI8d0bBT-6wM%3Bhttp%253A%252F%252Fwww.joomlaworks.net%252Fimages%252Fdemos%252Fgalleries%252Fabstract%252F7.jpg%3Bhttp%253A%252F%252Fwww.joomlaworks.net%252Fsupport%252Fdocs%252Fsimple-image-gallery-pro%3B900%3B600');
+}*/
 
 
 /*FOR DOWNLOADING OF FILES?
@@ -363,6 +375,8 @@ div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove:hover {
 div.jp-type-playlist div.jp-playlist span.jp-free-media a{
 	color:#666;
 }
+
+
 
 
 div.jp-type-playlist div.jp-playlist span.jp-free-media a:hover{

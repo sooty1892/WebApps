@@ -1,21 +1,21 @@
 function addSkillsProject() {
-    var newSkill = $("#inputSkill").val();
+    var newSkill = $("#edit_inputSkill").val();
     if (newSkill != "") {
-        $("#skill-list-p").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
+        $("#edit_skill-list-p").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
                                 + newSkill  + "\">" 
                                + newSkill + "<span class=\"close\" style =\"display: block\">x</span></button></li>");
-        $("#inputSkill").val("");
+        $("#edit_inputSkill").val("");
         $(document).on("click", ".close", buttonFade);
     }
 }
 
 function addGenre() {
-    var newGenre = $("#inputGenre").val();
+    var newGenre = $("edit_#inputGenre").val();
     if (newGenre != "") {
-        $("#genre-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
+        $("#edit_genre-list").append("\n<li><button type=\"button\" class=\"btn-primary\" disabled value = \"" 
                                 + newGenre  + "\">" 
                                + newGenre + "<span class=\"close\" style =\"display: block\">x</span></button></li>");
-        $("#inputGenre").val("");
+        $("#edit_inputGenre").val("");
         $(document).on("click", ".close", buttonFade);
     }
 }
@@ -30,29 +30,13 @@ function showEditModal() {
     $('#editProject').modal('show');
 }
 
-function pullData(){
-   $.ajax({
-        url: 'scripts/pull_project_data.php',
-        type: 'GET',
-        dataType: 'json',
-        data: {idproject: '1'},
-        success: function(response) {
-          fillDetails(response);
-           
-        },
-        error: function(xhr,err){
-                alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status + "NNNNNNNOOOOOOOO");
-                alert("responseText: "+xhr.responseText);
-              }
-      });
 
-    }
 function fillDetails(response){
      
 }
 function generateTabs() {
-    var btnSkills = $("#skill-list-p button");
-    var btnGenres = $("#genre-list button");
+    var btnSkills = $("#edit_skill-list-p button");
+    var btnGenres = $("#edit_genre-list button");
 
     var skills = "";
     var genres = "";
@@ -64,8 +48,8 @@ function generateTabs() {
         genres = genres + "," + btnGenres[i].value;
     }
 
-    $('#hiddenSkills').attr("value", skills);
-    $('#hiddenGenres').attr("value", genres);
+    $('#edit_hiddenSkills').attr("value", skills);
+    $('#edit_hiddenGenres').attr("value", genres);
 
     return true;
 }
