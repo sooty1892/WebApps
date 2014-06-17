@@ -103,6 +103,7 @@
     <!-- For profile pic upload form -->
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
     <link href="css/upload_style.css" rel="stylesheet">
+    <link href="css/lightbox.css" rel="stylesheet">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -110,6 +111,7 @@
     <script src='js/jquery.autosize.js'></script>
     <script src="js/updateChanges.js"></script>
     <script src="js/create_project_add.js"></script>
+    <script src="js/lightbox.min.js"></script>
     <!-- For autocomplete -->
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
@@ -319,7 +321,40 @@
               contentType: false,
               dataType: 'json',
               success: function (res) {
-                  
+                var row_count = $("#portfolio").children(".row").length;
+                var pics_in_fst_row = $("#portfolio .row:first").children().length;
+                var last_row = $("#portfolio .row:last"); 
+                var current_row_count = last_row.children().length;
+
+                if(row_count == 0) {
+                  $("#portfolio").append('<div class="row"></div>');
+                  row_count = 1;
+                  last_row = $("#portfolio .row:last");
+                }
+
+                for(var i = 0; i < input.files.length; ++i) {
+                  if(row_count == 1 && pics_in_fst_row < 3) {
+                    last_row.append('<div class="col-md-3'
+                      + ' portfolio-item"> <a data-lightbox="portfolio" href="' + res[i] + '"><img ' +
+                      'class="img-responsive" src="' + res[i] +'"></a></div>');
+                    pics_in_fst_row++;
+                  } else {
+                    if(row_count == 1 || current_row_count == 4) {
+                      $("#portfolio").append('<br><div class="row"></div>');
+                      current_row_count = 1;
+                      last_row = $("#portfolio .row:last"); 
+                      last_row.append('<div class="col-md-3'
+                      + ' portfolio-item"> <a data-lightbox="portfolio" href="' + res[i] + '"><img ' +
+                      'class="img-responsive" src="' + res[i] +'"></a></div>');
+                      row_count++;
+                    } else {
+                      last_row.append('<div class="col-md-3'
+                      + ' portfolio-item"> <a data-lightbox="portfolio" href="' + res[i] + '"><img ' +
+                      'class="img-responsive" src="' + res[i] +'"></a></div>');
+                      current_row_count++;
+                    }
+                  }
+                }
               }
             });
           }
@@ -465,6 +500,43 @@
 
     <!--Start of Container -->
     <div class="container" style="margin-top: 50px">
+          <div class="sidebar">
+          <h4 style = "margin-top: 0px; padding : 5px; text-align: center; background-color: #34495e">Music Feeds</h4>
+          <div id = "feed-list" style = "margin-top: -10px; margin-bottom: 5px">
+              <div class = "feed-element">
+                <i class="glyphicon glyphicon-user"></i>
+                <strong>User1</strong> has created a new project
+              </div>
+              <div class = "feed-element">
+                <i class="glyphicon glyphicon-music"></i>
+                <strong>User9</strong> has finished a new song
+              </div>
+              <div class = "feed-element">
+                <i class="glyphicon glyphicon-user"></i>
+                <strong>User1</strong> has created a new project
+              </div>
+              <div class = "feed-element">
+                <i class="glyphicon glyphicon-plus"></i>
+                <strong>User17</strong> has uploaded to <strong>Project Funk</strong>
+              </div>
+              <div class = "feed-element">
+                <i class="glyphicon glyphicon-music"></i>
+                <strong>User12</strong> has finished a new song
+              </div>
+          </div>
+          <h4 style = "margin-top: 0px; padding : 5px; text-align: center; background-color: #34495e">Current Projects</h4>
+          <ul id = "projects-list" style="margin-top: -10px; margin-right: 20px">
+            <li><button type="button" class="btn-default btn-lg btn-block">
+              Project 1</button>
+            </li>
+            <li><button type="button" class="btn-default btn-lg btn-block">
+              Project 2</button>
+            </li>
+            <li><button type="button" class="btn-default btn-lg btn-block">
+              Project Project 3</button>
+            </li>
+          </ul>
+      </div>
       <!-- Start of Profile -->
       <div class="profilesection">
         <?php
@@ -590,7 +662,7 @@
       <div class = "profilesection">
         <img src="web_icons/portfolio.png" style = "float:right">
         <h1 style = "margin-left: 25px">Portfolio</h1>
-        <div id="portfolio" style="padding-top: 50px; padding-left: 25px; padding-right: 25px; padding-bottom: 25px">
+        <div id="portfolio" style="padding-left: 25px; padding-right: 25px; padding-bottom: 10px">
           <?php
             $query = "SELECT path FROM userimagefiles WHERE username = '{$user['username']}'";
             $results = pg_query($con, $query);
