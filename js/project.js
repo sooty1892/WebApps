@@ -107,13 +107,13 @@ var description = data[i].description;
     section+='<div id="jp_container_' + sectionName +'" class="jp-audio">';
     section+='<div class="jp-playlist"><ul> <li></li> <!-- Empty <li> so your HTML conforms with the W3C spec --></ul></div>';
     section+='<div class="jp-details"><ul><li><span class="jp-title"></span></li></ul></div>';
-    section+='<div class="jp-type-single"><span id="song_' + sectionName + '" class="songName">Song name: </span>';
-    section+='<span id="artist_' + sectionName + '" class="artistName">Artist name: </span>';
+    section+='<div class="jp-type-single"><span id="song_' + sectionName + '" class="songName"></span>';
+    section+='<span id="artist_' + sectionName + '" class="artistName"></span>';
     section+='<div class="starImage"><img style="position:relative; left:120px;top:55px;z-index:999;width:20px;height:20px;"src="http://www.freestockphotos.biz/pictures/15/15160/Illustration+of+a+gold+star.png"><span style="position:relative; left:130px;top:55px;z-index:999;width:20px;height:20px;"class="star"id="star_'+sectionName+'"></span><img id="tick"  src="http://www.clker.com/cliparts/2/k/n/l/C/Q/transparent-green-checkmark-hi.png"</div>';
     section+='<div class="jp-gui jp-interface"><ul class="jp-controls"><div class="mediaButton">'
     section+='<a href="javascript:;" class="jp-play" >play</a><a href="javascript:;" class="jp-pause"><div class="pause"style="top:14px;left:25px"></div>';
     section+='<div class="pause"style="top:-36px;left:45px"></div></a></div>';
-    section+='<div id="starButton"  class="unlitStar"></div><div id="uploadButton"></div></ul>';
+    section+='<div id="starButton_' + sectionName + '"  class="starbtn unlitStar"></div><div id="uploadButton"></div></ul>';
     section+='<div class="jp-progress"><div class="jp-seek-bar"><div class="jp-play-bar"></div></div></div>';
     section+='<div class="jp-time-holder"><div class="jp-current-time"></div><div class="jp-duration"></div></div></div>';
     section+='<div class="jp-no-solution"><span>Update Required</span>To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.';
@@ -124,14 +124,14 @@ section+=description+'</p></div></div><br>';
 
   }
 }
-function getRating(jobject,name, section) {
+function getRating(jobject,name, section, id) {
 
         $.ajax({
           type: 'POST',
           dataType: 'text',
           data: {name: name,
                  section: section,
-                 idproject: '1'},
+                 idproject: id},
           url: 'scripts/rating.php',
           success: function(response) {
              $(jobject).next().find(".star").html(response);
@@ -140,17 +140,20 @@ function getRating(jobject,name, section) {
         });
       }
 
-      function deleteSong(name, section) {
+      function deleteSong(name, section, id) {
         $.ajax({
           type: 'POST',
           dataType: 'text',
           data: {},
           data: {name: name,
                  section: section,
-                 idproject: '1'},
+                 idproject: id},
           url: 'scripts/delete_song.php'
         });
       }
+
+function updateRating() {
+}
 
 
 function activatePlayers(data){
@@ -184,7 +187,7 @@ $(playerName).on($.jPlayer.event.setmedia, function(event){
  var value = current.html(); 
 $(this).next().find(".songName").html(value);
  value = $(this).next().find(".songName").find(".jp-playlist-current").html();
-$(this).next().find(".songName").html("Song name:" + value);
+$(this).next().find(".songName").html( value);
 $(this).next().find(".songName").find(".jp-free-media").hide();
 var a = $(this).next().find(".jp-playlist-current .jp-artist").html();
 $(this).next().find(".artistName").html(a);
@@ -207,7 +210,7 @@ $(this).next().find(".songName").find(".jp-artist").hide();
 var sectionName = $(this).parents(".projectSection").find("h3").html();
 
 getRating(this,value,sectionName);
-
+//HIGHLIGHT STAR OR NOT
 
 
 //DEFAULT SONG STUFF HERE
@@ -227,6 +230,25 @@ getRating(this,value,sectionName);
 
    }
   }
+
+var starName = "#starButton_" + data[i].name;
+
+$(starName).on("click",function(){
+var x = $(this).siblings(".starImage").children(".star").html();
+var y = parseInt(x);
+if ($(this).hasClass("unlitStar")) {
+
+y+=1;
+} else {y-=1;}
+$(this).toggleClass("litStar");
+
+$(this).siblings(".starImage").children(".star").html(y);
+$(this).parents(".jp-audio").find(".songName").html()
+
+
+})
+
+
 
 }
 

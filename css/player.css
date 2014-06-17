@@ -122,7 +122,7 @@ div.jp-interface ul.jp-controls a {
     box-shadow: 0 0 8px #3498db;
 }
 
-#starButton{
+.starbtn{
   background-color:#2b3e50;
   border-style:solid;
   border-color:#4e5d6c;
@@ -134,7 +134,7 @@ div.jp-interface ul.jp-controls a {
   height:40px;
 }
 
-#starButton:hover{
+.starbtn:hover{
      -webkit-box-shadow: 0 0 8px #3498db;
     -moz-box-shadow: 0 0 8px #3498db;
     box-shadow: 0 0 8px #3498db;}
