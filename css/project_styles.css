@@ -15,7 +15,7 @@ height: 500px;width: 500px;
 position: relative; left:50px;}
 .sectionList{
     list-style-type: none;
-  overflow:auto;
+        overflow-x:hidden;
   height:435px;
 }
 
@@ -31,8 +31,8 @@ position: relative; left:50px;}
     border-bottom-left-radius: 0px;*/
     text-align: center;
 }
-
-
+.songName{position:absolute;left: 130px;background-color:transparent;margin:0px;z-index:999; width:200px;}
+.artistName{position:absolute;left: 130px;background-color:transparent;margin:0px;z-index:999; top:80px;width 200px; }
 .listItem{
   background-color: #222222;
   width :75%;
@@ -73,7 +73,7 @@ li.active{background-color: #3498DB}
 .description{
   width:328px;
   position: relative;
-  top:-220px;
+  top:-242px;
   left:570px;
   height: 210px;
   border-left-style: solid;
