@@ -37,7 +37,8 @@
     <link href="css/list_style.css" rel="stylesheet">
     <!-- For profile pic upload form -->
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
-    
+    <link href="css/notify.css" rel="stylesheet" type="text/css">
+ 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -48,6 +49,54 @@
     <!-- For autocomplete -->
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" src="js/jquery.form.min.js"></script>
+
+<script> 
+
+  $(document).ready(function(){
+
+    $(".invite").click(function(){
+
+	formdata = new FormData();
+	var name = "<?php echo $logged_in_user; ?>";
+	
+	$.ajax({
+	  type: 'POST',
+	  url: "scripts/notify.php",
+	  data: {usersend: name},
+	  dataType: 'json'
+	  
+	});
+
+    }); 
+    
+
+
+
+  });
+
+ function reply_click(clicked_id, usersen){
+     
+     // alert("This object's ID attribute is set to \"" + usersend + "\"."); 
+
+ $(document).ready(function(){
+ 	var name = "<?php echo $logged_in_user; ?>";
+        $.ajax({
+	  type: 'POST',
+          url: "scripts/accept.php",
+          data: {useraccept: name, idproject: clicked_id, usersend: usersen },
+          dataType: 'json'
+        
+               
+        });
+
+    });
+
+ 
+}
+
+
+</script>
+
 
 </head>
 
@@ -92,11 +141,11 @@
     <!-- End of Navbar -->
 
 <div class="btn-group">
-      <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      <button type="button" class="btn btn-default dropdown-toggle" id="id" data-toggle="dropdown">
         Invite to Project
         <span class="caret"></span>
       </button>
-      <!-- /<ul class="dropdown-menu"> -->
+       <ul class="dropdown-menu"> 
 	<?php
 
 	  $query = "SELECT projects.name FROM projects INNER JOIN projectusers ON projectusers.owner = 't' AND projects.idproject = projectusers.idproject";
@@ -104,13 +153,43 @@
 	
 	if ($data = pg_query($con, $query)) {
     while ($row = pg_fetch_assoc($data)) {
-      echo "<h1>" . $row['name'] . "</h1>";
+//	<li><a href="#">Dropdown link</a></li>
+
+     echo "<li class=\"invite\"> <a href=\"#\">" . $row['name'] . "</li>";
     }
   }
 
 	?>
-       <!-- </ul> -->
+       </ul>
     </div>
+
+
+<ul class="nav nav-pills">
+  <li class="dropdown">
+    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+      Notifications <span class="badge">0</span>
+    </a>
+    <ul class="dropdown-menu">
+      <li class="divider"></li>
+	
+      <?php 
+	$query = " SELECT usersend,idproject,description FROM notifications WHERE useraccept='{$logged_in_user}'";
+
+	  if ($data = pg_query($con, $query)) {
+    while ($row = pg_fetch_assoc($data)) {
+
+         echo "<li class=\"invite\"> <a href=\"#\">" . $row['usersend'] . " ".$row['description'] ." </br> </br> <button type=\"button\" class=\"btn btn-warning accept\" id=\"".$row['idproject']."\"  onClick=\"reply_click(this.id, '".$row['usersend']."')\">Accept</button>
+<button type=\"button\" class=\"btn btn-danger decline\">Decline</button></li>";
+        }
+      }
+			
+      ?>
+    </ul>
+  </li>
+</ul>
+
 </body>
+
+
 
 
