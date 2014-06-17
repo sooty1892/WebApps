@@ -353,11 +353,10 @@ div.jp-type-playlist div.jp-playlist a.jp-playlist-item-remove:hover {
 	color:#0d88c1; }*/
 
 
-
-/* THIS IS THE ONE!
-.jp-playlist .jp-playlist-item-free{background-color:black;color:transparent;height:20px;width:20px;}
-.jp-playlist .jp-playlist-item-free:hover{background-color:black;color:transparent;height:20px;width:20px;}*/
-
+.jp-free-media{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
+.jp-playlist-item-free{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
+.jp-playlist .jp-playlist-item-free{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
+.jp-playlist .jp-playlist-item-free:hover{background-size:contain;color:transparent; background-repeat:no-repeat;height:30px;width:30px;background-image:url('../glyphicons_free/glyphicons/png/glyphicons_181_download_alt.png');}
 
 /*MAYBE THIS?
 .jp-free-media{
