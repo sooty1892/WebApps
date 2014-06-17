@@ -22,12 +22,12 @@ if (isset($_FILES["projectFiles"]) && isset($_POST["idproject"]) && isset($_POST
             move_uploaded_file($tempPath, $path);
 
             $newPath = substr($path, 3);
-           	$newNewPath = substr($newPath, 1);
+           	$newExt = substr($ext, 1);
 
             array_push($fi, $username);
-            array_push($fi, $_FILES["projectFiles"]["name"][$key]);
-
-            array_push($fi, $ext . ": " . $newNewPath);
+            array_push($fi, $name);
+            array_push($fi, $newPath);
+            array_push($fi, $ext);
 
             array_push($results, $fi);
 
