@@ -109,6 +109,7 @@ var description = data[i].description;
     section+='<div class="jp-details"><ul><li><span class="jp-title"></span></li></ul></div>';
     section+='<div class="jp-type-single"><span id="song_' + sectionName + '" class="songName">Song name: </span>';
     section+='<span id="artist_' + sectionName + '" class="artistName">Artist name: </span>';
+    section+='<div class="starImage"><img style="position:relative; left:120px;top:55px;z-index:999;width:20px;height:20px;"src="http://www.freestockphotos.biz/pictures/15/15160/Illustration+of+a+gold+star.png"><span style="position:relative; left:130px;top:55px;z-index:999;width:20px;height:20px;"class="star"id="star_'+sectionName+'"></span></div>';
     section+='<div class="jp-gui jp-interface"><ul class="jp-controls"><div class="mediaButton">'
     section+='<a href="javascript:;" class="jp-play" >play</a><a href="javascript:;" class="jp-pause"><div class="pause"style="top:14px;left:25px"></div>';
     section+='<div class="pause"style="top:-36px;left:45px"></div></a></div>';
@@ -124,7 +125,7 @@ section+=description+'</p></div></div><br>';
   }
 }
 
-function decoratePlayers() {
+function activateStars(data) {
      
 }
 
@@ -179,6 +180,8 @@ var a = $(this).next().find(".jp-playlist-current .jp-artist").html();
 $(this).next().find(".artistName").html(a);
 $(this).next().find(".songName").find(".jp-artist").hide();
 $(this).next().find(".songName").find(".jp-artist").hide();
+//GET RATING SOMEHOW VIA WHAT WE KNOW
+//$(this).next().find(".star").html(rating);
 
 });
   
