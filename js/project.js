@@ -51,6 +51,7 @@ var name = '#' + sectionName;
 
 
 }
+
 function pullData(){
    $.ajax({
         url: 'scripts/pull_project_data.php',
@@ -103,7 +104,7 @@ var description = data[i].description;
   var section = '<div class="projectSection">';
   section += ' <div class="sectionTitle"><h3>' + sectionName + '</h3></div';
      section+= ' <div class="mediaSection"><div id="jquery_jplayer_' + sectionName+'" class="jp-jplayer"></div>';
-    section+='<div id="jp_contaasdasdasdiner_' + sectionName +'" class="jp-audio">';
+    section+='<div id="jp_container_' + sectionName +'" class="jp-audio">';
     section+='<div class="jp-playlist"><ul> <li></li> <!-- Empty <li> so your HTML conforms with the W3C spec --></ul></div>';
     section+='<div class="jp-details"><ul><li><span class="jp-title"></span></li></ul></div>';
     section+='<div class="jp-type-single"><span id="song_' + sectionName + '" class="songName">Song name: </span>';
@@ -139,19 +140,7 @@ function activatePlayers(data){
   jPlayer: p,
   cssSelectorAncestor: c
 }, [
-  {
-    title:"Cro Magnon Man",
-    artist:"The Stark Palace",
-    mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-    oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg",
-    poster: "http://www.jplayer.org/audio/poster/The_Stark_Palace_640x360.png"
-  },{
-    title:"Cro Magnon Mandemn caraspodakdpsako",
-    artist:"The Stark Palace",
-    mp3:"http://www.jplayer.org/audio/mp3/TSP-01-Cro_magnon_man.mp3",
-    oga:"http://www.jplayer.org/audio/ogg/TSP-01-Cro_magnon_man.ogg",
-    poster: "http://www.jplayer.org/audio/poster/The_Stark_Palace_640x360.png"
-  },
+  
 ], {
   playlistOptions: {
   },
@@ -172,8 +161,9 @@ $(this).next().find(".songName").html(value);
  value = $(this).next().find(".songName").find(".jp-playlist-current").html();
 $(this).next().find(".songName").html("Song name:" + value);
 $(this).next().find(".songName").find(".jp-free-media").hide();
-var a = $(this).siblings().find(".jp-artist").html();
-$(this).next().find(".artistName").html();
+var a = $(this).next().find(".jp-playlist-current .jp-artist").html();
+$(this).next().find(".artistName").html(a);
+$(this).next().find(".songName").find(".jp-artist").hide();
 $(this).next().find(".songName").find(".jp-artist").hide();
 
 });
@@ -212,5 +202,6 @@ $(this).next().find(".songName").find(".jp-artist").hide();
 }
 
 // if !isOwner $("#controlButton").hide();
+
 
 

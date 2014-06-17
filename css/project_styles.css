@@ -2,8 +2,8 @@
     position: relative;
     height: 250px;
     margin-right: auto;
-    margin-top: 100px;
-    margin-bottom:70px;
+    margin-top: 35px;
+    margin-bottom:35px;
     width: 900px;
     background-color: #4e5d6c;
     overflow: hidden;
@@ -31,8 +31,8 @@ position: relative; left:50px;}
     border-bottom-left-radius: 0px;*/
     text-align: center;
 }
-.songName{position:absolute;left: 130px;overflow:scroll;background-color:transparent;margin:0px;z-index:999; width:200px;}
-.artistName{position:absolute;left: 130px;overflow:scroll;background-color:transparent;margin:0px;z-index:999; top:80px;width 200px; }
+.songName{position:absolute;left: 130px;background-color:transparent;margin:0px;z-index:999; width:200px;}
+.artistName{position:absolute;left: 130px;background-color:transparent;margin:0px;z-index:999; top:80px;width 200px; }
 .listItem{
   background-color: #222222;
   width :75%;
