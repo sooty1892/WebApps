@@ -1,16 +1,25 @@
 
-//ADJUST FOR PROFILE HEAD.
 $(document).ready(function(){
     pullData();
 
-$('#controlButton').click(function(){
-      
- $.ajax({
-        url: 'scripts/pull_project_data.php',
-        type: 'GET',
-        dataType: 'json',
-        data: {idproject: '1'},
-        success: function(response) {
+
+$(document).on("keydown",function(e){
+            if (e.which == 40){
+        pageScroller.next();
+
+            }
+            if (e.which == 38){
+              pageScroller.prev();
+            }
+            
+            
+          }) ;  
+
+
+});
+
+function writeSectionList(response){
+   $('.sectionList').html("");   
             for (var i in response){
               var sectionName = 'id_' + response[i].name;
               var color= '<div style="position:relative; top:-15px; left:230px"><select name="colorpicker_' + response[i].name + '">';
@@ -41,29 +50,7 @@ var name = '#' + sectionName;
 
 
 
-        },
-        error: function(xhr,err){
-                alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status + "NNNNNNNOOOOOOOO");
-                alert("responseText: "+xhr.responseText);
-              }
-      });
-
-})
-
-$(document).on("keydown",function(e){
-            if (e.which == 40){
-        pageScroller.next();
-
-            }
-            if (e.which == 38){
-              pageScroller.prev();
-            }
-            
-            
-          }) ;  
-
-
-});
+}
 
 function pullData(){
    $.ajax({
@@ -74,6 +61,7 @@ function pullData(){
         success: function(response) {
           writeMenu(response);
           writeSections(response);
+          writeSectionList(response);
           activatePlayers(response);
           activatePageScroller(); 
           pageScroller.prev();
@@ -134,6 +122,9 @@ section+=description+'</p></div></div><br>';
   }
 }
 
+function decoratePlayers() {
+     
+}
 
 function activatePlayers(data){
   for (var i in data){
