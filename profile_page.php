@@ -277,11 +277,12 @@
                   var name = input.files.item(i).name;
                   var id = $("#songs-list li").length + 1;
                   $("#songs-list").append('<li><button id="' + id + '" type="button"' + 
-                    ' class="btn-default btn-lg btn-block" onclick="activateSong()">' +
+                    ' class="btn-default btn-lg btn-block"">' +
                     '<img src="web_icons/now_playing.png" style="display: none">' 
                     + name + '</button></li>');
+                  $('#' + id).on('click', activate);
                   var audio_id = 'audio' + id;
-                  $("#audioPlayer").append('<audio controls style="display:none" id="' 
+                  $("#audioPlayer").append('<audio loop controls style="display:none" id="' 
                     + audio_id +'"><source src="' + res[i] + '"></audio>');
                   setTimeout(function() {
                     $("#song-preview-list").fadeOut(400, function() {
@@ -318,10 +319,7 @@
               contentType: false,
               dataType: 'json',
               success: function (res) {
-                console.log(res);
-                for (var i in res) {
-                  alert(res[i]);
-                }
+                  
               }
             });
           }
@@ -618,8 +616,17 @@
             }
           ?>
         </div>
-        <!--<div id="mulitplefileuploader" style="margin-left: 25px">Upload</div>
-        <div id="status"></div>-->
+        <div style= "margin-left: 25px; margin-bottom: 10px">
+            <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_portfolio.php">
+              <button class="btn-info fileinput-button">
+                    <i class="glyphicon glyphicon-plus"></i>
+                    <span>Add photos...</span>
+                    <input type="file" name="imageFiles" id="imageFiles" multiple onchange="fileNamesList()">                  
+              </button>
+              <button type="submit" id="imageButt">Upload</button>
+            </form>
+        </div>
+        </div>
       </div>
       <!-- End of Portfolio Section -->
 

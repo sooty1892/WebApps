@@ -149,14 +149,14 @@ function cancelAboutMe() {
     document.getElementById("aboutArea").disabled = true;
 }
 
-function activateSong() {
+var activate = function activateSong() {
     var btn = $(event.target);
     var id = btn.attr('id');
 
     if (currentActiveButton == null) {
         currentActiveButton = btn;
-        currentActiveAudio = $('#audio' + id)[0];
-        currentActiveAudio.play();        
+        currentActiveAudio = document.getElementById("audio" + id);
+        currentActiveAudio.play();       
         btn.children("img")[0].style.display = "inline";
         btn.toggleClass("active");
     } else {
@@ -169,8 +169,8 @@ function activateSong() {
             currentActiveButton = null;
         } else {
             currentActiveButton = btn;
-            currentActiveAudio = $('#audio' + id)[0];
-            currentActiveAudio.play();
+            currentActiveAudio = document.getElementById("audio" + id);
+            currentActiveAudio.play();  
             btn.children("img")[0].style.display = "inline";
             btn.toggleClass("active");
         }
