@@ -22,7 +22,6 @@ if (isset($_FILES["projectFiles"]) && isset($_POST["idproject"]) && isset($_POST
             move_uploaded_file($tempPath, $path);
 
             $newPath = substr($path, 3);
-           	$newExt = substr($ext, 1);
 
             array_push($fi, $username);
             array_push($fi, $name);
@@ -31,8 +30,16 @@ if (isset($_FILES["projectFiles"]) && isset($_POST["idproject"]) && isset($_POST
 
             array_push($results, $fi);
 
-            //$query = "INSERT INTO userimagefiles (username, path) VALUES ('$username', '$newPath')";
-            //pg_query($con, $query);
+            $query = "SELECT idsection FROM sections WHERE name='$section' AND idproject='$idproject'";
+            $res = pg_query($con, $query);
+            $id;
+            while($row = pg_fetch_assoc($res)) {
+                $id = $row['idsection'];
+            }
+
+            $query = "INSERT INTO sectionmusic (idsection, path, name, extension, username, chosen, dateadded)
+                        VALUES ('$id', '$newPath', '$name', '$ext', '$username', 'false', 'NOW()')";
+            pg_query($con, $query);
         }
     }
 

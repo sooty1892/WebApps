@@ -1,8 +1,7 @@
-var playlist = [];
+// var playlist = [];
 
 $(document).ready(function () {
   pullData();
-
 
   $(document).on("keydown", function (e) {
     if (e.which == 40) {
@@ -11,11 +10,7 @@ $(document).ready(function () {
     if (e.which == 38) {
       pageScroller.prev();
     }
-
-
   });
-
-
 });
 
 function writeSectionList(response) {
@@ -41,15 +36,8 @@ function writeSectionList(response) {
     $(select).simplecolorpicker({
       picker: true
     })
-
-
-
   }
   $('.sectionList').sortable();
-
-
-
-
 }
 
 function pullData() {
@@ -73,18 +61,16 @@ function pullData() {
       alert("responseText: " + xhr.responseText);
     }
   });
-
-
 }
 
+function writeMenu(data) {
+  $("#menu").append('<li ><a href="#">Project Description</a></li>');
+  for (var i in data) {
+    var item = "<li><a href='#'>"+ data[i].name +"</a></li>";  
+    $("#menu").append(item);
+  }
+}
 
-
-function writeMenu(data){
-$("#menu").append('<li ><a href="#">Project Description</a></li>');
-for (var i in data) {
- var item = "<li><a href='#'>"+ data[i].name +"</a></li>";  
-$("#menu").append(item);
-}}
 function activatePageScroller() {
   $("#middlePanel").pageScroller({
     sectionClass: 'projectSection',
@@ -92,18 +78,13 @@ function activatePageScroller() {
     scrollOffset: -180,
     animationSpeed: 200
   });
-
-
-
+}
 
 function writeMenu(data) {
   $("#menu").append('<li ><a href="#">Bio</a></li>');
   for (var i in data) {
     var item = "<li><a href='#'>" + data[i].name + "</a></li>";
     $("#menu").append(item);
-
-    
-
   }
 }
 // !!DO THE ALBUM ART
@@ -141,7 +122,6 @@ function uploadSongsToSection() {
       }
     });
   }
-
 }
 
 function writeSections(data) {
@@ -170,11 +150,8 @@ function writeSections(data) {
   }
 }
 
-
-
 function activatePlayers(data) {
   for (var i in data) {
-
     var sectionName = data[i].name;
     //bool  isOwner 
     var p = "#jquery_jplayer_" + sectionName;
@@ -221,12 +198,10 @@ function activatePlayers(data) {
       $(this).next().find(".artistName").html(a);
       $(this).next().find(".songName").find(".jp-artist").hide();
       $(this).next().find(".songName").find(".jp-artist").hide();
-var sectionName = $(this).parents(".projectSection").find("h3").html();
+      var sectionName = $(this).parents(".projectSection").find("h3").html();
 
-getRating(this,value,sectionName);
-//HIGHLIGHT STAR OR NOT
-
-
+      getRating(this,value,sectionName);
+      //HIGHLIGHT STAR OR NOT
     });
 
 
@@ -242,7 +217,6 @@ getRating(this,value,sectionName);
           mp3: path,
           free: true
         });
-
       } else {
         playlist[i].add({
           title: name,
@@ -250,36 +224,33 @@ getRating(this,value,sectionName);
           mp4: path,
           free: true
         });
-
       }
     }
 
     var starName = "#starButton_" + data[i].name;
 
-$(starName).on("click",function(){
-var x = $(this).siblings(".starImage").children(".star").html();
-var y = parseInt(x);
-if ($(this).hasClass("unlitStar")) {
+    $(starName).on("click",function() {
+      var x = $(this).siblings(".starImage").children(".star").html();
+      var y = parseInt(x);
+      if ($(this).hasClass("unlitStar")) {
+        y+=1;
+      } else {
+        y-=1;
+      }
+      $(this).toggleClass("litStar");
 
-y+=1;
-} else {y-=1;}
-$(this).toggleClass("litStar");
-
-$(this).siblings(".starImage").children(".star").html(y);
-$(this).parents(".jp-audio").find(".songName").html()
-
-
+      $(this).siblings(".starImage").children(".star").html(y);
+      $(this).parents(".jp-audio").find(".songName").html();
+    });
   }
-
 }
 
 
-$(document).ready(function(){
-
-$(".description").editable('scripts/edit.php',{
+$(document).ready(function() {
+  $(".description").editable('scripts/edit.php',{
     idproject: '1',
     section: 'section',
-    tooltip: : 'Click to write...'  
+    tooltip: 'Click to write...'  
   });
-
 });
+
