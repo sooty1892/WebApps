@@ -99,7 +99,7 @@
             //console.log(response);
             $('#search-results').empty();
             for (var i in response) {
-              projectOutput = "<div class=\"result\"><img src=\"http://placehold.it/100x100\"><div class=\"result-info\"><h4>" +  response[i].name + "</h4><p><strong>" + response[i].description + "</strong></p><p><strong>Skills Needed</strong>";
+              projectOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" src=\"" . response[i].path . "\"><div class=\"result-info\"><h4>" +  response[i].name + "</h4><p><strong>" + response[i].description + "</strong></p><p><strong>Skills Needed</strong>";
               for (var a in response[i][0]) {
                 projectOutput += " <span class=\"label label-primary\">" + response[i][0][a] + "</span> ";
               }
@@ -180,7 +180,7 @@
             //console.log(response);
             var projectOutput;
             for (var i in response[0]) {
-              projectOutput = "<div class=\"result\"><img src=\"http://placehold.it/100x100\"><div class=\"result-info\"><h4>" +  response[0][i].name + "</h4><p><strong>" + response[0][i].description + "</strong></p><p><strong>Skills Needed</strong>";
+              projectOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" src=\"" . response[0][i].path . "\"><div class=\"result-info\"><h4>" +  response[0][i].name + "</h4><p><strong>" + response[0][i].description + "</strong></p><p><strong>Skills Needed</strong>";
               for (var a in response[0][i][0]) {
                 projectOutput += " <span class=\"label label-primary\">" + response[0][i][0][a] + "</span> ";
               }
@@ -259,26 +259,26 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">MusicMan</a>
+          <a class="navbar-brand" href="index.php">projectjam</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Profile</a></li>
+            <li class="active"><a href="search.php">Search</a></li>
           </ul>
-          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search">
+          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search" action="search.php" method="GET">
             <div class="form-group">
-              <input type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills..." value="<?php if (isset($_SESSION['search'])) {echo $_SESSION['search'];}?>">
+              <input name="search" type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills...">
             </div>
             <button type="submit" class="btn btn-success" style="margin-left: -2px">
-            <span class="glyphicon glyphicon-search"></span>
+              <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
           <ul class="nav navbar-nav navbar-right">
             <li><a href="#" onclick="showModal()">Create Project</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $logged_in_user; ?><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Profile Page</a></li>
+                <li><a href="profile_page.php">Profile Page</a></li>
                 <li><a href="logout.php">Logout</a></li>
               </ul>
             </li>
@@ -393,7 +393,7 @@
               $query = "SELECT projects.idproject, projects.name FROM projects INNER JOIN projectusers ON projectusers.username = '{$logged_in_user}' AND projects.idproject = projectusers.idproject";
               $results = pg_query($con, $query);
               while ($row = pg_fetch_assoc($results)) {
-                echo "<li><button type=\"button\" class=\"btn-default btn-lg btn-block\">" . $row['name'] . "</button></li>";
+                echo "<li><a href=\"temp.php?id=" . $row['idproject'] . "\"><button type=\"button\" class=\"btn-default btn-lg btn-block\">" . $row['name'] . "</button></a></li>";
               }
             ?>
           </ul>

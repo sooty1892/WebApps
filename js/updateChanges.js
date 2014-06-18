@@ -16,18 +16,6 @@ function editModeUser() {
     document.getElementById("userRealName").disabled = false;
 }
 
-function followUser() {
-    if($("#btnFollow").val() == "not_following"){
-        $("#btnFollow").html('<i class="glyphicon glyphicon-ok"></i> Following');
-        $("#btnFollow").val("following");
-        $("#btnFollow").css("opacity", "0.6");
-    } else {
-        $("#btnFollow").html('<i class="glyphicon glyphicon-user"></i> Follow');
-        $("#btnFollow").val("not_following");
-        $("#btnFollow").css("opacity", "1");
-    }
-}
-
 function fileNamesList() {
     var inp = $("#songFiles")[0];
     for (var i = 0; i < inp.files.length; ++i) {

@@ -148,6 +148,7 @@ function getProjectData($search, $order, $require, $skillFilter, $genreFilter) {
 			$tempF = array();
 			$fields["name"] = $row['name'];
 			$fields["description"] = $row['description'];
+			$fields["path"] = $row['path'];
 			$fields["datecreated"] = parse_sql_timestamp($row['datecreated']);
 			$skills = getProjectSkills($row['idproject']);
 			$genres = getProjectGenres($row['idproject']);
@@ -247,6 +248,7 @@ function getAllData($search) {
 			$tempC = array();
 			$fields["name"] = $row['name'];
 			$fields["description"] = $row['description'];
+			$fields["path"] = $row['path'];
 			$fields["datecreated"] = parse_sql_timestamp($row['datecreated']);
 			foreach(getProjectSkills($row['idproject']) as $tempSkill) {
 				array_push($tempB, $tempSkill);

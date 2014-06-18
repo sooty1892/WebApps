@@ -15,6 +15,23 @@
         }
     }
 
+    if (!isset($_GET['id'])) {
+      $_GET['id'] = $logged_in_user;
+    }
+
+    $follow = 'no';
+    $access;
+    if ($_GET['id'] == $logged_in_user) {
+      $access = 'true';
+    } else {
+      $access = 'false';
+      $query = "SELECT * FROM following WHERE follower = '$logged_in_user' AND followee = '{$_GET['id']}'";
+      $res = pg_query($con, $query);
+      if (pg_num_rows($res) > 0) {
+        $follow = 'yes';
+      }
+    }
+
     $query = "SELECT * FROM users WHERE username = '{$logged_in_user}'";
     $result = pg_query($con, $query);
     $user = pg_fetch_array($result);
@@ -36,11 +53,11 @@
         $license = $_POST['selectLicense'];
 
         if ($_POST['projectPrivacy'] != 'option1') {
-          $query = "INSERT INTO projects (name, description, private, license, datecreated)
-                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()') RETURNING idproject";
+          $query = "INSERT INTO projects (name, description, private, license, datecreated, path)
+                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()', 'images/dj.png') RETURNING idproject";
         } else {
-          $query = "INSERT INTO projects (name, description, private, license, datecreated)
-                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()') RETURNING idproject";
+          $query = "INSERT INTO projects (name, description, private, license, datecreated, path)
+                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()', 'images/dj.png') RETURNING idproject";
         }
         $result = pg_query($con, $query);
         $row = pg_fetch_row($result);
@@ -65,6 +82,8 @@
 
         $query = "INSERT INTO projectusers (username, idproject, owner) VALUES ('$logged_in_user', '$idproject', 'true')";
         pg_query($con, $query);
+
+        header("Location: temp.php?id=". $idproject); 
       }
     }
 ?>
@@ -350,6 +369,57 @@
         });
       });
     </script>
+    <script>
+      $( document ).ready(function() {
+        var access = '<?php echo $access; ?>';
+        if (access == 'true') {
+          $('#btnFollow').hide();
+          //console.log("TRUE");
+        } else {
+          //console.log("FALSE");
+          $('#btnEdit').hide();
+          $('#btnEditSkills').hide();
+          $('#btnSddSongs').hide();
+          $('.fileinput-button').hide();
+          $('.editSkillsBtn').hide();
+          $('#btnEditAbout').hide();
+          var fo = '<?php echo $follow; ?>';
+          if (fo == 'yes') {
+            $("#btnFollow").html('<i class="glyphicon glyphicon-ok"></i> Following');
+            $("#btnFollow").val("following");
+            $("#btnFollow").css("opacity", "0.6");
+          }
+        }
+      });
+
+      function followUser() {
+        if($("#btnFollow").val() == "not_following"){
+            $("#btnFollow").html('<i class="glyphicon glyphicon-ok"></i> Following');
+            $("#btnFollow").val("following");
+            $("#btnFollow").css("opacity", "0.6");
+            $.ajax({
+              url: 'scripts/follow.php',
+              type: "POST",
+              data: {what: 'follow',
+                     from: '<?php echo $logged_in_user; ?>',
+                     to: '<?php echo $_GET['id']; ?>'
+              }
+            });
+        } else {
+            $("#btnFollow").html('<i class="glyphicon glyphicon-user"></i> Follow');
+            $("#btnFollow").val("not_following");
+            $("#btnFollow").css("opacity", "1");
+            $.ajax({
+              url: 'scripts/follow.php',
+              type: "POST",
+              data: {what: 'unfollow',
+                     from: '<?php echo $logged_in_user; ?>',
+                     to: '<?php echo $_GET['id']; ?>'
+              }
+            });
+        }
+    }
+    </script>
   </head>
 
   <body>
@@ -457,11 +527,11 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">MusicMan</a>
+          <a class="navbar-brand" href="index.php">projectjam</a>
         </div>
         <div class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Profile</a></li>
+            <li class="active"><a href="profile_page.php">Profile</a></li>
           </ul>
           <form class="navbar-form navbar-left" style="margin-left: 150px" role="search" action="search.php" method="GET">
             <div class="form-group">
@@ -472,11 +542,11 @@
             </button>
           </form>
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#" onclick="showModal()">Create Project</a></li>
+            <li><a onclick="showModal()">Create Project</a></li>
             <li class="dropdown">
-              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $user['username']; ?><b class="caret"></b></a>
               <ul class="dropdown-menu">
-                <li><a href="#">Profile Page</a></li>
+                <li><a href="profile_page.php">Profile Page</a></li>
                 <li><a href="logout.php">Logout</a></li>
               </ul>
             </li>
@@ -515,15 +585,13 @@
           </div>
           <h4 style = "margin-top: 0px; padding : 5px; text-align: center; background-color: #34495e">Current Projects</h4>
           <ul id = "projects-list" style="margin-top: -10px; margin-right: 20px">
-            <li><button type="button" class="btn-default btn-lg btn-block">
-              Project 1</button>
-            </li>
-            <li><button type="button" class="btn-default btn-lg btn-block">
-              Project 2</button>
-            </li>
-            <li><button type="button" class="btn-default btn-lg btn-block">
-              Project Project 3</button>
-            </li>
+            <?php
+              $query = "SELECT projects.idproject, projects.name FROM projects INNER JOIN projectusers ON projectusers.username = '{$logged_in_user}' AND projects.idproject = projectusers.idproject";
+              $results = pg_query($con, $query);
+              while ($row = pg_fetch_assoc($results)) {
+                echo "<li><a href=\"temp.php?id=" . $row['idproject'] . "\"><button type=\"button\" class=\"btn-default btn-lg btn-block\">" . $row['name'] . "</button></a></li>";
+              }
+            ?>
           </ul>
       </div>
       <!-- Start of Profile -->
@@ -548,7 +616,7 @@
             <button type="submit" class="btn-success" onclick="saveChangesUser('<?php echo $user['username']; ?>')">Save Changes</button>
             <div style = "margin-top : 3px">
                 <form action="scripts/upload_profile_pic.php" method="post" enctype="multipart/form-data" id="MyUploadForm">
-                  <button class="btn-info fileinput-button">
+                  <button class="btn-info fileinput-button" id="btnAddPhoto">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>Add photo...</span>
                     <input name="FileInput" id="FileInput" type="file" onchange="updateOutputSelection()">
@@ -577,13 +645,14 @@
           }
         ?>
         <br>
-        <button id = "btnEditAbout" onclick="editAboutMe()" type="button" class="btn-info btnMargin">Edit Info</button>
+        <button id="btnEditAbout" onclick="editAboutMe()" type="button" class="btn-info btnMargin">Edit Info</button>
         <div id = "aboutChanges" style = "display:none" class = "btnMargin">
           <button onclick="cancelAboutMe()" type ="button" class="btn-default">Cancel</button>
           <button onclick="saveAboutMe('<?php echo $user['username']; ?>')" type="submit" class="btn-success">Save Changes</button>
         </div>
       </div>
       <br>
+
       <!-- Start of Skills Section -->
       <div class="profilesection">
         <h1 style = "margin-left: 25px">Skills &#38; Talents</h1>
@@ -602,7 +671,7 @@
             }
           ?>
         </ul>
-        <button id ="btnEditSkills" type="button" class="btn-info" style = "margin-left: 25px; margin-bottom: 10px" onclick="editSkills()">Edit Skills</button>
+        <button id="btnEditSkills" type="button" class="btn-info" style = "margin-left: 25px; margin-bottom: 10px" onclick="editSkills()">Edit Skills</button>
         <div id="btnsSkillEdits" style ="margin-left: 25px; padding-bottom: 10px; display: none">
           <input id="skillField" type="text" placeholder="Add your talents..." style="width:300px"><button type="submit" class="btn-success" style="background-color: #3498db" onclick="addSkills()">Add</button>
           <button type="button" class="btn-success" onclick="cancelSkills('<?php echo $user['username']; ?>')">Save Changes</button>
@@ -659,7 +728,7 @@
         </audio>
         <div style= "margin-left: 25px; margin-bottom: 10px">
           <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_song.php">
-              <button class="btn-info fileinput-button">
+              <button class="btn-info fileinput-button" id="btnSddSongs">
                     <i class="glyphicon glyphicon-plus"></i>
                     <span>Add songs...</span>
                     <input type="file" name="songFiles" id="songFiles" multiple onchange="fileNamesList()">                  
