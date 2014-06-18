@@ -104,6 +104,7 @@
    
 
    <link href="css/chat.css" rel="stylesheet">
+    <script type"text/javscript" src= "js/jquery.jeditable.js"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script>
       var last = 0;

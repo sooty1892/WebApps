@@ -254,6 +254,14 @@ $(this).parents(".jp-audio").find(".songName").html()
 
 }
 
-// if !isOwner $("#controlButton").hide();
+// if !isOwner $("#(").hide();
 
+$(document).ready(function(){
 
+$(".description").editable('scripts/edit.php',{
+    idproject: '1',
+    section: 'section',
+    tooltip: : 'Click to write...'  
+  });
+
+});
