@@ -279,7 +279,7 @@
                   var name = input.files.item(i).name;
                   var id = $("#songs-list li").length + 1;
                   $("#songs-list").append('<li><button id="' + id + '" type="button"' + 
-                    ' class="btn-default btn-lg btn-block"">' +
+                    ' class="btn-default btn-lg btn-block">' +
                     '<img src="web_icons/now_playing.png" style="display: none">' 
                     + name + '</button></li>');
                   $('#' + id).on('click', activate);

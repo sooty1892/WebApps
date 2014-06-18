@@ -83,7 +83,6 @@
       $query = "UPDATE projects SET sectionorder = '{$newOrder}' WHERE idproject = '1'";
       pg_query($con, $query);
     }
-
 ?>
 
 <!DOCTYPE html>
@@ -99,6 +98,7 @@
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/lightbox.css" rel="stylesheet">
     <link href="css/project_styles.css" rel="stylesheet">
+    <link href="css/jquery.fileupload.css" rel="stylesheet">
     <!-- For autocomplete -->
     <link href="http://code.jquery.com/ui/1.10.4/themes/excite-bike/jquery-ui.css" rel="stylesheet">
    
@@ -278,7 +278,7 @@
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   <!-- <button type="submit" class="btn btn-success" name="edit_submit">Submit</button> -->
-                  <input id="btnLogin" type="submit" value="Submit" name="edit_submit" class="btn btn-sm btn-success">
+                  <input id="btnLogin" type="submit" value="Submit" name="edit_submit" class="btn btn-success">
                 </div>
               </form>
             </div>
