@@ -1,41 +1,11 @@
-
+#page-wrap{position:fixed; top :440px;left:120px;}
 
 
 #sendie {
-  position: absolute;
-  border: 3px solid #d35400;
-  width: 300px
-  margin-bottom: 10%;
-}
-
-#chat-area {
- height: 300px; 
- overflow: auto; 
- padding: 20px; 
- background: white; 
- width: 300px;
- border: 3px solid #d35400; 
-}
-
-#chat-area p { 
- padding: 8px 0; 
- border-bottom: 1px solid #ccc;
- color: #2c3e50; 
-}
-
-#chat-area span { 
- color: white; 
- background: #333;
- padding: 4px 8px;
- -moz-border-radius: 5px;
- -webkit-border-radius: 8px; 
- margin: 0 5px 0 0; 
-}
-
-#page-wrap {
-  position: relative;
-  width: 400px;
-  height: 400px;
-
+	border: 3px ridge #49a2df; background-color:#7f8c8d;color:white;width:200px;	;border-top-width:4px;border-top-style:ridge;
 
 }
+
+#chat-area                      { height: 300px; overflow: auto; border: 2px ridge #49a2df; padding: 20px;color:white; background-color: #4e5d6c; width: 200px;border-bottom-width:0px; }
+#chat-area p                    { padding: 8px 0; border-bottom: 1px solid #ccc; }
+#chat-area span                 { color: white; background: #333; padding: 4px 8px; -moz-border-radius: 5px; -webkit-border-radius: 8px; margin: 0 5px 0 0; }
