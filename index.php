@@ -88,8 +88,8 @@
         die("Password hasing error");
         //echo "PASSWORD HASHING ERROR";
       } else {
-        $sql = "INSERT INTO users (username, name, email, password)
-            VALUES ('$un', '', '$email', '$hashpw')";
+        $sql = "INSERT INTO users (username, name, email, password, path)
+            VALUES ('$un', '', '$email', '$hashpw', 'images/new.jpg')";
         $result = pg_query($con, $sql);
         if (!$result) {
           die("Error in SQL query: " . pg_last_error());

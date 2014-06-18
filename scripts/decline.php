@@ -8,9 +8,6 @@
 		$useraccept  = $_POST['useraccept'];
 		$id = $_POST["idproject"];
 
-		$query = "INSERT INTO projectusers (username, idproject, owner) VALUES ('{$usersend}', '{$id}', 'false')";
-	    $results = pg_query($con, $query);
-
 	    $query = "DELETE FROM notifications WHERE usersend = '{$usersend}' AND idproject = '{$id}' AND useraccept = '{$useraccept}'";
 	    $results = pg_query($con, $query);
 	}

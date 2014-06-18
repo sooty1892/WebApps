@@ -26,26 +26,11 @@
 
         $skills = explode(",", $_POST['hiddenSkills']);
         $genres = explode(",", $_POST['hiddenGenres']);
-        foreach (array_keys($skills, '') as $key) {
-          unset($skills[$key]);
-        }
         foreach (array_keys($skills, ',') as $key) {
           unset($skills[$key]);
         }
-        foreach (array_keys($genres, '') as $key) {
-          unset($genres[$key]);
-        }
         foreach (array_keys($genres, ',') as $key) {
           unset($genres[$key]);
-        }
-
-        $fp = fopen('scripts/log.txt', "w+");
-
-        foreach ($skills as $skill) {
-          fwrite($fp, $skill . "\n");
-        }
-        foreach ($genres as $genre) {
-          fwrite($fp, $genre . "\n");
         }
 
         $license = $_POST['selectLicense'];
@@ -264,7 +249,9 @@
             formdata.append("songFiles[]", this.files[i]);
           }
 
-          formdata.append("username", "admin");
+          var user = "<?php echo $user['username']; ?>";
+
+          formdata.append("username", user);
 
           if (formdata) {
             $.ajax({
@@ -302,6 +289,8 @@
       $(document).ready(function() {
         var input = document.getElementById("imageFiles");
 
+        var user = "<?php echo $user['username']; ?>";
+
         formdata = new FormData();
         document.getElementById("imageButt").style.display = "none";
         input.addEventListener("change", function (evt) {
@@ -310,7 +299,7 @@
             formdata.append("imageFiles[]", this.files[i]);
           }
 
-          formdata.append("username", "admin");
+          formdata.append("username", user);
 
           if (formdata) {
             $.ajax({
@@ -474,11 +463,11 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Profile</a></li>
           </ul>
-          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search">
+          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search" action="search.php" method="GET">
             <div class="form-group">
-              <input type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills...">
+              <input name="search" type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills...">
             </div>
-            <button type="submit" class="btn btn-success" style = "margin-left: -2px">
+            <button type="submit" class="btn btn-success" style="margin-left: -2px">
               <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
@@ -540,11 +529,7 @@
       <!-- Start of Profile -->
       <div class="profilesection">
         <?php
-          if (empty($user['path'])) {
-            echo "<img id=\"profile_pic\" class=\"img-circle\" style=\"margin-left: 10px; margin-top: 10px ; margin-bottom: 10px; height: 200px; width: 200px; \" src=\"http://placehold.it/200x200\">";
-          } else {
-            echo "<img id=\"profile_pic\" class=\"img-circle\" style=\"margin-left: 10px; margin-top: 10px ; margin-bottom: 10px; height: 200px; width: 200px; \" src=\"" . $user['path'] . "\">";
-          }
+          echo "<img id=\"profile_pic\" class=\"img-circle\" style=\"margin-left: 10px; margin-top: 10px ; margin-bottom: 10px; height: 200px; width: 200px; \" src=\"" . $user['path'] . "\">";
         ?>
         <img src="web_icons/user.png" style="float: right">
         <div class="profilesection-details">
@@ -633,14 +618,45 @@
         <h1 style = "margin-left: 25px">My Sounds</h1>
         <div id = "sound-container" class = "infoSection" style="padding-bottom: 5px">
           <ul id="songs-list">
+            <?php
+              $query = "SELECT path, name FROM usermusicfiles WHERE username = '{$user['username']}'";
+              $results = pg_query($con, $query);
+              $count = 0;
+              while ($row = pg_fetch_assoc($results)) {
+                $count++;
+                echo '<li><button id="';
+                echo $count;
+                echo '" type="button"';
+                echo ' class="btn-default btn-lg btn-block">';
+                echo '<img src="web_icons/now_playing.png" style="display: none">';
+                echo $row['name'] ;
+                echo '</button></li>';
+                echo '<script>';
+                echo '$(\'#\' + ' . $count . ').on(\'click\', activate);';
+                echo '</script>';
+              }
+            ?>
           </ul>
         </div>
-        <div id="audioPlayer"></div>
-        <!--<div id="songUploadBtns" style="padding-bottom: 10px">
-          <button type="button" class="btn-info" style ="margin-left:25px">Upload Song</button>
-          <button id="btnRemoveSong" type="button" class="btn-danger" onclick="removeSongs()">Remove Songs</button>
-          <button id="btnSaveSong" type="button" class="btn-success" onclick="saveSongs()" style = "display:none">Save Changes</button>
-        </div>-->
+        <div id="audioPlayer">
+          <?php
+              $query = "SELECT path FROM usermusicfiles WHERE username = '{$user['username']}'";
+              $results = pg_query($con, $query);
+              $count = 0;
+              while ($row = pg_fetch_assoc($results)) {
+                $count++;
+                $audio_id = "audio" . $count;
+                echo "<audio loop controls style=\"display:none\" id=\"";
+                echo $audio_id;
+                echo "\"><source src=\"";
+                echo $row['path'];
+                echo "\"></audio>";
+              }
+            ?>
+        </div>
+        <audio controls style = "margin-left: 25px; width: 500px; display: none">
+          Your browser does not support the audio element.
+        </audio>
         <div style= "margin-left: 25px; margin-bottom: 10px">
           <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_song.php">
               <button class="btn-info fileinput-button">
@@ -656,6 +672,22 @@
       </div>
       <!-- End of Sounds Section -->
 
+      <!-- for(var i = 0; i < input.files.length; ++i) {
+                  var name = input.files.item(i).name;
+                  var id = $("#songs-list li").length + 1;
+                  $("#songs-list").append('<li><button id="' + id + '" type="button"' + 
+                    ' class="btn-default btn-lg btn-block"">' +
+                    '<img src="web_icons/now_playing.png" style="display: none">' 
+                    + name + '</button></li>');
+                  $('#' + id).on('click', activate);
+                  var audio_id = 'audio' + id;
+                  $("#audioPlayer").append('<audio loop controls style="display:none" id="' 
+                    + audio_id +'"><source src="' + res[i] + '"></audio>');
+ 
+                } -->
+
+
+
       <br>
 
       <!-- Start of Portfolio Section -->
@@ -666,27 +698,47 @@
           <?php
             $query = "SELECT path FROM userimagefiles WHERE username = '{$user['username']}'";
             $results = pg_query($con, $query);
-            $numOfImages = pg_fetch_row($results);
-            $count = 0;
+            $numOfImages = pg_num_rows($results);
+            $row_count = 0;
             $total = 0;
             while ($row = pg_fetch_assoc($results)) {
-              $count++;
+              $row_count++;
               $total++;
-              if ($count == 1) {
-                echo "<div class=\"row\">";
-              }
 
-              echo "<div class=\"col-md-4 portfolio-item\">
-                      <a href=\"portfolio-item.html\">
-                        <img class=\"img-responsive\" src=\"" . $row['path'] . "\">
-                      </a>
-                    </div>";
-              if ($count == 3 || $total == $numOfImages) {
-                echo "</div><br>";
-                $count = 0;
+              if ($total <= 3) {
+                if ($row_count == 1) {
+                  echo "<div class=\"row\">";
+                }
+                echo "<div class=\"col-md-3 portfolio-item\">";
+                echo '<a data-lightbox="portfolio" href="';
+                echo $row['path'];
+                echo '"><img ';
+                echo 'class="img-responsive" src="';
+                echo $row['path'];
+                echo '"></a></div>';
+                if ($row_count == 3 || $total == $numOfImages) {
+                  echo "</div><br>";
+                  $row_count = 0;
+                }
+              } else {
+                if ($row_count == 1) {
+                  echo "<div class=\"row\">";
+                }
+                echo "<div class=\"col-md-3 portfolio-item\">";
+                echo '<a data-lightbox="portfolio" href="';
+                echo $row['path'];
+                echo '"><img ';
+                echo 'class="img-responsive" src="';
+                echo $row['path'];
+                echo '"></a></div>';
+                if ($row_count == 4 || $total == $numOfImages) {
+                  echo "</div><br>";
+                  $row_count = 0;
+                }
               }
             }
           ?>
+
         </div>
         <div style= "margin-left: 25px; margin-bottom: 10px">
             <form method="post" enctype="multipart/form-data"  action="scripts/upload_profile_portfolio.php">
@@ -705,83 +757,6 @@
       <br>
     </div>
     <!-- End of Container -->
-
-    <!-- The template to display files available for upload -->
-    <script id="template-upload" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr>
-          <td style="width:300px">
-            <span class="preview"></span>
-          </td>
-          <td class="block">
-            <p class="name">{%=file.name%}</p>
-            <strong class="error text-danger"></strong>
-          </td>
-          <td>
-            <p class="size">Processing...</p>
-            <div class="progress progress-striped active" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="progress-bar progress-bar-success" style="width:0%;"></div></div>
-          </td>
-          <td>
-            {% if (!i && !o.options.autoUpload) { %}
-              <button class="btn-primary start" disabled>
-                <i class="glyphicon glyphicon-upload"></i>
-                <span>Start</span>
-              </button>
-            {% } %}
-            {% if (!i) { %}
-              <button class="btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-              </button>
-            {% } %}
-          </td>
-        </tr>
-      {% } %}
-    </script>
-
-    <!-- The template to display files available for download -->
-    <script id="template-download" type="text/x-tmpl">
-      {% for (var i=0, file; file=o.files[i]; i++) { %}
-        <tr class="template-download fade">
-          <td>
-            <span class="preview">
-              {% if (file.thumbnailUrl) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" data-gallery><img src="{%=file.thumbnailUrl%}"></a>
-              {% } %}
-            </span>
-          </td>
-          <td>
-            <p class="name">
-              {% if (file.url) { %}
-                <a href="{%=file.url%}" title="{%=file.name%}" download="{%=file.name%}" {%=file.thumbnailUrl?'data-gallery':''%}>{%=file.name%}</a>
-              {% } else { %}
-                <span>{%=file.name%}</span>
-              {% } %}
-            </p>
-              {% if (file.error) { %}
-                <div><span class="label label-danger">Error</span> {%=file.error%}</div>
-              {% }%}
-          </td>
-          <td>
-            <span class="size">{%=o.formatFileSize(file.size)%}</span>
-          </td>
-          <td>
-            {% if (file.deleteUrl) { %}
-              <button class="btn btn-danger delete" data-type="{%=file.deleteType%}" data-url="{%=file.deleteUrl%}"{% if (file.deleteWithCredentials) { %} data-xhr-fields='{"withCredentials":true}'{% } %}>
-                <i class="glyphicon glyphicon-trash"></i>
-                <span>Delete</span>
-              </button>
-              <input type="checkbox" name="delete" value="1" class="toggle">
-            {% } else { %}
-              <button class="btn btn-warning cancel">
-                <i class="glyphicon glyphicon-ban-circle"></i>
-                <span>Cancel</span>
-              </button>
-            {% } %}
-          </td>
-        </tr>
-      {% } %}
-    </script>
 
   </body>
 </html>

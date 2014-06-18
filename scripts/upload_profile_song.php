@@ -21,7 +21,7 @@ if (isset($_FILES["songFiles"])) {
 
             array_push($results, $newPath);
 
-            $query = "INSERT INTO usermusicfiles (username, path) VALUES ('$username', '$newPath')";
+            $query = "INSERT INTO usermusicfiles (username, path, name) VALUES ('$username', '$newPath', '$name')";
             pg_query($con, $query);
         }
     }

@@ -42,7 +42,7 @@
         var skillGenres = "";
 
         for(var i = 0; i < divSkillGenres.length ; ++i) {
-          skillGenres = skillGenres + "," + divSkillGenres[i].value;
+          skillGenres = skillGenres + "," + divSkillGenres[i].getAttribute("value");
         }
 
         if (skillGenres == "") {
@@ -57,7 +57,7 @@
         var skill = "";
 
         for(var i = 0; i < divSkill.length ; ++i) {
-          skill = skill + "," + divSkill[i].value;
+          skill = skill + "," + divSkill[i].getAttribute("value");
         }
 
         if (skill == "") {
@@ -68,49 +68,98 @@
       }
 
       function getProjectData() {
+        //console.log("Project");
         var search = "<?php echo $_SESSION['search'];?>";
         var filter = getSkillGenre();
+        if ($('#orderProject').val() == '1') {
+          //name
+          var order = "name";
+        } else if ($('#orderProject').val() =='2') {
+          //new -> old
+          var order = "new";
+        } else {
+          //old -> new
+          var order = "old";
+        }
+        if ($('#radioProjectOne').is(':checked')) {
+          var require = "one";
+        } else {
+          var require = "all";
+        }
         $.ajax({
           type: 'POST',
           url: 'scripts/search_get.php',
           data: {search: search,
                  type: 'project',
-                 filter: filter},
+                 filter: filter,
+                 order: order,
+                 require: require},
           dataType: 'json',
           success: function(response) {
-            //alert(response);
-            $('#search-results').empty();
             //console.log(response);
+            $('#search-results').empty();
             for (var i in response) {
-              $('#search-results').append($("<div class=\"result\"><img src=\"http://placehold.it/100x100\"><div class=\"result-info\"><h4>" +  response[i].name + "</h4><p><strong>" + response[i].description + "</strong></p><p><strong>Skills Needed</strong></p><p><strong>Genre</strong></p></div></div>"));
+              projectOutput = "<div class=\"result\"><img src=\"http://placehold.it/100x100\"><div class=\"result-info\"><h4>" +  response[i].name + "</h4><p><strong>" + response[i].description + "</strong></p><p><strong>Skills Needed</strong>";
+              for (var a in response[i][0]) {
+                projectOutput += " <span class=\"label label-primary\">" + response[i][0][a] + "</span> ";
+              }
+              projectOutput += "</p><p><strong>Genre</strong>";
+              for (var b in response[i][1]) {
+                projectOutput += " <span class=\"label label-primary\">" + response[i][1][b] + "</span> ";
+              }
+              projectOutput += "</p></div></div>";
+              $('#search-results').append($(projectOutput));
             }
           },
-          error: function(a) {
-            alert(a);
+          error: function(xhr,err){
+            alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status);
+            alert("responseText: "+xhr.responseText);
           }
         })
       }
 
       function getUserData() {
+        //console.log("User");
         var search = "<?php echo $_SESSION['search'];?>";
         var filter = getSkill();
+        console.log(filter);
+        if ($('#orderUser').val() == '2') {
+          //username
+          var order = "real";
+        } else {
+          //real name
+          var order = "username";
+        }
+        if ($('#radioUserOne').is(':checked')) {
+          var require = "one";
+        } else {
+          var require = "all";
+        }
         $.ajax({
           type: 'POST',
           url: 'scripts/search_get.php',
           data: {search: search,
                  type: 'user',
-                 filter: filter},
+                 filter: filter,
+                 order: order,
+                 require: require},
           dataType: 'json',
           success: function(response) {
-            //alert(response);
-            $('#search-results').empty();
             //console.log(response);
+            $('#search-results').empty();
+            var userOutput;
             for (var i in response) {
-              $('#search-results').append($("<div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[i].path + "\"><div class=\"result-info\"><h4>" + response[i].username + "</h4><p><strong>" + response[i].about + "</strong></p><p><strong>Skills</strong></p></div></div>"));
+              userOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[i].path + "\"><div class=\"result-info\"><h4>" + response[i].username + "</h4><p><strong>" + response[i].about + "</strong></p><p><strong>Skills</strong>";
+              for (var a in response[i][0]) {
+                userOutput += " <span class=\"label label-primary\">" + response[i][0][a] + "</span> ";
+              }
+              userOutput += "</p></div></div>";
+              $('#search-results').append($(userOutput));
             }
           },
-          error: function(a) {
-            alert(a);
+          error: function(xhr,err){
+            alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status);
+            alert("responseText: "+xhr.responseText);
           }
         })
       }
@@ -122,21 +171,39 @@
           url: 'scripts/search_get.php',
           data: {search: search,
                  type: 'all',
-                 filter: 'none'},
+                 filter: 'none',
+                 order: 'none',
+                 require: 'none'},
           dataType: 'json',
           success: function(response) {
-            //alert(response);
             $('#search-results').empty();
-            console.log(response);
+            //console.log(response);
+            var projectOutput;
             for (var i in response[0]) {
-              $('#search-results').append($("<div class=\"result\"><img src=\"http://placehold.it/100x100\"><div class=\"result-info\"><h4>" +  response[0][i].name + "</h4><p><strong>" + response[0][i].description + "</strong></p><p><strong>Skills Needed</strong></p><p><strong>Genre</strong></p></div></div>"));
+              projectOutput = "<div class=\"result\"><img src=\"http://placehold.it/100x100\"><div class=\"result-info\"><h4>" +  response[0][i].name + "</h4><p><strong>" + response[0][i].description + "</strong></p><p><strong>Skills Needed</strong>";
+              for (var a in response[0][i][0]) {
+                projectOutput += " <span class=\"label label-primary\">" + response[0][i][0][a] + "</span> ";
+              }
+              projectOutput += "</p><p><strong>Genre</strong>";
+              for (var b in response[0][i][1]) {
+                projectOutput += " <span class=\"label label-primary\">" + response[0][i][1][b] + "</span> ";
+              }
+              projectOutput += "</p></div></div>";
+              $('#search-results').append($(projectOutput));
             }
+            var userOutput;
             for (var i in response[1]) {
-              $('#search-results').append($("<div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[1][i].path + "\"><div class=\"result-info\"><h4>" + response[1][i].username + "</h4><p><strong>" + response[1][i].about + "</strong></p><p><strong>Skills</strong></p></div></div>"));
+              userOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[1][i].path + "\"><div class=\"result-info\"><h4>" + response[1][i].username + "</h4><p><strong>" + response[1][i].about + "</strong></p><p><strong>Skills</strong>";
+              for (var a in response[1][i][0]) {
+                userOutput += " <span class=\"label label-primary\">" + response[1][i][0][a] + "</span> ";
+              }
+              userOutput += "</p></div></div>";
+              $('#search-results').append($(userOutput));
             }
           },
-          error: function(a) {
-            alert(a);
+          error: function(xhr,err){
+            alert("readyState: "+xhr.readyState+"\nstatus: "+xhr.status);
+            alert("responseText: "+xhr.responseText);
           }
         })
       }
@@ -198,11 +265,11 @@
           <ul class="nav navbar-nav">
             <li class="active"><a href="#">Profile</a></li>
           </ul>
-          <form class="navbar-form navbar-left" style= "margin-left: 150px" role="search">
+          <form class="navbar-form navbar-left" style="margin-left: 150px" role="search">
             <div class="form-group">
-              <input type="text" class="form-control" style = "width: 300px;" placeholder="Search for people, projects and skills..." value="<?php if (isset($_SESSION['search'])) {echo $_SESSION['search'];}?>">
+              <input type="text" class="form-control" style="width: 300px;" placeholder="Search for people, projects and skills..." value="<?php if (isset($_SESSION['search'])) {echo $_SESSION['search'];}?>">
             </div>
-            <button type="submit" class="btn btn-success" style = "margin-left: -2px">
+            <button type="submit" class="btn btn-success" style="margin-left: -2px">
             <span class="glyphicon glyphicon-search"></span>
             </button>
           </form>
@@ -234,15 +301,52 @@
           <h4 class="subheading">Search Filters</h4>
           <div id="filters" style ="padding-left: 10px; margin-top: -5px; margin-bottom: 10px">
               <div id="filterAddingProject" style="display:none">
-                  <input id="filterProject" type="text" name="skillGenreEnter" style= "margin-bottom: 5px" placeholder="Filter by skill or genre">
-                  <ul id="skills-genre-list" style = "margin-left: -40px">
+                  <select class="form-control" id="orderProject" onchange="getProjectData()">
+                    <option value="1">Order by Project Name</option>
+                    <option value="2">Order by new projects</option>
+                    <option value="3">Order by old projects</option>
+                  </select>
+                  <br>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="radioProject" id="radioProjectOne" value="radioProjectOne" onchange="getProjectData()" checked>
+                      Require at least 1 skill/genre
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="radioProject" id="radioProjectAll" onchange="getProjectData()" value="radioProjectAll">
+                      Require all skills/genres
+                    </label>
+                  </div>
+                  <br>
+                  <input id="filterProject" type="text" name="skillGenreEnter" style="margin-bottom: 5px" placeholder="Filter by skill or genre">
+                  <ul id="skills-genre-list" style="margin-left: -40px">
                     <li><div class="tag">Guitar<span class="close">x</span></div></li>
                   </ul>
               </div>
               <div id="filterAddingUser" style="display:none">
-                  <input id="filterUser" type="text" name="skillEnter" style= "margin-bottom: 5px" placeholder="Filter by skill">
-                  <ul id="skills-list" style = "margin-left: -40px">
-                    <li><div class="tag">Guitar<span class="close">x</span></div></li>
+                  <select class="form-control" id="orderUser" onchange="getUserData()">
+                    <option value="1">Order by username</option>
+                    <option value="2">Order by real name</option>
+                  </select>
+                  <br>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="radioUser" id="radioUserOne" value="radioUserOne" onchange="getUserData()" checked>
+                      Require at least 1 skill
+                    </label>
+                  </div>
+                  <div class="radio">
+                    <label>
+                      <input type="radio" name="radioUser" id="radioUserAll" value="radioUserAll" onchange="getUserData()">
+                      Require all skills
+                    </label>
+                  </div>
+                  <br>
+                  <input id="filterUser" type="text" name="skillEnter" style="margin-bottom: 5px" placeholder="Filter by skill">
+                  <ul id="skills-list" style="margin-left: -40px">
+                   
                   </ul>
               </div>
               <div style = "margin-top: -8px">
@@ -256,44 +360,6 @@
 
       <div id="search-results" style="margin-left: 260px; float:left">
 
-      <!-- <div class="result">
-          <img class="img-circle" src="http://placehold.it/100x100">
-          <div class="result-info">
-              <h4>eddytheblack</h4>
-              <p><strong>About me</strong></p>
-              <p>
-                  <strong>Skills</strong> 
-                  <span class="label label-primary">Vocalist</span> 
-                  <span class="label label-primary">Guitar</span>
-                  <span class="label label-primary">Keyboard</span>
-                  <span class="label label-primary">GarageBand</span>
-                  
-              </p>
-          </div>
-      </div>
-      <div class="result">
-          <img class="img-circle" src="http://placehold.it/100x100">
-          <div class="result-info">
-              <h4>soundperson102555</h4>
-              <p><strong>About me</strong></p>
-              <p>
-                  <strong>Skills</strong> 
-                  <span class="label label-primary">Guitar</span>
-                  <span class="label label-primary">Bass</span>
-                  <span class="label label-primary">Ukelele</span>
-                  <span class="label label-primary">Triangle</span>
-              </p>
-          </div>
-      </div>
-      <div class="result">
-          <img src="http://placehold.it/100x100">
-          <div class="result-info">
-              <h4>Project Super Funk</h4>
-              <p><strong>About</strong></p>
-              <p><strong>Skills Needed</strong></p>
-              <p><strong>Genre</strong></p>
-          </div>
-      </div> -->
     </div>
 
 
@@ -323,15 +389,13 @@
           </div>
           <h4 style = "margin-top: 0px; padding : 5px; text-align: center; background-color: #34495e">Current Projects</h4>
           <ul id = "projects-list" style="margin-top: -10px; padding: 10px">
-            <li><button type="button" class="btn-default btn-lg btn-block">
-              Project 1</button>
-            </li>
-            <li><button type="button" class="btn-default btn-lg btn-block">
-              Project 2</button>
-            </li>
-            <li><button type="button" class="btn-default btn-lg btn-block">
-              Project Project 3</button>
-            </li>
+            <?php
+              $query = "SELECT projects.idproject, projects.name FROM projects INNER JOIN projectusers ON projectusers.username = '{$logged_in_user}' AND projects.idproject = projectusers.idproject";
+              $results = pg_query($con, $query);
+              while ($row = pg_fetch_assoc($results)) {
+                echo "<li><button type=\"button\" class=\"btn-default btn-lg btn-block\">" . $row['name'] . "</button></li>";
+              }
+            ?>
           </ul>
       </div>
     </div>

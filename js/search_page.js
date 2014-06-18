@@ -11,6 +11,7 @@ $(document).ready(function() {
     if (e.keyCode == 13) {
       $('#skills-genre-list').append($("\n<li><div class=\"tag\" value=\"" + $('#filterProject').val() + "\">" + $('#filterProject').val() + "<span class=\"close\">x</span></div></li>"));
       $('#filterProject').val('');
+      getProjectData();
     }
     $(document).on("click", "span.close", buttonRemove);
   });
@@ -19,6 +20,7 @@ $(document).ready(function() {
     if (e.keyCode == 13) {
       $('#skills-list').append($("\n<li><div class=\"tag\" value=\"" + $('#filterUser').val() + "\">" + $('#filterUser').val() + "<span class=\"close\">x</span></div></li>"));
       $('#filterUser').val('');
+      getUserData();
     }
     $(document).on("click", "span.close", buttonRemove);
   });
@@ -27,6 +29,11 @@ $(document).ready(function() {
 var buttonRemove = function(){
   $(this).parent().fadeOut(400, function() {
     $(this).parent().remove();
+    if ($('#projects').is(':checked')) {
+      getProjectData();
+    } else {
+      getUserData();
+    }
   });
 }
 
@@ -35,6 +42,7 @@ function hideFiltering() {
     $("#filterAddingUser").fadeOut(400);
     $("#projects").attr("checked", false);
     $("#users").attr("checked", false);
+    getAllData();
 }
 
 function followUser() {
@@ -47,7 +55,6 @@ function followUser() {
         $("#btnFollow").val("not_following");
         $("#btnFollow").css("opacity", "1");
     }
-    getAllData();
 }
 
 function showFilteringProject() {

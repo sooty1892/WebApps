@@ -7,7 +7,6 @@ $(document).ready(function () {
   $(document).on("keydown", function (e) {
     if (e.which == 40) {
       pageScroller.next();
-
     }
     if (e.which == 38) {
       pageScroller.prev();

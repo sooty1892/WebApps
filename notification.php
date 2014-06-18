@@ -50,58 +50,84 @@
     <script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
     <script type="text/javascript" src="js/jquery.form.min.js"></script>
 
-<script> 
-
-  $(document).ready(function(){
-
-    $(".invite").click(function(){
-
-	formdata = new FormData();
-	var name = "<?php echo $logged_in_user; ?>";
-	
-	$.ajax({
-	  type: 'POST',
-	  url: "scripts/notify.php",
-	  data: {usersend: name},
-	  dataType: 'json'
-	  
-	});
-
-    }); 
-    
+    <script>  
+      $(document).ready(function(){
+        getNotificationData();
+        setInterval(function() {
+          getNotificationData();
+        }, 10000);
 
 
+        $(".invite").click(function(){
+          //console.log("HERE");
+          //var name = "<?php echo $logged_in_user;?>";
+        	$.ajax({
+        	  type: 'POST',
+        	  url: "scripts/notify.php",
+        	  data: {usersend: 'admin',
+                   useraccept: 'cts12',
+                   idproject: '1'}
+        	});
+        }); 
+      });
 
-  });
+      function reply_click(clicked_id, usersen){
+        // alert("This object's ID attribute is set to \"" + usersend + "\"."); 
 
- function reply_click(clicked_id, usersen){
-     
-     // alert("This object's ID attribute is set to \"" + usersend + "\"."); 
-
- $(document).ready(function(){
- 	var name = "<?php echo $logged_in_user; ?>";
-        $.ajax({
-	  type: 'POST',
-          url: "scripts/accept.php",
-          data: {useraccept: name, idproject: clicked_id, usersend: usersen },
-          dataType: 'json'
-        
-               
+        $(document).ready(function(){
+         	var name = "<?php echo $logged_in_user; ?>";
+          //console.log("HI");
+          $.ajax({
+        	  type: 'POST',
+            url: "scripts/accept.php",
+            data: {useraccept: 'admin', 
+                  idproject: '1',
+                  usersend: 'admin'},
+          });
         });
+      }
 
-    });
+      function reply_decline(clicked_id, usersen){
+        // alert("This object's ID attribute is set to \"" + usersend + "\"."); 
 
- 
-}
+        $(document).ready(function(){
+          var name = "<?php echo $logged_in_user; ?>";
+          //console.log("HI");
+          $.ajax({
+            type: 'POST',
+            url: "scripts/decline.php",
+            data: {useraccept: 'admin', 
+                  idproject: '1',
+                  usersend: 'admin'},
+          });
+        });
+      }
+
+      function getNotificationData() {
+        var name = "<?php echo $logged_in_user; ?>";
+        $.ajax({
+          type: 'POST',
+          url: "scripts/get_notifications.php",
+          dataType: 'json',
+          data: {name: name},
+          success: function(res) {
+            console.log(res);
+            $('#responseList').empty();
+            $('#notifi').html(res.length);
+            for (var i in res) {
+              var output = "<li class=\"response\"> <a href=\"#\">" + res[i].usersend + " " + res[i].description + " </br> </br> <button type=\"button\" class=\"btn btn-warning accept\" id=\"" + res[i].idproject + "\"  onClick=\"reply_click(this.id, '" + res[i].usersend + "')\">Accept</button><button type=\"button\" class=\"btn btn-danger decline\" id=\"" + res[i].idproject + "\"  onClick=\"reply_decline(this.id, '" + res[i].usersend + "')\">Decline</button></li>";
+              $('#responseList').append(output);
+            } 
+          }
+        });
+      }
+    </script>
 
 
-</script>
+  </head>
 
-
-</head>
-
-<body> 
- <!-- Start of Navbar -->
+  <body> 
+    <!-- Start of Navbar -->
     <div id ="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -140,56 +166,36 @@
     </div>
     <!-- End of Navbar -->
 
-<div class="btn-group">
+    <div class="btn-group">
       <button type="button" class="btn btn-default dropdown-toggle" id="id" data-toggle="dropdown">
         Invite to Project
         <span class="caret"></span>
       </button>
-       <ul class="dropdown-menu"> 
-	<?php
-
-	  $query = "SELECT projects.name FROM projects INNER JOIN projectusers ON projectusers.owner = 't' AND projects.idproject = projectusers.idproject";
-
-	
-	if ($data = pg_query($con, $query)) {
-    while ($row = pg_fetch_assoc($data)) {
-//	<li><a href="#">Dropdown link</a></li>
-
-     echo "<li class=\"invite\"> <a href=\"#\">" . $row['name'] . "</li>";
-    }
-  }
-
-	?>
-       </ul>
+      <ul class="dropdown-menu"> 
+      	<?php
+      	  $query = "SELECT projects.name FROM projects INNER JOIN projectusers ON projectusers.owner = 't' AND projects.idproject = projectusers.idproject";
+          if ($data = pg_query($con, $query)) {
+            while ($row = pg_fetch_assoc($data)) {
+              //	<li><a href="#">Dropdown link</a></li>
+              echo "<li class=\"invite\"> <a href=\"#\">" . $row['name'] . "</li>";
+            }
+          }
+      	?>
+      </ul>
     </div>
-
-
-<ul class="nav nav-pills">
-  <li class="dropdown">
-    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-      Notifications <span class="badge">0</span>
-    </a>
-    <ul class="dropdown-menu">
-      <li class="divider"></li>
-	
-      <?php 
-	$query = " SELECT usersend,idproject,description FROM notifications WHERE useraccept='{$logged_in_user}'";
-
-	  if ($data = pg_query($con, $query)) {
-    while ($row = pg_fetch_assoc($data)) {
-
-         echo "<li class=\"invite\"> <a href=\"#\">" . $row['usersend'] . " ".$row['description'] ." </br> </br> <button type=\"button\" class=\"btn btn-warning accept\" id=\"".$row['idproject']."\"  onClick=\"reply_click(this.id, '".$row['usersend']."')\">Accept</button>
-<button type=\"button\" class=\"btn btn-danger decline\">Decline</button></li>";
-        }
-      }
-			
-      ?>
+    
+    <ul class="nav nav-pills">
+      <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Notifications <span class="badge" id="notifi">0</span>
+        </a>
+        <ul class="dropdown-menu" id="responseList">
+          <li class="divider"></li>
+        </ul>
+      </li>
     </ul>
-  </li>
-</ul>
 
-</body>
-
-
+  </body>
+</html>
 
 
