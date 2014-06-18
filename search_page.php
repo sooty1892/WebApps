@@ -99,7 +99,7 @@
             //console.log(response);
             $('#search-results').empty();
             for (var i in response) {
-              projectOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" src=\"" . response[i].path . "\"><div class=\"result-info\"><h4>" +  response[i].name + "</h4><p><strong>" + response[i].description + "</strong></p><p><strong>Skills Needed</strong>";
+              projectOutput = '<a><div class="result"><img style="height: 100px; width: 100px;" src="' + response[i].path + '"><div class="result-info"><h4>' +  response[i].name + '</h4><p><strong>' + response[i].description + '</strong></p><p><strong>Skills Needed</strong>';
               for (var a in response[i][0]) {
                 projectOutput += " <span class=\"label label-primary\">" + response[i][0][a] + "</span> ";
               }
@@ -107,7 +107,7 @@
               for (var b in response[i][1]) {
                 projectOutput += " <span class=\"label label-primary\">" + response[i][1][b] + "</span> ";
               }
-              projectOutput += "</p></div></div>";
+              projectOutput += "</p></div></div></a>";
               $('#search-results').append($(projectOutput));
             }
           },
@@ -149,11 +149,11 @@
             $('#search-results').empty();
             var userOutput;
             for (var i in response) {
-              userOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[i].path + "\"><div class=\"result-info\"><h4>" + response[i].username + "</h4><p><strong>" + response[i].about + "</strong></p><p><strong>Skills</strong>";
+              userOutput = '<a href=\"profile_page.php?id=\"' + response[i].username +  "\"><div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[i].path + "\"><div class=\"result-info\"><h4>" + response[i].username + "</h4><p><strong>" + response[i].about + "</strong></p><p><strong>Skills</strong>";
               for (var a in response[i][0]) {
                 userOutput += " <span class=\"label label-primary\">" + response[i][0][a] + "</span> ";
               }
-              userOutput += "</p></div></div>";
+              userOutput += "</p></div></div></a>";
               $('#search-results').append($(userOutput));
             }
           },
@@ -180,7 +180,7 @@
             //console.log(response);
             var projectOutput;
             for (var i in response[0]) {
-              projectOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" src=\"" . response[0][i].path . "\"><div class=\"result-info\"><h4>" +  response[0][i].name + "</h4><p><strong>" + response[0][i].description + "</strong></p><p><strong>Skills Needed</strong>";
+              projectOutput = "<a><div class=\"result\"><img style=\"height: 100px; width: 100px;\" src=\"" + response[0][i].path + "\"><div class=\"result-info\"><h4>" +  response[0][i].name + "</h4><p><strong>" + response[0][i].description + "</strong></p><p><strong>Skills Needed</strong>";
               for (var a in response[0][i][0]) {
                 projectOutput += " <span class=\"label label-primary\">" + response[0][i][0][a] + "</span> ";
               }
@@ -188,16 +188,16 @@
               for (var b in response[0][i][1]) {
                 projectOutput += " <span class=\"label label-primary\">" + response[0][i][1][b] + "</span> ";
               }
-              projectOutput += "</p></div></div>";
+              projectOutput += "</p></div></div></a>";
               $('#search-results').append($(projectOutput));
             }
             var userOutput;
             for (var i in response[1]) {
-              userOutput = "<div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[1][i].path + "\"><div class=\"result-info\"><h4>" + response[1][i].username + "</h4><p><strong>" + response[1][i].about + "</strong></p><p><strong>Skills</strong>";
+              userOutput = "<a href=\"profile_page?id=" + response[1][i].username +  "\"><div class=\"result\"><img style=\"height: 100px; width: 100px;\" class=\"img-circle\" src=\"" + response[1][i].path + "\"><div class=\"result-info\"><h4>" + response[1][i].username + "</h4><p><strong>" + response[1][i].about + "</strong></p><p><strong>Skills</strong>";
               for (var a in response[1][i][0]) {
                 userOutput += " <span class=\"label label-primary\">" + response[1][i][0][a] + "</span> ";
               }
-              userOutput += "</p></div></div>";
+              userOutput += "</p></div></div></a>";
               $('#search-results').append($(userOutput));
             }
           },
@@ -282,6 +282,14 @@
                 <li><a href="logout.php">Logout</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Notifications <span class="badge" id="notifi">0</span>
+        </a>
+        <ul class="dropdown-menu" id="responseList">
+          <li class="divider"></li>
+        </ul>
+      </li>
           </ul>
         </div>
       </div>

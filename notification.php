@@ -156,10 +156,19 @@
             <li class="dropdown">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">Username<b class="caret"></b></a>
               <ul class="dropdown-menu">
+                <li class="dropdown">
                 <li><a href="#">Profile Page</a></li>
                 <li><a href="logout.php">Logout</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Notifications <span class="badge" id="notifi">0</span>
+        </a>
+        <ul class="dropdown-menu" id="responseList">
+          <li class="divider"></li>
+        </ul>
+      </li>
           </ul>
         </div>
       </div>

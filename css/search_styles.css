@@ -6,6 +6,16 @@
     border-bottom: 1px solid white;
 }
 
+.result:hover {
+    background-color: #505b65;
+    cursor: pointer
+}
+a {color: white;}
+a:link {color: white;}
+a:active {color: white;}
+a:visited {color: white;}
+a:hover {color: white;}
+
 .result-info {
     position: absolute;
     left: 120px;

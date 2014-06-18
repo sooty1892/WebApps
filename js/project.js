@@ -1,3 +1,5 @@
+var playlist = [];
+
 $(document).ready(function(){
     pullData();
 
@@ -56,7 +58,7 @@ function pullData(){
         url: 'scripts/pull_project_data.php',
         type: 'GET',
         dataType: 'json',
-        data: {idproject: '1'},
+        data: {idproject: projectID},
         success: function(response) {
           writeMenu(response);
           writeSections(response);
@@ -92,6 +94,43 @@ $("#menu").append(item);
 
 } 
 }
+
+function uploadSongsToSection() {
+  formdata = new FormData();
+  var j_player = $(event.target).parents(".projectSection").find(".jp-jplayer");
+  var id = $(event.target).attr("id");
+  var section = $(event.target).parents(".projectSection").find("h3").html();
+  for (var i = 0; i < $(event.target)[0].files.length; i++) {
+    formdata.append("projectFiles[]", $(event.target)[0].files[i]);
+  }
+
+  formdata.append("idproject", projectID);
+  formdata.append("section", section);
+  formdata.append("username", userID);
+
+  if (formdata) {
+    $.ajax({
+      url: "scripts/upload_files.php",
+      type: "POST",
+      data: formdata,
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      success: function (res) {
+        console.log(res);
+        for(var i in res) {
+          playlist[id].add({
+            title: res[i][1],
+            artist: res[i][0],
+            mp3: res[i][2]
+          });
+        }
+      }
+    });
+  }
+
+}
+
 // !!DO THE ALBUM ART
 function writeSections(data){
   
@@ -112,7 +151,7 @@ var description = data[i].description;
     section+='<div class="jp-gui jp-interface"><ul class="jp-controls"><div class="mediaButton">'
     section+='<a href="javascript:;" class="jp-play" >play</a><a href="javascript:;" class="jp-pause"><div class="pause"style="top:14px;left:25px"></div>';
     section+='<div class="pause"style="top:-36px;left:45px"></div></a></div>';
-    section+='<div id="starButton_' + sectionName + '"  class="starbtn unlitStar"></div><div id="uploadButton"></div></ul>';
+    section += '<div id="starButton"  class="starbtn"></div><div id="uploadButton" class ="fileinput-button"><form method="post" enctype="multipart/form-data" action="scripts/upload_files.php"><input id ="' + i + '" onchange="uploadSongsToSection()" type="file" multiple></form></div></ul>';
     section+='<div class="jp-progress"><div class="jp-seek-bar"><div class="jp-play-bar"></div></div></div>';
     section+='<div class="jp-time-holder"><div class="jp-current-time"></div><div class="jp-duration"></div></div></div>';
     section+='<div class="jp-no-solution"><span>Update Required</span>To play the media you will need to either update your browser to a recent version or update your <a href="http://get.adobe.com/flashplayer/" target="_blank">Flash plugin</a>.';
@@ -163,7 +202,7 @@ function activatePlayers(data){
    var p = "#jquery_jplayer_" + sectionName;
    var c = "#jp_container_"+sectionName;
    
-   var myPlaylist = new jPlayerPlaylist({
+   playlist[i] = new jPlayerPlaylist({
   jPlayer: p,
   cssSelectorAncestor: c
 }, [
@@ -222,10 +261,10 @@ getRating(this,value,sectionName);
    var path = data[i][0][file].path;
    var fileArtist = data[i][0][file].username;
    if (extension == "mp3") {
-   myPlaylist.add({title:name,artist:fileArtist,mp3:path,free:true});
+   playlist[i].add({title:name,artist:fileArtist,mp3:path,free:true});
 
    } else {
-   myPlaylist.add({title:name,artist:fileArtist,mp4:path,free:true});
+   playlist[i].add({title:name,artist:fileArtist,mp4:path,free:true});
 
    }
   }

@@ -1,4 +1,4 @@
-#page-wrap{position:fixed; top :440px;left:120px;}
+#page-wrap{position:fixed; top :380px;left:120px;}
 
 
 #sendie {
@@ -6,6 +6,6 @@
 
 }
 
-#chat-area                      { height: 300px; overflow: auto; border: 2px ridge #49a2df; padding: 20px;color:white; background-color: #4e5d6c; width: 200px;border-bottom-width:0px; }
+#chat-area                      { word-wrap: break-word; height: 300px; overflow: auto; border: 2px ridge #49a2df; padding: 20px;color:white; background-color: #4e5d6c; width: 200px;border-bottom-width:0px; }
 #chat-area p                    { padding: 8px 0; border-bottom: 1px solid #ccc; }
 #chat-area span                 { color: white; background: #333; padding: 4px 8px; -moz-border-radius: 5px; -webkit-border-radius: 8px; margin: 0 5px 0 0; }

@@ -54,10 +54,10 @@
 
         if ($_POST['projectPrivacy'] != 'option1') {
           $query = "INSERT INTO projects (name, description, private, license, datecreated, path)
-                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()', 'images/dj.png') RETURNING idproject";
+                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()', 'images/dj.jpg') RETURNING idproject";
         } else {
           $query = "INSERT INTO projects (name, description, private, license, datecreated, path)
-                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()', 'images/dj.png') RETURNING idproject";
+                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()', 'images/dj.jpg') RETURNING idproject";
         }
         $result = pg_query($con, $query);
         $row = pg_fetch_row($result);
@@ -108,6 +108,7 @@
     <link href="css/profile_pic_upload.css" rel="stylesheet" type="text/css">
     <link href="css/upload_style.css" rel="stylesheet">
     <link href="css/lightbox.css" rel="stylesheet">
+    <link href="css/notify.css" rel="stylesheet" type="text/css">
     
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
@@ -420,6 +421,78 @@
         }
     }
     </script>
+    <script>  
+      $(document).ready(function(){
+        getNotificationData();
+        setInterval(function() {
+          getNotificationData();
+        }, 10000);
+
+
+        $(".invite").click(function(){
+          //console.log("HERE");
+          //var name = "<?php echo $logged_in_user;?>";
+          $.ajax({
+            type: 'POST',
+            url: "scripts/notify.php",
+            data: {usersend: 'admin',
+                   useraccept: 'cts12',
+                   idproject: '1'}
+          });
+        }); 
+      });
+
+      function reply_click(clicked_id, usersen){
+        // alert("This object's ID attribute is set to \"" + usersend + "\"."); 
+
+        $(document).ready(function(){
+          var name = "<?php echo $logged_in_user; ?>";
+          //console.log("HI");
+          $.ajax({
+            type: 'POST',
+            url: "scripts/accept.php",
+            data: {useraccept: 'admin', 
+                  idproject: '1',
+                  usersend: 'admin'},
+          });
+        });
+      }
+
+      function reply_decline(clicked_id, usersen){
+        // alert("This object's ID attribute is set to \"" + usersend + "\"."); 
+
+        $(document).ready(function(){
+          var name = "<?php echo $logged_in_user; ?>";
+          //console.log("HI");
+          $.ajax({
+            type: 'POST',
+            url: "scripts/decline.php",
+            data: {useraccept: 'admin', 
+                  idproject: '1',
+                  usersend: 'admin'},
+          });
+        });
+      }
+
+      function getNotificationData() {
+        var name = "<?php echo $logged_in_user; ?>";
+        $.ajax({
+          type: 'POST',
+          url: "scripts/get_notifications.php",
+          dataType: 'json',
+          data: {name: name},
+          success: function(res) {
+            console.log(res);
+            $('#responseList').empty();
+            $('#notifi').html(res.length);
+            for (var i in res) {
+              var output = "<li class=\"response\"> <a href=\"#\">" + res[i].usersend + " " + res[i].description + " </br> </br> <button type=\"button\" class=\"btn btn-warning accept\" id=\"" + res[i].idproject + "\"  onClick=\"reply_click(this.id, '" + res[i].usersend + "')\">Accept</button><button type=\"button\" class=\"btn btn-danger decline\" id=\"" + res[i].idproject + "\"  onClick=\"reply_decline(this.id, '" + res[i].usersend + "')\">Decline</button></li>";
+              $('#responseList').append(output);
+            } 
+          }
+        });
+      }
+    </script>
   </head>
 
   <body>
@@ -550,6 +623,14 @@
                 <li><a href="logout.php">Logout</a></li>
               </ul>
             </li>
+            <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Notifications <span class="badge" id="notifi">0</span>
+        </a>
+        <ul class="dropdown-menu" id="responseList">
+          <li class="divider"></li>
+        </ul>
+      </li>
           </ul>
         </div>
       </div>

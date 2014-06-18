@@ -3,8 +3,8 @@
 include 'common.php';
 global $con;
 
-$fp = fopen("log.txt", 'w');
-global $fp;
+//$fp = fopen("log.txt", 'w');
+//global $fp;
 
 function parse_sql_timestamp($timestamp, $format = 'd-m-Y')
 {
@@ -123,7 +123,7 @@ function checkRequire($require, $filter, $sg) {
 
 function getProjectData($search, $order, $require, $skillFilter, $genreFilter) {
 	global $con;
-	global $fp;
+	//global $fp;
 
 	if ($order == 'name') {
 		//name
@@ -191,7 +191,7 @@ function getProjectData($search, $order, $require, $skillFilter, $genreFilter) {
 
 function getUserData($search, $order, $require, $skillFilter) {
 	global $con;
-	global $fp;
+	//global $fp;
 
 	if ($order == 'username') {
 		//order by username
@@ -293,7 +293,7 @@ function getAllData($search) {
 
 // if the 'term' variable is not sent with the request, exit
 if (isset($_POST)) {
-	global $fp;
+	//global $fp;
 
 	$type = $_POST['type'];
 	$search = strtolower($_POST['search']);
@@ -303,7 +303,7 @@ if (isset($_POST)) {
 	$skillFilter = false;
 	$genreFilter = false;
 
-	fwrite($fp, $_POST['filter']);
+	//fwrite($fp, $_POST['filter']);
 
 	if (isset($_POST['filter'])) {
 		$filter = getFilterArray($_POST['filter']);

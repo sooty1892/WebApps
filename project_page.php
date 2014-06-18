@@ -110,10 +110,10 @@
 
         if ($_POST['projectPrivacy'] != 'option1') {
           $query = "INSERT INTO projects (name, description, private, license, datecreated, path)
-                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()', 'images/dj.png') RETURNING idproject";
+                  VALUES ('$name', '$desc', 'true', '$license', 'NOW()', 'images/dj.jpg') RETURNING idproject";
         } else {
           $query = "INSERT INTO projects (name, description, private, license, datecreated, path)
-                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()', 'images/dj.png') RETURNING idproject";
+                  VALUES ('$name', '$desc', 'false', '$license', 'NOW()', 'images/dj.jpg') RETURNING idproject";
         }
         $result = pg_query($con, $query);
         $row = pg_fetch_row($result);
@@ -165,7 +165,8 @@
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
     <script>
       var last = 0;
-
+      var projectID = '<?php echo $_SESSION['id']; ?>';
+      var userID = '<?php echo $logged_in_user; ?>';
       $(document).ready(function() {
         getMessages();
         setInterval(function() {
@@ -206,7 +207,7 @@
         success: function(response) {
           console.log(response);
           for (var i in response) {
-            $('#chat-area').append($("</p>" +"<span>" + response[i].username + "</span>" + ":\n" + response[i].message + "</p>"));
+            $('#chat-area').append($("<p>" +"<span>" + response[i].username + "</span>" + ":\n" + response[i].message + "</p>"));
             if (response[i].idmessage > last) {
               last = response[i].idmessage;
             }
@@ -289,20 +290,20 @@
 
 
     <div class="container">
-      <!-- <div id="page-wrap">
-    
-        <div id="chat-wrap">
-          <div id="chat-area">
-                <h3 style="text-align:center;border: 2px solid #49a2df;position:fixed;background-color:#222222;width:200px;left :120px;top:400px;">Group Chat</h3>
+        <div id="page-wrap">
+      
+          <div id="chat-wrap">
+            <div id="chat-area">
+                  <h3 style="text-align:center;border: 2px solid #49a2df;position:fixed;background-color:#222222;width:200px;left :120px;top:340px;">Group Chat</h3>
+            </div>
           </div>
-        </div>
-        
-        <form id="send-message-area"> -->
-            <!-- <p>Your message: </p> -->
-            <!-- <textarea id="sendie"></textarea>
-        </form>
-    
-    </div> -->
+          
+          <form id="send-message-area">
+              <!-- <p>Your message: </p> -->
+              <textarea id="sendie"></textarea>
+          </form>
+      
+      </div>
       <!-- Static navbar -->
       <div id ="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
@@ -336,6 +337,14 @@
                   <li><a href="logout.php">Logout</a></li>
                 </ul>
               </li>
+              <li class="dropdown">
+        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+          Notifications <span class="badge" id="notifi">0</span>
+        </a>
+        <ul class="dropdown-menu" id="responseList">
+          <li class="divider"></li>
+        </ul>
+      </li>
             </ul>
           </div>
         </div>
