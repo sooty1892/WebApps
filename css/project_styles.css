@@ -9,7 +9,6 @@
     overflow: hidden;
     
 }
-
 .sectionEdit{background-color: #485563;
 height: 500px;width: 500px;
 position: relative; left:50px;}
@@ -155,4 +154,3 @@ opacity: 0.5;
 }
 
 #menu{overflow:auto;top:20px;max-height: 250px;}
-

@@ -85,7 +85,7 @@ function activatePageScroller(){
 }
 
 function writeMenu(data){
-$("#menu").append('<li ><a href="#">Bio</a></li>');
+$("#menu").append('<li ><a href="#">Project Description</a></li>');
 for (var i in data) {
  var item = "<li><a href='#'>"+ data[i].name +"</a></li>";  
 $("#menu").append(item);
@@ -109,7 +109,7 @@ var description = data[i].description;
     section+='<div class="jp-details"><ul><li><span class="jp-title"></span></li></ul></div>';
     section+='<div class="jp-type-single"><span id="song_' + sectionName + '" class="songName"></span>';
     section+='<span id="artist_' + sectionName + '" class="artistName"></span>';
-    section+='<div class="starImage"><img style="position:relative; left:120px;top:55px;z-index:999;width:20px;height:20px;"src="http://www.freestockphotos.biz/pictures/15/15160/Illustration+of+a+gold+star.png"><span style="position:relative; left:130px;top:55px;z-index:999;width:20px;height:20px;"class="star"id="star_'+sectionName+'"></span><img id="tick"  src="http://www.clker.com/cliparts/2/k/n/l/C/Q/transparent-green-checkmark-hi.png"</div>';
+    section+='<div class="starImage"><img style="position:relative; left:120px;top:75px;z-index:999;width:20px;height:20px;"src="http://www.freestockphotos.biz/pictures/15/15160/Illustration+of+a+gold+star.png"><span style="position:relative; left:130px;top:75px;z-index:999;width:20px;height:20px;"class="star"id="star_'+sectionName+'"></span></div>';
     section+='<div class="jp-gui jp-interface"><ul class="jp-controls"><div class="mediaButton">'
     section+='<a href="javascript:;" class="jp-play" >play</a><a href="javascript:;" class="jp-pause"><div class="pause"style="top:14px;left:25px"></div>';
     section+='<div class="pause"style="top:-36px;left:45px"></div></a></div>';

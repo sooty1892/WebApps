@@ -102,6 +102,63 @@
     <!-- For autocomplete -->
     <link href="http://code.jquery.com/ui/1.10.4/themes/excite-bike/jquery-ui.css" rel="stylesheet">
    
+
+   <link href="css/chat.css" rel="stylesheet">
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script>
+      var last = 0;
+
+      $(document).ready(function() {
+        getMessages();
+        setInterval(function() {
+          getMessages();
+        }, 1000);
+
+      $('#sendie').keyup(function(e) {
+        if (e.keyCode == 13) {
+          if ($('#sendie').val() == "\n") {
+            $('#sendie').val('');
+          } else {
+            sendMessage($('#sendie').val());
+            //$('#chat-area').append($("<p>" + $('#sendie').val() + "</p>"));
+            $('#sendie').val('');
+          }
+        }
+      });
+    });
+
+    function sendMessage(message) {
+      $.ajax({
+        url: 'scripts/save_message.php',
+        type: 'POST',
+        data: {message: message,
+             username: 'admin',
+             idproject: '1'}
+      });
+    } 
+
+    function getMessages() {
+      $.ajax({
+        url: 'scripts/get_messages.php',
+        type: 'GET',
+        dataType: 'json',
+        data: {idproject: '1',
+             last: last},
+        success: function(response) {
+          console.log(response);
+          for (var i in response) {
+            $('#chat-area').append($("</p>" +"<span>" + response[i].username + "</span>" + ":\n" + response[i].message + "</p>"));
+            if (response[i].idmessage > last) {
+              last = response[i].idmessage;
+            }
+          }       
+        }
+      });
+    }
+    </script>
+
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
     <script src="js/bootstrap.min.js"></script>
@@ -165,7 +222,27 @@
   </head>
 
   <body>
+
+
+
+
+
+
     <div class="container">
+<div id="page-wrap">
+    
+        <div id="chat-wrap">
+          <div id="chat-area">
+                <h3 style="text-align:center;border: 2px solid #49a2df;position:fixed;background-color:#222222;width:200px;left :120px;top:400px;">Group Chat</h3>
+          </div>
+        </div>
+        
+        <form id="send-message-area">
+            <!-- <p>Your message: </p> -->
+            <textarea id="sendie" maxlength='100'></textarea>
+        </form>
+    
+    </div>
       <!-- Static navbar -->
       <div id ="navbar" class="navbar navbar-default navbar-fixed-top" role="navigation">
         <div class="container">
@@ -362,7 +439,6 @@
       <div class="middlePanel"id="middlePanel">
         <div class="projectSection" >
           <img src="images/dj.jpg" width="250px" id="albumArt">
-          <button type="button" class="btn btn-default" id="changeAlbumArt">:::</button>
           <div class="projectInfo">
             <h3 ><?php echo $projectname; ?></h3>
             <h4><?php echo $projectdesc; ?></h4>
