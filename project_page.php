@@ -191,7 +191,7 @@
         type: 'POST',
         data: {message: message,
              username: '<?php echo $logged_in_user;?>',
-             idproject: '<?php echo $_GET['id'];?>'
+             idproject: '<?php echo $_SESSION['id'];?>'
         }
       });
     } 
@@ -201,7 +201,7 @@
         url: 'scripts/get_messages.php',
         type: 'GET',
         dataType: 'json',
-        data: {idproject: '<?php echo $_GET['id'];?>',
+        data: {idproject: '<?php echo $_SESSION['id'];?>',
              last: last},
         success: function(response) {
           console.log(response);
