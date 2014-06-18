@@ -9,18 +9,18 @@
     //for
     
     // //for
-    $host = "localhost";
-    $port = "5432";
-    $dbname = "ashleyhemingway";
-    $dbuser = "ashleyhemingway";
-    $dbpw = "";
+    // $host = "localhost";
+    // $port = "5432";
+    // $dbname = "ashleyhemingway";
+    // $dbuser = "ashleyhemingway";
+    // $dbpw = "";
 
 
-     // $dbuser = "cts12";
-     // $host = "db.doc.ic.ac.uk";
-     // $port = 5432;
-     // $dbname = "cts12";
-     // $dbpw = "WkMRCTUhEN";
+     $dbuser = "cts12";
+     $host = "db.doc.ic.ac.uk";
+     $port = 5432;
+     $dbname = "cts12";
+     $dbpw = "WkMRCTUhEN";
 
     // for imperial server
     // $host = '146.169.45.190';

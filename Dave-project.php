@@ -92,10 +92,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Music Collaborator</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+     <link href="css/bootstrap-theme.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/chat.css">
     <link rel="stylesheet" href="css/jquery.simplecolorpicker.css">
     <link href="css/player.css" rel="stylesheet">
     <link href="css/jquery.simplecolorpicker.css" rel="stylesheet">
-    <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/lightbox.css" rel="stylesheet">
     <link href="css/project_styles.css" rel="stylesheet">
     <link href="css/jquery.fileupload.css" rel="stylesheet">
@@ -104,8 +106,22 @@
    
 
    <link href="css/chat.css" rel="stylesheet">
-    <script type"text/javscript" src= "js/jquery.jeditable.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
+    <script src="js/create_project_add.js"></script>
+    <script src="js/edit_project_add.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+    <script type"text/javscript" src= "js/jquery.jeditable.js"></script>
+
+<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="js/jquery.simplecolorpicker.js"></script>
+    <script type="text/javascript" src="js/jquery.pagescroller.lite.js"></script>
+    <script src="js/project.js"></script>
+    <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>  
+    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
+    <script type"text/javscript" src= "js/jquery.jeditable.js"></script>
     <script>
       var last = 0;
 
@@ -146,7 +162,6 @@
         data: {idproject: '1',
              last: last},
         success: function(response) {
-          console.log(response);
           for (var i in response) {
             $('#chat-area').append($("</p>" +"<span>" + response[i].username + "</span>" + ":\n" + response[i].message + "</p>"));
             if (response[i].idmessage > last) {
@@ -160,17 +175,7 @@
 
 
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js"></script> 
-    <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="js/jquery.jplayer.min.js"></script>
-    <script type="text/javascript" src="js/jplayer.playlist.min.js"></script>  
-    <script type="text/javascript" src="js/jquery.pagescroller.lite.js"></script>
-    <script src="js/create_project_add.js"></script>
-    <script src="js/edit_project_add.js"></script>
-
-    <script src="js/jquery.simplecolorpicker.js"></script>
-    <script src="js/project.js"></script>
+   
     <script type="text/javascript"> 
       $(document).ready(function(){
         var x = '<?php echo $projectprivacy ?>';
@@ -210,6 +215,40 @@
         });
       });
     </script>
+    <script> function uploadSongsToSection() {
+  formdata = new FormData();
+  var j_player = $(event.target).parents(".projectSection").find(".jp-jplayer");
+  var id = $(event.target).attr("id");
+  var section = $(event.target).parents(".projectSection").find("h3").html();
+  for (var i = 0; i < $(event.target)[0].files.length; i++) {
+    formdata.append("projectFiles[]", $(event.target)[0].files[i]);
+  }
+
+  formdata.append("idproject", "1");
+  formdata.append("section", section);
+  formdata.append("username", "admin");
+
+  if (formdata) {
+    $.ajax({
+      url: "scripts/upload_files.php",
+      type: "POST",
+      data: formdata,
+      processData: false,
+      contentType: false,
+      dataType: 'json',
+      success: function (res) {
+        for(var i in res) {
+          playlist[id].add({
+            title: res[i][1],
+            artist: res[i][0],
+            mp3: res[i][2]
+          });
+        }
+      }
+    });
+  }
+
+}</script>
     <style>
           .ui-autocomplete {
             max-height: 150px;

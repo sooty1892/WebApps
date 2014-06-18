@@ -124,14 +124,19 @@ div.jp-interface ul.jp-controls a {
 
 .starbtn{
   background-color:#2b3e50;
+ background-color:#2b3e50;
+  background-size: 20px 20px;
+  background-position: 6px 6px;
+  background-repeat: no-repeat;
   border-style:solid;
   border-color:#4e5d6c;
   border-radius:100px;
   position:absolute;
   top:80px;
-  left:8px;
+  left:5px;
   width:40px;
   height:40px;
+
 }
 
 .starbtn:hover{
