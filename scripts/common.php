@@ -9,11 +9,11 @@
     //for
     
     // //for
-    $host = "localhost";
-    $port = "5432";
-    $dbname = "ashleyhemingway";
-    $dbuser = "ashleyhemingway";
-    $dbpw = "";
+//    $host = "localhost";
+ //   $port = "5432";
+ //   $dbname = "ashleyhemingway";
+  //  $dbuser = "ashleyhemingway";
+   // $dbpw = "";
 
 
      // $dbuser = "cts12";
@@ -23,11 +23,11 @@
      // $dbpw = "WkMRCTUhEN";
 
     // for imperial server
-    // $host = '146.169.45.190';
-    // $port = '5432';
-    // $dbname = 'postgres';
-    // $dbuser = 'postgres';
-    // $dbpw = 'whocares';
+     $host = 'localhost';
+     $port = '5432';
+     $dbname = 'postgres';
+     $dbuser = 'postgres';
+     $dbpw = 'whocares';
 
     $con = pg_connect("host=" . $host . " " .
                       "port=" . $port . " " .

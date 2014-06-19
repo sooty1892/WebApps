@@ -16,23 +16,23 @@
     }
 
     if (!isset($_GET['id'])) {
-      $_GET['id'] = $logged_in_user;
+     $_GET['id'] = $logged_in_user;
     }
 
     $follow = 'no';
     $access;
-    if ($_GET['id'] == $logged_in_user) {
-      $access = 'true';
-    } else {
+    if ($_GET['id'] != $logged_in_user) {
       $access = 'false';
       $query = "SELECT * FROM following WHERE follower = '$logged_in_user' AND followee = '{$_GET['id']}'";
       $res = pg_query($con, $query);
       if (pg_num_rows($res) > 0) {
         $follow = 'yes';
       }
+    } else {
+	$access = 'true';
     }
 
-    $query = "SELECT * FROM users WHERE username = '{$logged_in_user}'";
+    $query = "SELECT * FROM users WHERE username = '{$_GET['id']}'";
     $result = pg_query($con, $query);
     $user = pg_fetch_array($result);
 

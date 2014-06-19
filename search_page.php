@@ -376,23 +376,23 @@
           <div id = "feed-list" style = "margin-top: -10px; margin-bottom: 5px">
               <div class = "feed-element">
                 <i class="glyphicon glyphicon-user"></i>
-                <strong>User1</strong> has created a new project
+                <strong>liskevich</strong> has created a new project
               </div>
               <div class = "feed-element">
                 <i class="glyphicon glyphicon-music"></i>
-                <strong>User9</strong> has finished a new song
+                <strong>eddytheman</strong> has finished a new song
               </div>
               <div class = "feed-element">
                 <i class="glyphicon glyphicon-user"></i>
-                <strong>User1</strong> has created a new project
+                <strong>cts12</strong> has created a new project
               </div>
               <div class = "feed-element">
                 <i class="glyphicon glyphicon-plus"></i>
-                <strong>User17</strong> has uploaded to <strong>Project Funk</strong>
+                <strong>admin</strong> has uploaded to <strong>Project Funk</strong>
               </div>
               <div class = "feed-element">
                 <i class="glyphicon glyphicon-music"></i>
-                <strong>User12</strong> has finished a new song
+                <strong>eddytheman</strong> has finished a new song
               </div>
           </div>
           <h4 style = "margin-top: 0px; padding : 5px; text-align: center; background-color: #34495e">Current Projects</h4>
